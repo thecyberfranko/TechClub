@@ -2,17 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Pyhon</title>
+    <title>Python</title>
     <link rel="stylesheet" href="reveal/css/reveal.css">
     <link rel="stylesheet" href="reveal/css/theme/black.css" id="theme">    
+    <link rel="stylesheet" href="reveal/lib/css/sunburst.css">
     <style>
-        .reveal code {
-            font-family: Lucida Console, Consolas, Liberation Mono,DejaVu Sans Mono;
-            font-size: 80%;
-            color: black;
-            background-color: dimgrey;
-            padding: 3px;
-        }
         .reveal table { font-size: 60%;}
         .reveal table th { font-size: 250%; }
     </style>
@@ -199,7 +193,6 @@
                     <li>>=</li>
                     <li>==</li>
                     <li>!=</li>
-                    <li>Chainable</li>
                 </ul>
                 <aside class="notes">
                     <ul>
@@ -294,7 +287,16 @@
                 <li>Code block</li>
                 <li>Return</li>
             </ul>
-            <image src="pythonImages\Function.gif" />
+            <pre class="fragment current-visable"><code class="python" data-trim contenteditable>
+def functionName(perameter1, perameter2):
+    sum = perameter1 + perameter2
+    return sum % min(perameter1, perameter2)
+
+functionName(12, 5)
+2
+functionName(15, 4)
+3
+            </code></pre>
             <aside class="notes">
                 <ul>
                     <li>Functions group repeatable tasks that are called to run</li>
@@ -401,7 +403,8 @@
     Reveal.initialize({
         dependencies: [
             // { src: 'reveal/plugin/zoom-js/zoom.js', async: true },
-            { src: 'reveal/plugin/notes/notes.js', async: true }
+            { src: 'reveal/plugin/notes/notes.js', async: true },
+            { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
         ]
     });
 </script>
