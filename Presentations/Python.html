@@ -9,6 +9,10 @@
     <style>
         .reveal table { font-size: 60%;}
         .reveal table th { font-size: 250%; }
+        .reveal .transparentImg {
+            background: none; border: none; box-shadow: none }
+        .reveal ul {
+            list-style-image: url("pythonImages/pythonBullet.png"); }
     </style>
 </head>
 
@@ -17,9 +21,10 @@
 <div class="reveal">
     <div class="slides">
         <section>
-            <h1>Intro to Python</h1>
+            <h3>Presenting</h3>
+            <img src="pythonImages/pythonWithText.png" width=50% class="transparentImg" />
             <br>
-            <h3>Jonathan Niehenke</h3>
+            <h3>By Jonathan Niehenke</h3>
         </section>
         <section>
             <h2>What is Python</h2>
@@ -109,7 +114,7 @@
                         <li>None is the absence of anything, similar to null and void.</li>
                         <li>Integers are whole positive or negative numerical values. (v2=short, v3=long).</li>
                         <li>Float are positive or negative decimal numeric values.</li>
-                        <li>Strings are sequences of charactors delimied by a single or double quote.</li>
+                        <li>Strings are sequences of characters delimited by a single or double quote.</li>
                     </ul>
                 </aside>
             </section>
@@ -123,8 +128,8 @@
                 </ul>
                 <aside class="notes">
                     <ul>
-                        <li>Collections contian other data type including other collections</li>
-                        <li>Lists are mutable (changable and expandable) sequence (pref homogeneous).</li>
+                        <li>Collections contain other data type including other collections</li>
+                        <li>Lists are mutable (changeable and expandable) sequence (pref homogeneous).</li>
                         <li>Tuples are immutable sequence representing a group of data like a date.</li>
                         <li>Sets are mappings of unique values.</li>
                         <li>Dictionary - mapping of key: value pairs.</li>
@@ -168,24 +173,24 @@
                     </tr>
                     <tr>
                         <td>str</td>
-                        <td>Concatinate</td> <td></td>
+                        <td>Concatenate</td> <td></td>
                         <td>Repeat</td> <td></td> <td></td>
                         <td>Formatting</td> <td></td>
                     </tr>
                     <tr>
                         <td>list</td>
-                        <td>Concatinate</td> <td></td>
+                        <td>Concatenate</td> <td></td>
                         <td>Repeat</td> <td></td> <td></td> <td></td> <td></td>
                     </tr>
                     <tr>
                         <td>tuple</td>
-                        <td>Concatinate</td> <td></td>
+                        <td>Concatenate</td> <td></td>
                         <td>Repeat</td> <td></td> <td></td> <td></td> <td></td>
                     </tr>
                 </table>
             </section>
             <section>
-                <h2>Comparision</h2>
+                <h2>Comparison</h2>
                 <ul>
                     <li><</li>
                     <li>></li>
@@ -255,7 +260,7 @@
                         <li>while will loop if the given expression is true</li>
                         <li>for will loop through elements of an object</li>
                         <li>continue will skip the rest of the block to begin the next loop</li>
-                        <li>break will imediately stop the loop</li>
+                        <li>break will immediately stop the loop</li>
                         <li>else will run if the loop completed without a break</li>
                     </ul>
                 </aside>
@@ -281,16 +286,16 @@
         <section>
             <h2>Functions</h2>
             <ul>
-                <li>With def</li>
-                <li>A name</li>
-                <li>Perameters</li>
-                <li>Code block</li>
+                <li>Def</li>
+                <li>Name</li>
+                <li>Parameters</li>
+                <li>Block</li>
                 <li>Return</li>
             </ul>
             <pre class="fragment current-visable"><code class="python" data-trim contenteditable>
-def functionName(perameter1, perameter2):
-    sum = perameter1 + perameter2
-    return sum % min(perameter1, perameter2)
+def functionName(parameter1, parameter2):
+    sum = parameter1 + parameter2
+    return sum % min(parameter1, parameter2)
 
 functionName(12, 5)
 2
@@ -302,10 +307,10 @@ functionName(15, 4)
                     <li>Functions group repeatable tasks that are called to run</li>
                     <li>Defined with def keyword</li>
                     <li>A name to reference for when it is called</li>
-                    <li>Perameters for unknown values given when called</li>
-                    <li>Code block contains the code the function runs</li>
-                    <li>Return created or modified values</li>
-                    <li>A function will return None when a return is not specified</li>
+                    <li>Parameters representing values given when called</li>
+                    <li>Code block contains the code the function will run</li>
+                    <li>Return outputs the expression value</li>
+                    <li>A function will return None when it is not specified</li>
                 </ul>
             </aside>
         </section>
@@ -322,7 +327,7 @@ functionName(15, 4)
                 <ul>
                     <li>Classes group repeatable tasks to data</li>
                     <li>Defined with class keyword</li>
-                    <li>A name to reference for when it is initalized into an instance</li>
+                    <li>A name to reference for when it is initialized into an instance</li>
                     <li>Begin here</li>
                     <li>Code block contains the code the function runs</li>
                     <li>A function will return None when a return is not specified</li>
@@ -387,10 +392,10 @@ functionName(15, 4)
             <aside class="notes">
                 <ul>
                     <li>tkinter - GUI toolkit (comes with Python, except Linux).</li>
-                    <li>numpy - Large multi-dimension array arithmatic.</li>
+                    <li>numpy - Large multi-dimension array arithmetic.</li>
                     <li>scipy - Extension to numpy.</li>
-                    <li>pillow - Image minipulation and editing.</li>
-                    <li>pywin32 - Windows extention.</li>
+                    <li>pillow - Image manipulation and editing.</li>
+                    <li>pywin32 - Windows extension.</li>
                     <li>requests - HTTP toolkit.</li>
                 </ul>
             </aside>
