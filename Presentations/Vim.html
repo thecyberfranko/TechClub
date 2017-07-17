@@ -15,14 +15,10 @@
             padding: 3px;
         }
         .reveal b { color:yellow; }
-        .reveal ul.dualList {
-            -webkit-column-count: 2; /* Chrome, Safari, Opera */
-            -moz-column-count: 2; /* Firefox */
-            column-count: 2;
-            -webkit-column-gap: 10px; /* Chrome, Safari, Opera */
-            -moz-column-gap: 10px; /* Firefox */
-            column-gap: 10px;
-        }
+        .reveal .transparentImg {
+            background: none; border: none; box-shadow: none }
+        .reveal ul {
+            list-style-image: url("Images/vimBullet.png"); }
     </style>
 </head>
 
@@ -31,16 +27,15 @@
 <div class="reveal">
     <div class="slides">
         <section>
-            <h1>Intro to Vim</h1>
-            <br>
+            <img src="Images/vimLogo.png" width=50% class="transparentImg" />
             <h3>By Jonathan Niehenke</h3>
         </section>
         <section>
             <h2>Why vim?</h2>
             <ul>
                 <li>Reduce load times</li>
+                <li>Keyboard exclusive</li>
                 <li>Create your workflow</li>
-                <li>Stop using the mouse</li>
                 <li><a href="https://www.fastcompany.com/3037629/why-vim-an-80s-text-editor-is-still-the-ui-of-choice-for-power-users"
                        target="_blank">An ’80s Text Editor</a></li>
                 <li>Popular
@@ -56,10 +51,10 @@
                     command-line gurus.</p>
                 <ul>
                     <li>It is lightweight (35MB) and loads quickly</li>
-                    <li>Modify settings, hotkeys, and create and run macros as
-                        you work</li>
                     <li>Repeatedly switching between the keyboard and mouse
                         accumulates into waisted time</li>
+                    <li>Modify settings, hotkeys, and create and run macros as
+                        you work</li>
                     <li>More on that and vim in the linked article</li>
                     <li>Survey results of preferred developer text editors and
                         environments</li>
@@ -120,7 +115,7 @@
             <section>
                 <h2>Points</h2>
                 <ul>
-                    <li>About Vim</li>
+                    <li>About</li>
                     <li>Basics</li>
                     <li>Search/Replace</li>
                     <li>Check spelling</li>
@@ -131,10 +126,10 @@
             </section>
         </section>
         <section>
-            <h2>About Vim</h2>
+            <h2>About</h2>
             <ul>
                 <li>Released in 1991</li>
-                <li>Keyboard exclusive</li>
+                <li>Clone of Vi</li>
                 <li>Modal interface
                     <ul>
                         <li>Normal mode</li>
@@ -227,7 +222,7 @@
             </section>
             <section>
                 <h3>Actions</h3>
-                <ul class="dualList">
+                <ul>
                     <li>Input: <b>i</b>, <b>I</b></li>
                     <li>Append: <b>a</b>, <b>A</b></li>
                     <li>New line: <b>o</b>, <b>O</b></li>
