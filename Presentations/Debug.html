@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>The Methotical Art of Debugging</title>
+    <link rel="stylesheet" href="reveal/css/reveal.css">
+    <link rel="stylesheet" href="reveal/css/theme/black.css" id="theme">    
+    <style>
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h4>Presenting...</h4>
+            <h2>The Methodical Art of Program Debugging</h2>
+            <h4>By Jonathan Niehenke</h4>
+        </section>
+        <section>
+            <h2>Why?</h2>
+            <ul>
+                <li>Reduce the expectation of difficulty</li>
+                <li>Provide perspective and steps to debug a program</li>
+                <li>Focus on the reasoning</li>
+                <li>Illustrate with my StarCraft bot</li>
+                <li>Keeping it general</li>
+                <li>Please ask questions</li>
+            </ul>
+            <aside class="notes">
+                Because programming has the expectation of being difficult, I
+                intend to reduce this association by providing my perspective
+                and the thought process I use to debug computer programs. My
+                focus is for you to understand the reasoning behind each step
+                more than the steps themselves so you remain flexable when
+                facing different problems even those outside of programming. To
+                illistrate I will guide you through a recent problem I had
+                concerning my StarCraft bot. You will not see any code or the
+                details of each step. If you have a question please ask as an early
+                misunderstanding may prevent a mind blowing revelation.
+            </aside>
+        </section>
+        <section>
+            <h2>Points</h2>
+            <ul>
+                <li>Define the problem</li>
+                <li>Modify and Test</li>
+                <li>Devising a solution</li>
+                <li>Implement/Asses</li>
+            </ul>
+            <aside class="notes">
+                The steps I take are: define the problem, modify and test,
+                devising a solution, and implement and asses. The first step
+                define the problem aims at gathering information about the
+                problem. If we don't understand why its a problem and the
+                sequence of events leading to it, how could we ever fix it
+                effectively?
+            </aside>
+        </section>
+        <section>
+            <h2>Define the problem</h2>
+            <ul>
+                <li>What is the problem/bug?<span class="fragment">
+                        Some bases are not gathering resources.
+                    </span>
+                </li>
+                <li>Why is it a problem/bug?<span class="fragment">
+                        We are waisting minerals used to build the base.
+                    </span>
+                </li>
+                <li>What was expected?<span class="fragment">
+                        The base train workers and improve our economy.
+                    </span>
+                </li>
+                <li>What is the cause?<span class="fragment">
+                        The base missed seeing the resources we would gather.
+                    </span>
+                </li>
+                <li>What is our target solution?<span class="fragment">
+                        Improve the accuracy of the base placement.
+                    </span>
+                </li>
+            </ul>
+            <img src="Images/Problem.png" width="48%" />
+            <img src="Images/Misplaced.png" width="49%" />
+            <aside class="notes">
+                In this example what is the problem? Well some bases are
+                not gathering resources. For those haven't played Starcraft
+                resources are the currency used to build and train stuff.
+                There are two types, minerals the abundant blue crystals
+                and vespene gas the three volcano-ish thing and both need
+                workers to gather them.<br />
+                Why is it a problem or bug? Because a base is a large
+                investment about 400 minerals. That would take a single
+                worker about 50 mining trips to recover the expense. The
+                resources would've been better used for something else in
+                this case.<br />
+                We expect the base to train workers that would gather the
+                minerals improving our economic income for more building
+                and training. Otherwise the spent minerals for the base are
+                waisted.<br />
+                What is cause? Well there were two causes at play. The
+                method of detecting the minerals is situationally faulty.
+                If no minerals are detected nearby than no workers are
+                trained to gather them. On the right the poor base
+                placement is an additional cause. Poor placement because
+                the distance to gather resources is longer than necessary
+                meaning that our economic income will be slower or more
+                workers are required to compensate.<br />
+                What is our target solution? The target I will guide you
+                through is to improve the base placement. Why? Because the
+                other cause was due to a some missed logic that once
+                defined was easy to correct. Improving base placement
+                provides a good perspective of each step.<br />
+
+            </aside>
+        </section>
+        <section>
+            <h2>Modify and Test</h2>
+            <ul>
+                <li>
+                    Originally:<span class="fragment">
+                        I was using the average position of minerals.
+                    </span>
+                </li>
+                <li>
+                    First Modification:<span class="fragment">
+                        Giving the average position of all local resources.
+                    </span>
+                </li>
+                <li>
+                    Test Result:<span class="fragment">
+                        While slightly improving the worse cases, it is
+                        still unacceptably inaccurate.
+                    </span>
+                </li>
+                <li>
+                    Second Modification:<span class="fragment">
+                        I further modify the given position to favor geysers.
+                    </span>
+                </li>
+                <li>
+                    Test Result:<span class="fragment">
+                        While really close, the tool finds some poorer position.
+                    </span>
+                </li>
+                <li>
+                    Deduction:<span class="fragment">
+                        The tool is not finding the position nearest the given
+                        position.
+                    </span>
+                </li>
+            </ul>
+            <ul class="legend">
+                <li class="fBlack"><strong>Black:</strong>
+                    Average position of resources.
+                </li>
+                <li class="fGreen">
+                    <strong>Green: </strong>Geyser given greater priority.
+                </li>
+                <li>
+                    <strong>White: </strong>The final outcome of position.
+                </li>
+            </ul>
+            <img src="Images/Positioning1.png" width="48%" style="float:left" />
+            <img src="Images/Positioning2.png" width="48%" style="float:left" />
+            <br style="clear: both" />
+            <aside class="notes">
+                I use this step for implementing quick fixes or for discovering
+                how something operates. Similar to the scientific method I will
+                make a small change thinking it will solve the problem. By
+                testing and observing its outcome I can make logical deductions
+                about what is happening and the effect it just had.</br>
+                Tools were created to allow us to interact with the game
+                programmatically otherwise it would not be possible to
+                build this bot. One of the tools will find a location for a
+                desired building within range of a given position.
+                Originally I was giving it the average position of minerals
+                and building the base at its determined location.
+            </aside>
+        </section>
+        <section>
+            <h2>Devising a solution</h2>
+            <ul>
+                <li>
+                    I know: A player uses the corner of a graphic for placement.
+                </li>
+                <li>
+                    Potential solution:<span class="fragment">
+                        Build along the <b>perpendicular edges</b> after the
+                        required offset.
+                    </span>
+                </li>
+                <li>
+                    What could we use?<span class="fragment">
+                        The edge nearest the optimal position are <b>shared</b> by
+                        the resources.
+                    </span>
+                </li>
+                <li>
+                    How we can find it?<span class="fragment">
+                        From a number set of each side's position as a reoccurring
+                        position.
+                    </span>
+                </li>
+                <li>
+                    What could halt this?<span class="fragment">
+                        On what side do we build on?</span>
+                </li>
+            </ul>
+            <img src="Images/PlayerPlacementUL.png" width="48%" />
+            <img src="Images/PlayerPlacementUR.png" width="48%" />
+            <img src="Images/PlayerPlacementLL.png" width="48%" />
+            <img src="Images/PlayerPlacementLR.png" width="48%" />
+        </section>
+        <section>
+            <h2>Implement/Asses</h2>
+            <h3>Hunters</h3>
+            <div id="Hunters" name="tabMenu">
+                <h4>Correct</h4>
+                <div>
+                    <img src="Images/HuntersTL.png" width="49%" />
+                    <img src="Images/HuntersTM.png" width="49%" />
+                    <img src="Images/HuntersTR.png" width="49%" />
+                    <img src="Images/HuntersML.png" width="49%" />
+                    <img src="Images/HuntersMR.png" width="49%" />
+                    <img src="Images/HuntersBL.png" width="49%" />
+                    <img src="Images/HuntersBM.png" width="49%" />
+                    <img src="Images/HuntersBR.png" width="49%" />
+                </div>
+                <h4>Wrong</h4>
+                <div>
+                    <img src="Images/HuntersIssue5.png" width="49%" />
+                    <img src="Images/HuntersIssue6.png" width="49%" />
+                    <img src="Images/HuntersIssue2.png" width="49%" />
+                    <img src="Images/HuntersIssue3.png" width="49%" />
+                    <img src="Images/HuntersIssue.png" width="49%" />
+                    <img src="Images/HuntersIssue4.png" width="49%" />
+                </div>
+            </div>
+            <h3>Destination</h3>
+            <div>
+                <h4>Correct</h4>
+                <img src="Images/DestinationT.png" width="49%" />
+                <img src="Images/DestinationB.png" width="49%" />
+                <h4>Wrong</h4>
+                <img src="Images/DestinationIssue.png" width="49%" />
+                <img src="Images/DestinationIssue2.png" width="49%" />
+            </div>
+            <h3>Python</h3>
+            <div>
+                <h4>Correct</h4>
+                <img src="Images/PythonT.png" width="49%" />
+                <img src="Images/PythonL.png" width="49%" />
+                <img src="Images/PythonR.png" width="49%" />
+                <img src="Images/PythonB.png" width="49%" />
+                <h4>Wrong</h4>
+                <img src="Images/PythonIssue.png" width="49%" />
+                <img src="Images/PythonIssue2.png" width="49%" />
+            </div>
+            <h3>RoadRunner</h3>
+            <div>
+                <img src="Images/RoadRunnerT.png" width="49%" />
+                <img src="Images/RoadRunnerL.png" width="49%" />
+                <img src="Images/RoadRunnerR.png" width="49%" />
+                <img src="Images/RoadRunnerB.png" width="49%" />
+            </div>
+        </section>
+        <section>
+            <h2>Conclusion</h2>
+            <ul>
+                <li>
+                    Defining the problem:<span class="fragment">
+                        Of a direction to solve the problem.</span>
+                </li>
+                <li>
+                    Modifying and Testing:<span class="fragment">
+                        Of a misunderstanding in our logic.
+                    </span>
+                </li>
+                <li>
+                    Devising a solution:<span class="fragment">
+                        How to simplify the problem by using what we knew.
+                    </span>
+                </li>
+                <li>
+                    Implementing/Testing/Assessing:<span class="fragment">
+                        There are still problems, but it is an improvement.
+                    </span>
+                </li>
+                <li>
+                    Finally:<span class="fragment">
+                        Reach for good enough, because every little improvement is
+                        closer to perfection.
+                    </span>
+                </li>
+            </ul>
+        </section>
+    </div>
+</div>
+<script src="reveal/lib/js/head.min.js"></script>
+<script src="reveal/js/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        dependencies: [
+            // { src: 'reveal/plugin/zoom-js/zoom.js', async: true },
+            { src: 'reveal/plugin/notes/notes.js', async: true }
+        ]
+    });
+</script>
+
+</body>
+</html>
