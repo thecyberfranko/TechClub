@@ -120,7 +120,7 @@
                     <li>Search/Replace</li>
                     <li>Check spelling</li>
                     <li>Word Completion</li>
-                    <li>Preview Features</li>
+                    <li>Other Features</li>
                     <li>Resources</li>
                 </ul>
             </section>
@@ -246,49 +246,97 @@
             </section>
         </section>
         <section>
-            <h2>Search/Replace</h2>
-            <ul>
-                <li>Search current word: <b>*</b>, <b>#</b></li>
-                <li>Search custom pattern: <b>/</b>, <b>?</b></li>
-                <li>Move to match: <b>n</b>, <b>N</b></li>
-                <li>Substitute:<code>:s/find/replace</code></li>
-            </ul>
-            <aside class="notes">
+            <section>
+                <h2>Search/Replace</h2>
                 <ul>
-                    <li>Search current word or pattern following or preceding the cursor</li>
-                    <li>Jump to the next or previous match according to search direction</li>
-                    <li>If either substitute command ran as is the first
-                        f-i-n-d would get replaced by replace</li>
-                    <li>Preceed "s" with "%" to replace within entire file</li>
-                    <li>Append "/g" to the substitute command to replace all matches</li>
-                    <li>Supports regular expressions as pattern</li>
-                    <li>The set hlsearch command to enables highlighting like
-                        browsers</li>
-                    <li>Sometimes the search highlighting can be obstructive
-                        use the noh command to temporarily disable</li>
+                    <li>Search custom pattern: <b>/</b>, <b>?</b></li>
+                    <li>Search current word: <b>*</b>, <b>#</b></li>
+                    <li>Move to match: <b>n</b>, <b>N</b></li>
+                    <li>Substitute:<code>:s/find/replace</code></li>
                 </ul>
-            </aside>
+                <aside class="notes">
+                    <ul>
+                        <li>Search pattern or current word following or preceding the cursor</li>
+                        <li>Jump to the next or previous match according to search direction</li>
+                        <li>If either substitute command ran as is the first
+                            f-i-n-d would get replaced by replace</li>
+                        <li>Preceed "s" with "%" to replace within entire file</li>
+                        <li>Append "/g" to the substitute command to replace all matches</li>
+                    </ul>
+                </aside>
+                </section>
+            <section>
+                <h2>Custom Search</h2>
+                <img src="Images/customSearch.gif" />
+                <aside class="notes">
+                    <ul>
+                        <li>The search patter is in the bottom left corner</li>
+                        <li>This pattern include matches within words</li>
+                        <li>To highlight the search like in browsers "set hlsearch" command</li>
+                        <li>The "noh" command temporarily disables search highlighting</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <h2>Star Search</h2>
+                <img src="Images/starSearch.gif" />
+                <aside class="notes">
+                    <ul>
+                        <li>Search supports regular expressions</li>
+                        <li>The star automatically types the search expression
+                            matching an entire word</li>
+                    </ul>
+                </aside>
+            </section>
         </section>
         <section>
-            <h2>Spell Checking</h2>
-            <ul>
-                <li>Enable: <code>:set spell</code></li>
-                <li>Next misspell: <b>]s</b></li>
-                <li>Previous misspell: <b>[s</b></li>
-                <li>List/Select corrections: <b>z=</b></li>
-            </ul>
+            <section>
+                <h2>Spell Checking</h2>
+                <ul>
+                    <li>Enable: <code>:set spell</code></li>
+                    <li>Next misspell: <b>]s</b></li>
+                    <li>Previous misspell: <b>[s</b></li>
+                    <li>List/Select corrections: <b>z=</b></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Spell Highlighting</h2>
+                <img src="Images\spellHighlight.gif" />
+            </section>
+            <section>
+                <h2>Spell Suggestion</h2>
+                <img src="Images\spellSuggestions.gif" />
+                <aside class="notes">
+                    <ul>
+                        <li>Press "z=" to view the suggestion</li>
+                        <li>Type the associated number and press "Enter"</li>
+                    </ul>
+                </aside>
+            </section>
         </section>
         <section>
-            <h2>Word Completion</h2>
-            <ul>
-                <li>Word must exist</li>
-                <li>Insert mode</li>
-                <li>Next matching word: <b>Ctrl+n</b></li>
-                <li>Previous matching word: <b>Ctrl+p</b></li>
-            </ul>
+            <section>
+                <h2>Word Completion</h2>
+                <ul>
+                    <li>Word must exist</li>
+                    <li>Insert mode</li>
+                    <li>Next matching word: <b>Ctrl+n</b></li>
+                    <li>Previous matching word: <b>Ctrl+p</b></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Word Completion</h2>
+                <img src="Images\wordCompletion.gif" />
+                <aside class="notes">
+                    <ul>
+                        <li>mo has multiple matches</li>
+                        <li>Use Ctrl+n or Ctrl+p to cycle through them</li>
+                    </ul>
+                </aside>
+            </section>
         </section>
         <section>
-            <h2>Preview Features</h2>
+            <h2>Other Features</h2>
             <ul>
                 <li>Composition with text objects</li>
                 <li>Text folding</li>
