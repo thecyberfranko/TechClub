@@ -19,200 +19,166 @@
             <h4>By Jonathan Niehenke</h4>
         </section>
         <section>
-            <h2>Why?</h2>
+            <h2>Intentions</h2>
             <ul>
-                <li>Reduce the expectation of difficulty</li>
-                <li>Provide perspective and steps to debug a program</li>
-                <li>Focus on the reasoning</li>
-                <li>Illustrate with my StarCraft bot</li>
+                <li>Provide perspective</li>
+                <li>Focused on reasoning</li>
+                <li>Illustrated by example</li>
                 <li>Keeping it general</li>
                 <li>Please ask questions</li>
             </ul>
             <aside class="notes">
-                Because programming has the expectation of being difficult, I
-                intend to reduce this association by providing my perspective
-                and the thought process I use to debug computer programs. My
-                focus is for you to understand the reasoning behind each step
-                more than the steps themselves so you remain flexable when
-                facing different problems even those outside of programming. To
-                illistrate I will guide you through a recent problem I had
-                concerning my StarCraft bot. You will not see any code or the
-                details of each step. If you have a question please ask as an early
-                misunderstanding may prevent a mind blowing revelation.
+                <ul>
+                    <li>To provided my perspective and thought process</li>
+                    <li>Focused on the reasoning behind each step to remain flexible (even outside of programming)</li>
+                    <li>I will illustrate with a problem I had with my StarCraft Bot</li>
+                    <li>You will not see any code or the details of each step.</li>
+                    <li>Ask questions as any misunderstanding may prevent the intended impact.</li>
+                </ul>
             </aside>
         </section>
         <section>
-            <h2>Points</h2>
+            <h2>Steps</h2>
             <ul>
                 <li>Define the problem</li>
                 <li>Modify and Test</li>
                 <li>Devising a solution</li>
                 <li>Implement/Asses</li>
             </ul>
-            <aside class="notes">
-                The steps I take are: define the problem, modify and test,
-                devising a solution, and implement and asses. The first step
-                define the problem aims at gathering information about the
-                problem. If we don't understand why its a problem and the
-                sequence of events leading to it, how could we ever fix it
-                effectively?
-            </aside>
+            <aside class="notes"><p>
+                The steps I take to debug a program are define the problem,
+                modify and test, devise a solution, and implement and asses.
+            <p></aside>
         </section>
         <section>
             <h2>Define the problem</h2>
             <ul>
-                <li>What is the problem/bug?<span class="fragment">
-                        Some bases are not gathering resources.
-                    </span>
+                <li>What is the problem/bug?
+                    <span class="fragment">Not gathering resources.</span>
                 </li>
-                <li>Why is it a problem/bug?<span class="fragment">
-                        We are waisting minerals used to build the base.
-                    </span>
+                <li>Why is it a problem/bug?
+                    <span class="fragment"> Waisting minerals.</span>
                 </li>
-                <li>What was expected?<span class="fragment">
-                        The base train workers and improve our economy.
-                    </span>
+                <li>What was expected?
+                    <span class="fragment">Improve our economy.</span>
                 </li>
-                <li>What is the cause?<span class="fragment">
-                        The base missed seeing the resources we would gather.
-                    </span>
+                <li>What is the cause?
+                    <span class="fragment">Mistaken purpose</span>
                 </li>
-                <li>What is our target solution?<span class="fragment">
-                        Improve the accuracy of the base placement.
-                    </span>
+                <li>What is our target solution?
+                    <span class="fragment">Improve placement.</span>
                 </li>
             </ul>
             <img src="Images/Problem.png" width="48%" />
             <img src="Images/Misplaced.png" width="49%" />
             <aside class="notes">
-                In this example what is the problem? Well some bases are
-                not gathering resources. For those haven't played Starcraft
-                resources are the currency used to build and train stuff.
-                There are two types, minerals the abundant blue crystals
-                and vespene gas the three volcano-ish thing and both need
-                workers to gather them.<br />
-                Why is it a problem or bug? Because a base is a large
-                investment about 400 minerals. That would take a single
-                worker about 50 mining trips to recover the expense. The
-                resources would've been better used for something else in
-                this case.<br />
-                We expect the base to train workers that would gather the
-                minerals improving our economic income for more building
-                and training. Otherwise the spent minerals for the base are
-                waisted.<br />
-                What is cause? Well there were two causes at play. The
-                method of detecting the minerals is situationally faulty.
-                If no minerals are detected nearby than no workers are
-                trained to gather them. On the right the poor base
-                placement is an additional cause. Poor placement because
-                the distance to gather resources is longer than necessary
-                meaning that our economic income will be slower or more
-                workers are required to compensate.<br />
-                What is our target solution? The target I will guide you
-                through is to improve the base placement. Why? Because the
-                other cause was due to a some missed logic that once
-                defined was easy to correct. Improving base placement
-                provides a good perspective of each step.<br />
-
+                <ul>
+                    <li>The first step "define the problem" aims at gathering information</li>
+                    <li>How could we effectively fix the problem, if we don't understand the events leading to it</li>
+                    <br />
+                    <li>Problem: is that some bases are not gathering resources.</li>
+                    <li>Background: Resources are the currency used to build and train stuff
+                        <ul>
+                            <li>Minerals are the abundant blue crystals</li>
+                            <li>Vespene gas is gathered from the geysers</li>
+                            <li>Both need workers to gather them</li>
+                        </ul>
+                    </li>
+                    <li>Why: The base will not justify the cost with a single worker</li>
+                    <li>Expect: To train workers to improve economic income</li>
+                    <li>Cause: Minerals were not detected within range to
+                        determine it an economic base.
+                        <ul>
+                            <li>The method of mineral detection is situationally faulty.</li>
+                            <li>The base placement was too far away from the minerals.</li>
+                        </ul>
+                    </li>
+                    <li>Target: is to improve the base placement as it
+                        provides a good perspective for each step.</li>
+                </ul>
             </aside>
         </section>
         <section>
             <h2>Modify and Test</h2>
             <ul>
-                <li>
-                    Originally:<span class="fragment">
-                        I was using the average position of minerals.
-                    </span>
+                <li>Originally:
+                    <span class="fragment">Average of minerals</span>
                 </li>
-                <li>
-                    First Modification:<span class="fragment">
-                        Giving the average position of all local resources.
-                    </span>
+                <li>First Modification:
+                    <span class="fragment">Average of all local resources</span>
                 </li>
-                <li>
-                    Test Result:<span class="fragment">
-                        While slightly improving the worse cases, it is
-                        still unacceptably inaccurate.
-                    </span>
+                <li>Test Result:
+                    <span class="fragment">Reduced worse cases</span>
                 </li>
-                <li>
-                    Second Modification:<span class="fragment">
-                        I further modify the given position to favor geysers.
-                    </span>
+                <li>Second Modification:
+                    <span class="fragment">Favor geysers</span>
                 </li>
-                <li>
-                    Test Result:<span class="fragment">
-                        While really close, the tool finds some poorer position.
-                    </span>
+                <li>Test Result:
+                    <span class="fragment">Good given position</span>
                 </li>
-                <li>
-                    Deduction:<span class="fragment">
-                        The tool is not finding the position nearest the given
-                        position.
-                    </span>
-                </li>
-            </ul>
-            <ul class="legend">
-                <li class="fBlack"><strong>Black:</strong>
-                    Average position of resources.
-                </li>
-                <li class="fGreen">
-                    <strong>Green: </strong>Geyser given greater priority.
-                </li>
-                <li>
-                    <strong>White: </strong>The final outcome of position.
+                <li>Deduction:
+                    <span class="fragment">Skipping around</span>
                 </li>
             </ul>
             <img src="Images/Positioning1.png" width="48%" style="float:left" />
             <img src="Images/Positioning2.png" width="48%" style="float:left" />
             <br style="clear: both" />
             <aside class="notes">
-                I use this step for implementing quick fixes or for discovering
-                how something operates. Similar to the scientific method I will
-                make a small change thinking it will solve the problem. By
-                testing and observing its outcome I can make logical deductions
-                about what is happening and the effect it just had.</br>
-                Tools were created to allow us to interact with the game
-                programmatically otherwise it would not be possible to
-                build this bot. One of the tools will find a location for a
-                desired building within range of a given position.
-                Originally I was giving it the average position of minerals
-                and building the base at its determined location.
+                <ul>
+                    <li>For implementing quick fixes or discovering functionality</li>
+                    <li>Logical deductions are made from the results of a small change</li>
+                    <br />
+                    <li>Background: To interact with StarCraft programmatically
+                        we use the Brood War API. Included is a tool that finds
+                        appropriate building positions with a range around a
+                        desired position.
+                    </li>
+                    <br />
+                    <li>Originally: The desired position was the average position of minerals</li>
+                    <li>First: Use the average position of all local resources</li>
+                    <li>Result: Reduced the worse cases.</li>
+                    <li>Second: Bisect the average position of minerals and geysers</li>
+                    <li>Result: Good given positions, but receiving worse locations</li>
+                    <li>Deduction: The tool was skipping around in its search</li>
+                </ul>
             </aside>
         </section>
         <section>
             <h2>Devising a solution</h2>
             <ul>
-                <li>
-                    I know: A player uses the corner of a graphic for placement.
+                <li> I know:
+                    <span class="fragment">Corner of graphic</span>
                 </li>
-                <li>
-                    Potential solution:<span class="fragment">
-                        Build along the <b>perpendicular edges</b> after the
-                        required offset.
-                    </span>
+                <li>Potential solution:
+                    <span class="fragment">Perpendicular edges</span>
                 </li>
-                <li>
-                    What could we use?<span class="fragment">
-                        The edge nearest the optimal position are <b>shared</b> by
-                        the resources.
-                    </span>
+                <li>What could we use?
+                    <span class="fragment">Nearest shared edge</span>
                 </li>
-                <li>
-                    How we can find it?<span class="fragment">
-                        From a number set of each side's position as a reoccurring
-                        position.
-                    </span>
+                <li>How we can find it?
+                    <span class="fragment">From a number set</span>
                 </li>
-                <li>
-                    What could halt this?<span class="fragment">
-                        On what side do we build on?</span>
+                <li>What could halt this?
+                    <span class="fragment">Which side?</span>
                 </li>
             </ul>
             <img src="Images/PlayerPlacementUL.png" width="48%" />
             <img src="Images/PlayerPlacementUR.png" width="48%" />
             <img src="Images/PlayerPlacementLL.png" width="48%" />
             <img src="Images/PlayerPlacementLR.png" width="48%" />
+            <aside class="notes">
+                <ul>
+                    <li>For creating a new solution, after determining current
+                        methods are insufficient or nonexistent.
+                    </li>
+                    <br />
+                    <li>Know: Players use the corner of a graphic for placement.</li>
+                    <li>Solution: Build along the perpendicular edges after the required offset.</li>
+                    <li>Use: The nearest edge shared by the resources.</li>
+                    <li>Find: From a number set of each side's position as a reoccurring position.</li>
+                    <li>Halt: On what side do we build on?</li>
+                </ul>
+            </aside>
         </section>
         <section>
             <h2>Implement/Asses</h2>
@@ -268,34 +234,41 @@
             </div>
         </section>
         <section>
-            <h2>Conclusion</h2>
+            <h2>We learned</h2>
             <ul>
-                <li>
-                    Defining the problem:<span class="fragment">
-                        Of a direction to solve the problem.</span>
+                <li>Defining the problem:
+                    <span class="fragment">Direction</span>
                 </li>
-                <li>
-                    Modifying and Testing:<span class="fragment">
-                        Of a misunderstanding in our logic.
-                    </span>
+                <li>Modifying and Testing:
+                    <span class="fragment">Misunderstanding</span>
                 </li>
-                <li>
-                    Devising a solution:<span class="fragment">
-                        How to simplify the problem by using what we knew.
-                    </span>
+                <li>Devising a solution:
+                    <span class="fragment">Simplify</span>
                 </li>
-                <li>
-                    Implementing/Testing/Assessing:<span class="fragment">
-                        There are still problems, but it is an improvement.
-                    </span>
+                <li>Implement/Assess:
+                    <span class="fragment">Improvement</span>
                 </li>
-                <li>
-                    Finally:<span class="fragment">
-                        Reach for good enough, because every little improvement is
-                        closer to perfection.
-                    </span>
+                <li>Finally:
+                    <span class="fragment">Good enough</span>
                 </li>
             </ul>
+            <aside class="notes">
+                <ul>
+                    <li>Problem: We learned about directions we could take and
+                        chose to improve building placement</li>
+                    <li>Testing: We learned of a misunderstanding in a tools
+                        functionality that was finding worse positions.</li>
+                    <li>Devising: We learned how to simplify the problem
+                        by applying what we knew.</li>
+                    <li>Assess: We learned there are still problems, but it is
+                        an improvement.</li>
+                    <li>Finally: "Reach for good enough as every little
+                        improvement is a big deal. Perfection is an ever
+                        expanding standard that if challenged immediately will
+                        cause frustration and disinterest.
+                    </li>
+                </ul>
+            </aside>
         </section>
     </div>
 </div>
