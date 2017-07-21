@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="reveal/css/reveal.css">
     <link rel="stylesheet" href="reveal/css/theme/black.css" id="theme">    
     <style>
+        .reveal .split { display: inline-block; width: 45%; }
+        .reveal ul.split { vertical-align: top; }
+        .reveal img.split { margin: 0px }
+        .reveal div.split img { width: 45%; margin: 0px }
+        .reveal img.tile { width: 35%; margin: 0px }
     </style>
 </head>
 
@@ -52,25 +57,24 @@
         </section>
         <section>
             <h2>Define the problem</h2>
-            <ul>
-                <li>What is the problem/bug?
-                    <span class="fragment">Not gathering resources.</span>
+            <img src="debugImages\Misplaced.png" class="split" />
+            <ul class="split">
+                <li>What is the problem?<br />
+                    <span class="fragment">Not gathering.</span>
                 </li>
-                <li>Why is it a problem/bug?
-                    <span class="fragment"> Waisting minerals.</span>
+                <li>Why is it?<br />
+                    <span class="fragment">Waisting minerals.</span>
                 </li>
-                <li>What was expected?
+                <li>Expected?<br />
                     <span class="fragment">Improve our economy.</span>
                 </li>
-                <li>What is the cause?
+                <li>Cause?<br />
                     <span class="fragment">Mistaken purpose</span>
                 </li>
-                <li>What is our target solution?
+                <li>Solution?<br />
                     <span class="fragment">Improve placement.</span>
                 </li>
             </ul>
-            <img src="Images/Problem.png" width="48%" />
-            <img src="Images/Misplaced.png" width="49%" />
             <aside class="notes">
                 <ul>
                     <li>The first step "define the problem" aims at gathering information</li>
@@ -100,29 +104,21 @@
         </section>
         <section>
             <h2>Modify and Test</h2>
-            <ul>
-                <li>Originally:
-                    <span class="fragment">Average of minerals</span>
+            <ul class="split">
+                <li>Originally:<br />
+                    <span class="fragment">Minerals</span>
                 </li>
-                <li>First Modification:
-                    <span class="fragment">Average of all local resources</span>
+                <li>First Modification:<br />
+                    <span class="fragment">All resources</span>
                 </li>
-                <li>Test Result:
-                    <span class="fragment">Reduced worse cases</span>
-                </li>
-                <li>Second Modification:
+                <li>Second Modification:<br />
                     <span class="fragment">Favor geysers</span>
                 </li>
-                <li>Test Result:
-                    <span class="fragment">Good given position</span>
-                </li>
-                <li>Deduction:
+                <li>Deduction:<br />
                     <span class="fragment">Skipping around</span>
                 </li>
             </ul>
-            <img src="Images/Positioning1.png" width="48%" style="float:left" />
-            <img src="Images/Positioning2.png" width="48%" style="float:left" />
-            <br style="clear: both" />
+            <img src="debugImages/Positioning1.png" class="split" />
             <aside class="notes">
                 <ul>
                     <li>For implementing quick fixes or discovering functionality</li>
@@ -145,27 +141,29 @@
         </section>
         <section>
             <h2>Devising a solution</h2>
-            <ul>
-                <li> I know:
+            <ul class="split">
+                <li> I know:<br />
                     <span class="fragment">Corner of graphic</span>
                 </li>
-                <li>Potential solution:
+                <li>Solution:<br />
                     <span class="fragment">Perpendicular edges</span>
                 </li>
-                <li>What could we use?
+                <li>Use?<br />
                     <span class="fragment">Nearest shared edge</span>
                 </li>
-                <li>How we can find it?
+                <li>Find?<br />
                     <span class="fragment">From a number set</span>
                 </li>
-                <li>What could halt this?
+                <li>Halt?<br />
                     <span class="fragment">Which side?</span>
                 </li>
             </ul>
-            <img src="Images/PlayerPlacementUL.png" width="48%" />
-            <img src="Images/PlayerPlacementUR.png" width="48%" />
-            <img src="Images/PlayerPlacementLL.png" width="48%" />
-            <img src="Images/PlayerPlacementLR.png" width="48%" />
+            <div class="split">
+                <img src="debugImages/PlayerPlacementUL.png" />
+                <img src="debugImages/PlayerPlacementUR.png" />
+                <img src="debugImages/PlayerPlacementLL.png" />
+                <img src="debugImages/PlayerPlacementLR.png" />
+            </div>
             <aside class="notes">
                 <ul>
                     <li>For creating a new solution, after determining current
@@ -181,57 +179,28 @@
             </aside>
         </section>
         <section>
-            <h2>Implement/Asses</h2>
-            <h3>Hunters</h3>
-            <div id="Hunters" name="tabMenu">
-                <h4>Correct</h4>
-                <div>
-                    <img src="Images/HuntersTL.png" width="49%" />
-                    <img src="Images/HuntersTM.png" width="49%" />
-                    <img src="Images/HuntersTR.png" width="49%" />
-                    <img src="Images/HuntersML.png" width="49%" />
-                    <img src="Images/HuntersMR.png" width="49%" />
-                    <img src="Images/HuntersBL.png" width="49%" />
-                    <img src="Images/HuntersBM.png" width="49%" />
-                    <img src="Images/HuntersBR.png" width="49%" />
-                </div>
-                <h4>Wrong</h4>
-                <div>
-                    <img src="Images/HuntersIssue5.png" width="49%" />
-                    <img src="Images/HuntersIssue6.png" width="49%" />
-                    <img src="Images/HuntersIssue2.png" width="49%" />
-                    <img src="Images/HuntersIssue3.png" width="49%" />
-                    <img src="Images/HuntersIssue.png" width="49%" />
-                    <img src="Images/HuntersIssue4.png" width="49%" />
-                </div>
-            </div>
-            <h3>Destination</h3>
-            <div>
-                <h4>Correct</h4>
-                <img src="Images/DestinationT.png" width="49%" />
-                <img src="Images/DestinationB.png" width="49%" />
-                <h4>Wrong</h4>
-                <img src="Images/DestinationIssue.png" width="49%" />
-                <img src="Images/DestinationIssue2.png" width="49%" />
-            </div>
-            <h3>Python</h3>
-            <div>
-                <h4>Correct</h4>
-                <img src="Images/PythonT.png" width="49%" />
-                <img src="Images/PythonL.png" width="49%" />
-                <img src="Images/PythonR.png" width="49%" />
-                <img src="Images/PythonB.png" width="49%" />
-                <h4>Wrong</h4>
-                <img src="Images/PythonIssue.png" width="49%" />
-                <img src="Images/PythonIssue2.png" width="49%" />
-            </div>
-            <h3>RoadRunner</h3>
-            <div>
-                <img src="Images/RoadRunnerT.png" width="49%" />
-                <img src="Images/RoadRunnerL.png" width="49%" />
-                <img src="Images/RoadRunnerR.png" width="49%" />
-                <img src="Images/RoadRunnerB.png" width="49%" />
-            </div>
+            <section>
+                <h2>Implement/Asses</h2>
+            </section>
+            <section>
+                <h2>Python Correct</h2>
+                <img src="debugImages/PythonT.png" class="tile" />
+                <img src="debugImages/PythonL.png" class="tile" />
+                <img src="debugImages/PythonR.png" class="tile" />
+                <img src="debugImages/PythonB.png" class="tile" />
+            </section>
+            <section>
+                <h2>Python Wrong</h2>
+                <img src="debugImages/PythonIssue.png" class="tile" />
+                <img src="debugImages/PythonIssue2.png" class="tile" />
+            </section>
+            <section>
+                <h2>Destination</h2>
+                <img src="debugImages/DestinationT.png" class="tile" />
+                <img src="debugImages/DestinationB.png" class="tile" />
+                <img src="debugImages/DestinationIssue.png" class="tile" />
+                <img src="debugImages/DestinationIssue2.png" class="tile" />
+            </section>
         </section>
         <section>
             <h2>We learned</h2>
