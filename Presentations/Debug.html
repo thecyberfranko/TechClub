@@ -11,6 +11,7 @@
         .reveal img.split { margin: 0px }
         .reveal div.split img { width: 45%; margin: 0px }
         .reveal img.tile { width: 35%; margin: 0px }
+        .reveal ul.horizontal li { display: inline; margin: 0px 15px}
     </style>
 </head>
 
@@ -56,127 +57,134 @@
             <p></aside>
         </section>
         <section>
-            <h2>Define the problem</h2>
-            <img src="debugImages\Misplaced.png" class="split" />
-            <ul class="split">
-                <li>What is the problem?<br />
-                    <span class="fragment">Not gathering.</span>
-                </li>
-                <li>Why is it?<br />
-                    <span class="fragment">Waisting minerals.</span>
-                </li>
-                <li>Expected?<br />
-                    <span class="fragment">Improve our economy.</span>
-                </li>
-                <li>Cause?<br />
-                    <span class="fragment">Mistaken purpose</span>
-                </li>
-                <li>Solution?<br />
-                    <span class="fragment">Improve placement.</span>
-                </li>
-            </ul>
-            <aside class="notes">
+            <section>
+                <h2>Define the problem</h2>
                 <ul>
-                    <li>The first step "define the problem" aims at gathering information</li>
-                    <li>How could we effectively fix the problem, if we don't understand the events leading to it</li>
-                    <br />
-                    <li>Problem: is that some bases are not gathering resources.</li>
-                    <li>Background: Resources are the currency used to build and train stuff
-                        <ul>
-                            <li>Minerals are the abundant blue crystals</li>
-                            <li>Vespene gas is gathered from the geysers</li>
-                            <li>Both need workers to gather them</li>
-                        </ul>
-                    </li>
-                    <li>Why: The base will not justify the cost with a single worker</li>
-                    <li>Expect: To train workers to improve economic income</li>
-                    <li>Cause: Minerals were not detected within range to
-                        determine it an economic base.
-                        <ul>
-                            <li>The method of mineral detection is situationally faulty.</li>
-                            <li>The base placement was too far away from the minerals.</li>
-                        </ul>
-                    </li>
-                    <li>Target: is to improve the base placement as it
-                        provides a good perspective for each step.</li>
+                    <li>Gathering information</li>
+                    <li>If we don't understand</li>
+                <ul>
+                <aside class="notes">
+                    <ul>
+                        <li>The first step "define the problem" aims at gathering information</li>
+                        <li>How could we effectively fix the problem, if we don't understand the events leading to it</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <h2>Example</h2>
+                <img src="debugImages\Misplaced.png" class="split" />
+                <ul class="split">
+                    <li>What is the problem?</li>
+                    <li>Why is it?</li>
+                    <li>Expected?</li>
+                    <li>Cause?</li>
+                    <li>Solution?</li>
                 </ul>
-            </aside>
+                <aside class="notes">
+                    <ul>
+                        <li>Problem: is that some bases are not gathering resources.</li>
+                        <li>Background: Resources are the currency used to build and train stuff
+                            <ul>
+                                <li>Minerals are the abundant blue crystals</li>
+                                <li>Vespene gas is gathered from the geysers</li>
+                                <li>Both need workers to gather them</li>
+                            </ul>
+                        </li>
+                        <li>Why: The base will not justify the cost with a single worker</li>
+                        <li>Expect: To train workers to improve economic income</li>
+                        <li>Cause: Minerals were not detected within range to
+                            determine it an economic base.
+                            <ul>
+                                <li>The method of mineral detection is situationally faulty.</li>
+                                <li>The base placement was too far away from the minerals.</li>
+                            </ul>
+                        </li>
+                        <li>Target: is to improve the base placement as it
+                            provides a good perspective for each step.</li>
+                    </ul>
+                </aside>
+            </section>
         </section>
         <section>
-            <h2>Modify and Test</h2>
-            <ul class="split">
-                <li>Originally:<br />
-                    <span class="fragment">Minerals</span>
-                </li>
-                <li>First Modification:<br />
-                    <span class="fragment">All resources</span>
-                </li>
-                <li>Second Modification:<br />
-                    <span class="fragment">Favor geysers</span>
-                </li>
-                <li>Deduction:<br />
-                    <span class="fragment">Skipping around</span>
-                </li>
-            </ul>
-            <img src="debugImages/Positioning1.png" class="split" />
-            <aside class="notes">
+            <section>
+                <h2>Modify and Test</h2>
                 <ul>
-                    <li>For implementing quick fixes or discovering functionality</li>
-                    <li>Logical deductions are made from the results of a small change</li>
-                    <br />
-                    <li>Background: To interact with StarCraft programmatically
-                        we use the Brood War API. Included is a tool that finds
-                        appropriate building positions with a range around a
-                        desired position.
-                    </li>
-                    <br />
-                    <li>Originally: The desired position was the average position of minerals</li>
-                    <li>First: Use the average position of all local resources</li>
-                    <li>Result: Reduced the worse cases.</li>
-                    <li>Second: Bisect the average position of minerals and geysers</li>
-                    <li>Result: Good given positions, but receiving worse locations</li>
-                    <li>Deduction: The tool was skipping around in its search</li>
+                    <li>Quick fixes</li>
+                    <li>Functionality</li>
+                    <li>Logical deductions</li>
                 </ul>
-            </aside>
+            </section>
+            <section>
+                <ul class="horizontal">
+                    <li>Black: Average</li>
+                    <li>Green: Favor Gysers</li>
+                    <li>White: Final</li>
+                </ul>
+                <img src="debugImages/Positioning1.png" class="split" />
+                <img src="debugImages/Positioning2.png" class="split" />
+                <p class="fragment current-visible">Deduction: Skipping around</p>
+                <aside class="notes">
+                    <ul>
+                        <li>Background: To interact with StarCraft programmatically
+                            we use the Brood War API. Included is a tool that finds
+                            appropriate building positions with a range around a
+                            desired position.
+                        </li>
+                        <br />
+                        <li>Originally: The desired position was the average position of minerals</li>
+                        <li>First: Use the average position of all local resources</li>
+                        <li>Result: Reduced the worse cases.</li>
+                        <li>Second: Bisect the average position of minerals and geysers</li>
+                        <li>Result: Good given positions, but receiving worse locations</li>
+                        <li>Deduction: The tool was skipping around in its search</li>
+                    </ul>
+                </aside>
+            </section>
         </section>
         <section>
-            <h2>Devising a solution</h2>
-            <ul class="split">
-                <li> I know:<br />
-                    <span class="fragment">Corner of graphic</span>
-                </li>
-                <li>Solution:<br />
-                    <span class="fragment">Perpendicular edges</span>
-                </li>
-                <li>Use?<br />
-                    <span class="fragment">Nearest shared edge</span>
-                </li>
-                <li>Find?<br />
-                    <span class="fragment">From a number set</span>
-                </li>
-                <li>Halt?<br />
-                    <span class="fragment">Which side?</span>
-                </li>
-            </ul>
-            <div class="split">
+            <section>
+                <h2>Devising a solution</h2>
+                <ul>
+                    <li>New solution</li>
+                    <li>Insufficient</li>
+                    <li>Nonexistent</li>
+                </ul>
+                <aside class="notes">
+                    <p>For creating a new solution, after determining current
+                        methods are insufficient or nonexistent.</p>
+                </aside>
+            </section>
+            <section>
+                <h2>I know:</h2>
+                <p>Players use the graphic's corner</p>
                 <img src="debugImages/PlayerPlacementUL.png" />
-                <img src="debugImages/PlayerPlacementUR.png" />
+                <aside class="notes"><p>
+                    Players like myself use the corner of graphic for placement.
+                </p></aside>
+            </section>
+            <section>
+                <h2>Possible Solution</h2>
+                <p>Build along the perpendicular edges</p>
                 <img src="debugImages/PlayerPlacementLL.png" />
+                <aside class="notes"><p>
+                    Build at the corner made by the perpendicular edges after
+                    the required offset.
+                </p></aside>
+            </section>
+            <section>
+                <h2>What could be used?</h2>
+                <p>The nearest edge shared by the resources</p>
+                <img src="debugImages/PlayerPlacementUR.png" />
+                <aside class="notes"><p>
+                </p></aside>
+            </section>
+            <section>
+                <h2>How could we find?</h2>
+                <p>The reoccurring positions of a resource's sides</p>
                 <img src="debugImages/PlayerPlacementLR.png" />
-            </div>
-            <aside class="notes">
-                <ul>
-                    <li>For creating a new solution, after determining current
-                        methods are insufficient or nonexistent.
-                    </li>
-                    <br />
-                    <li>Know: Players use the corner of a graphic for placement.</li>
-                    <li>Solution: Build along the perpendicular edges after the required offset.</li>
-                    <li>Use: The nearest edge shared by the resources.</li>
-                    <li>Find: From a number set of each side's position as a reoccurring position.</li>
-                    <li>Halt: On what side do we build on?</li>
-                </ul>
-            </aside>
+                <aside class="notes"><p>
+                </p></aside>
+            </section>
         </section>
         <section>
             <section>
