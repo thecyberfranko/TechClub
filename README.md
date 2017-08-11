@@ -8,16 +8,16 @@ Jonathan Niehenke
 ### Contained files:
 
 - PiCalc/ **Note: assumes a fixed console size**
-...+algorithmPrintOut.rtf - A handout of demonstrated Pi formulas.
-...+piCalc.cpp - Cpp source that demonstrates Pi formulas to a fixed amount.
-...+piCalc.py - Python source that demonstrates Pi formulas to a fixed amount. 
-...+piCalcConditions.cpp - Cpp source that demonstrates to relative digit.
-...+piCalcConditions.py - Python source that demonstrates to relative digit.
+    - algorithmPrintOut.rtf - A handout of demonstrated Pi formulas.
+    - piCalc.cpp - Cpp source that demonstrates Pi formulas to a fixed amount.
+    - piCalc.py - Python source that demonstrates Pi formulas to a fixed amount. 
+    - piCalcConditions.cpp - Cpp source that demonstrates to relative digit.
+    - piCalcConditions.py - Python source that demonstrates to relative digit.
 - SVD_compression/
-...+skyline.png - A medium image for demonstrating visual changes.
-...+SoccerBall.png - A small image.
-...+SoccerBall_verySmall.png - Image for demonstrating numeric changes.
-...+svd.py - Demonstrates compression using Singular Value Decomposition.
+    - skyline.png - A medium image for demonstrating visual changes.
+    - SoccerBall.png - A small image.
+    - SoccerBall_verySmall.png - Image for demonstrating numeric changes.
+    - svd.py - Demonstrates compression using Singular Value Decomposition.
 - LICENSE.md - The License.
 - README.md - This file.
 
