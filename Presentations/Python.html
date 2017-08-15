@@ -353,15 +353,23 @@
             </section>
         </section>
         <section>
-            <h2>Functions</h2>
-            <ul>
-                <li>Def</li>
-                <li>Name</li>
-                <li>Parameters</li>
-                <li>Block</li>
-                <li>Return</li>
-            </ul>
-            <pre class="fragment current-visable"><code class="python" data-trim contenteditable>
+            <section>
+                <h2>Blueprints</h2>
+                    <ul>
+                        <li>Functions</li>
+                        <li>Classes</li>
+                    </ul>
+            </section>
+            <section>
+                <h2>Functions</h2>
+                <ul>
+                    <li>Def</li>
+                    <li>Name</li>
+                    <li>Parameters</li>
+                    <li>Block</li>
+                    <li>Return</li>
+                </ul>
+                <pre class="fragment current-visable"><code class="python" data-trim contenteditable>
 def functionName(parameter1, parameter2):
     sum = parameter1 + parameter2
     return sum % min(parameter1, parameter2)
@@ -370,38 +378,39 @@ functionName(12, 5)
 2
 functionName(15, 4)
 3
-            </code></pre>
-            <aside class="notes">
+                </code></pre>
+                <aside class="notes">
+                    <ul>
+                        <li>Functions group repeatable tasks that are called to run</li>
+                        <li>Defined with def keyword</li>
+                        <li>A name to reference for when it is called</li>
+                        <li>Parameters representing values given when called</li>
+                        <li>Code block contains the code the function will run</li>
+                        <li>Return outputs the expression value</li>
+                        <li>A function will return None when it is not specified</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <h2>Class</h2>
                 <ul>
-                    <li>Functions group repeatable tasks that are called to run</li>
-                    <li>Defined with def keyword</li>
-                    <li>A name to reference for when it is called</li>
-                    <li>Parameters representing values given when called</li>
-                    <li>Code block contains the code the function will run</li>
-                    <li>Return outputs the expression value</li>
-                    <li>A function will return None when it is not specified</li>
+                    <li>class</li>
+                    <li>A name</li>
+                    <li>Initializer</li>
+                    <li>Properties</li>
+                    <li>Methods</li>
                 </ul>
-            </aside>
-        </section>
-        <section>
-            <h2>Class</h2>
-            <ul>
-                <li>class</li>
-                <li>A name</li>
-                <li>Initializer</li>
-                <li>Properties</li>
-                <li>Methods</li>
-            </ul>
-            <aside class="notes">
-                <ul>
-                    <li>Classes group repeatable tasks to data</li>
-                    <li>Defined with class keyword</li>
-                    <li>A name to reference for when it is initialized into an instance</li>
-                    <li>Begin here</li>
-                    <li>Code block contains the code the function runs</li>
-                    <li>A function will return None when a return is not specified</li>
-                </ul>
-            </aside>
+                <aside class="notes">
+                    <ul>
+                        <li>Classes group repeatable tasks to data</li>
+                        <li>Defined with class keyword</li>
+                        <li>A name to reference for when it is initialized into an instance</li>
+                        <li>Begin here</li>
+                        <li>Code block contains the code the function runs</li>
+                        <li>A function will return None when a return is not specified</li>
+                    </ul>
+                </aside>
+            </section>
         </section>
         <section>
             <h2>Generators</h2>
