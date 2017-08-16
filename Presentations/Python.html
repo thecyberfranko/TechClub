@@ -182,6 +182,14 @@ print("This line is not part of the function")
                     <li>Primitive</li>
                     <li>Collections</li>
                 </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>Primitive data types are the most basic data types.
+                        </li>
+                        <li>Collections contain other data types including
+                            other collections.</li>
+                    </ul>
+                </aside>
             </section>
             <section>
                 <h2>Primitive</h2>
@@ -191,13 +199,22 @@ print("This line is not part of the function")
                     <li>Floats</li>
                     <li>Strings</li>
                 </ul>
+                <pre class="fragment current-visable"><code class="python" data-trim contenteditable>
+noneVal = None
+integerVal = 5
+floatVal = 3.14
+stringVal = "A string"
+                </code></pre>
                 <aside class="notes">
                     <ul>
-                        <li>Primitive data types - are immutable (they won't change they only replaced):</li>
-                        <li>None is the absence of anything, similar to null and void.</li>
-                        <li>Integers are whole positive or negative numerical values. (v2=short, v3=long).</li>
-                        <li>Float are positive or negative decimal numeric values.</li>
-                        <li>Strings are sequences of characters delimited by a single or double quote.</li>
+                        <li>None is the absence of anything, and has only one
+                            state.</li>
+                        <li>Integers are whole positive or negative numerical
+                            values. (v2=short, v3=long).</li>
+                        <li>Floats are positive or negative decimal numeric
+                            values.</li>
+                        <li>Strings are sequences of characters delimited by a
+                            single or double quote.</li>
                     </ul>
                 </aside>
             </section>
@@ -209,10 +226,16 @@ print("This line is not part of the function")
                     <li>Sets</li>
                     <li>Dictionary/{}</li>
                 </ul>
+                <pre class="fragment current-visable"><code class="python" data-trim contenteditable>
+listCon = [0, 1, 2, 0, 1, 2]
+tupleCon = ("London", "England", 51.5074, 0.1278)
+setCon = set(listCon)  # {0, 1, 3}
+dictionaryCon = {"a": 1, "b": 2, "c": 3}
+                </code></pre>
                 <aside class="notes">
                     <ul>
-                        <li>Collections contain other data type including other collections</li>
-                        <li>Lists are mutable (changeable and expandable) sequence (pref homogeneous).</li>
+                        <li>Lists are mutable (changeable and expandable)
+                            sequence (pref homogeneous).</li>
                         <li>Tuples are immutable sequence representing a group of data like a date.</li>
                         <li>Sets are mappings of unique values.</li>
                         <li>Dictionary - mapping of key: value pairs.</li>
