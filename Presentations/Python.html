@@ -148,9 +148,17 @@
                 <li>Inline comments</li>
                 <li>Multi-line comments</li>
             </ul>
+            <pre class="fragment current-visable"><code class="python" data-trim contenteditable>
+def viewFile(fileName):
+"""Prints out lines of a file."""
+with open(fileName, 'rU') as openFile:
+    for line in openFile:
+        print(line)  # Inline comment serving no purpose
+print("This line is not part of the function")
+            </code></pre>
             <aside class="notes">
                 <ul>
-                    <li>Indentations level signify blocks of code.</li>
+                    <li>Indentation level signify blocks of code.</li>
                     <li>Statements end with the line except when something is
                         left unclosed like parenthesis or square brackets.</li>
                     <li>Number sign/hash/octothorpe begin inline comments.</li>
@@ -158,6 +166,12 @@
                     <li>Comments are ignored by the computer, but not other
                         programmers.</li>
                     <li>And more as we deal with it's specific use.</li>
+                    <li>----------</li>
+                    <li>Three code blocks as indicated by the indents.</li>
+                    <li>The multi-line comment is not taking up multiple
+                        lines.</li>
+                    <li>The Inline comment serves no purpose.</li>
+                    <li>The last line is self explanatory.</li>
                 </ul>
             </aside>
         </section>
