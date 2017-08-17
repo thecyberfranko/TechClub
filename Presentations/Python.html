@@ -150,10 +150,10 @@
             </ul>
             <pre class="fragment current-visable"><code class="python" data-trim contenteditable>
 def viewFile(fileName):
-"""Prints out lines of a file."""
-with open(fileName, 'rU') as openFile:
-    for line in openFile:
-        print(line)  # Inline comment serving no purpose
+    """Prints out lines of a file."""
+    with open(fileName, 'rU') as openFile:
+        for line in openFile:
+            print(line)  # Inline comment serving no purpose
 print("This line is not part of the function")
             </code></pre>
             <aside class="notes">
@@ -294,6 +294,21 @@ dictionaryCon = {"a": 1, "b": 2, "c": 3}
                         <td>Repeat</td> <td></td> <td></td> <td></td> <td></td>
                     </tr>
                 </table>
+            </section>
+            <section>
+                <h2>Operator example</h2>
+                <pre><code class="python" data-trim contenteditable>
+832040 + 3.14159   # 832043.14159
+121393 - 2.71828   # 121390.28172
+832040 * 3.14159   # 2613928.5436
+121393 / 2.71828   # 44658.01904145268
+121393 // 2.71828  # 44658.0
+19 % 4             # 3
+2 ** 19            # 524288
+"This will " + "join with that"  # "This will join with that"
+[3, 1, 4, 1, 5, 9] * 2  # [3, 1, 4, 1, 5, 9, 3, 1, 4, 1, 5, 9]
+(2, 7, 1, 8, 2, 8) * 2  # (2, 7, 1, 8, 2, 8, 2, 7, 1, 8, 2, 8)
+                </code></pre>
             </section>
             <section>
                 <h2>Comparison</h2>
