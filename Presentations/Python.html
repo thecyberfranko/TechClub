@@ -13,6 +13,7 @@
             background: none; border: none; box-shadow: none }
         .reveal ul {
             list-style-image: url("pythonImages/pythonLogo32x32.png"); }
+        .reveal .inline_ex pre { margin: 0px; }
     </style>
 </head>
 
@@ -312,25 +313,50 @@ dictionaryCon = {"a": 1, "b": 2, "c": 3}
             </section>
             <section>
                 <h2>Comparison</h2>
-                <ul>
-                    <li><</li>
-                    <li>></li>
-                    <li><=</li>
-                    <li>>=</li>
-                    <li>==</li>
-                    <li>!=</li>
-                </ul>
-                <aside class="notes">
-                    <ul>
-                        <li>Less than</li>
-                        <li>Greater than</li>
-                        <li>Less than or equal too</li>
-                        <li>Greater than or equal too</li>
-                        <li>Equal too</li>
-                        <li>Not equal too</li>
-                        <li>Chainable 5 <= x < 12</li>
-                    </ul>
-                </aside>
+                <table class="inline_ex">
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Alphabetic</th>
+                        <th>Numeric</th>
+                    </tr>
+                    <tr>
+                        <td><</td>
+                        <td>less than</td>
+                        <td><pre><code>"less" < "more"</code></pre></td>
+                        <td><pre><code>1 < 8</code></pre></td>
+                    </tr>
+                    <tr>
+                        <td>></td>
+                        <td>greater than</td>
+                        <td><pre><code>"greater" > "Lesser"</code></pre></td>
+                        <td><pre><code>8.32 > 3</code></pre></td>
+                    </tr>
+                    <tr>
+                        <td>==</td>
+                        <td>equal too</td>
+                        <td><pre><code>"equal" == "equal"</code></pre></td>
+                        <td><pre><code>5 == 5</code></pre></td>
+                    </tr>
+                    <tr>
+                        <td><=</td>
+                        <td>less than or<br/>equal too</td>
+                        <td><pre><code>"equal" <= "equal"</code></pre></td>
+                        <td><pre><code>1 <= 8</code></pre></td>
+                    </tr>
+                    <tr>
+                        <td>>=</td>
+                        <td>greater than or<br/>equal too</td>
+                        <td><pre><code>"more" >= "less"</code></pre></td>
+                        <td><pre><code>3.14 >= 3.14</code></pre></td>
+                    </tr>
+                    <tr>
+                        <td>!=</td>
+                        <td>not equal</td>
+                        <td><pre><code>"not" != "Not"</code></pre></td>
+                        <td><pre><code>3 != 3.14</code></pre></td>
+                    </tr>
+                </table>
             </section>
             <section>
                 <h2>Conditional</h2>
