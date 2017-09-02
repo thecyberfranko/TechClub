@@ -247,6 +247,25 @@ dictionaryCon = {"a": 1, "b": 2, "c": 3}
         <section>
             <section>
                 <h2>Fasteners (Operators)</h2>
+                <ul>
+                    <li>Mathematical</li>
+                    <li>Comparison</li>
+                    <li>Logic</li>
+                    <li>*Bitwise</li>
+                    <li>Object Methods</li>
+                </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>Python has overloaded operators.</li>
+                        <li>Where an operator acts differently based on the
+                            object it is working on. As you will see.</li>
+                        <li>I will not be covering bitwise operators, but be
+                            aware they exist.</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <h2>Mathematical</h2>
                 <table>
                     <tr>
                         <th></th>
@@ -297,7 +316,7 @@ dictionaryCon = {"a": 1, "b": 2, "c": 3}
                 </table>
             </section>
             <section>
-                <h2>Operator example</h2>
+                <h2>Overloaded example</h2>
                 <pre><code class="python" data-trim contenteditable>
 832040 + 3.14159   # 832043.14159
 121393 - 2.71828   # 121390.28172
@@ -312,7 +331,7 @@ dictionaryCon = {"a": 1, "b": 2, "c": 3}
                 </code></pre>
             </section>
             <section>
-                <h2>Comparison</h2>
+                <h2>Comparison/Relational</h2>
                 <table class="inline_ex">
                     <tr>
                         <th></th>
@@ -357,21 +376,67 @@ dictionaryCon = {"a": 1, "b": 2, "c": 3}
                         <td><pre><code>3 != 3.14</code></pre></td>
                     </tr>
                 </table>
-            </section>
-            <section>
-                <h2>Conditional</h2>
-                <ul>
-                    <li>not</li>
-                    <li>and </li>
-                    <li>or</li>
-                    <li>in</li>
-                </ul>
                 <aside class="notes">
                     <ul>
-                        <li>not</li>
-                        <li>and</li>
-                        <li>or</li>
-                        <li>in - contains</li>
+                        <li>These examples will all evaluate to True.</li>
+                        <li>Alphabetic is by ASCII or UTF-8 values.</li>
+                        <li>So uppercase is always less than lowercase.</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <h2>Logic/Boolean</h2>
+                <table class="inline_ex">
+                    <tr>
+                        <th>Name</th>
+                        <th>Boolean</th>
+                        <th>Additional</th>
+                    </tr>
+                    <tr>
+                        <td>not</td>
+                        <td><pre><code>not True  # False</code></pre></td>
+                        <td><pre><code>not 1 > 2  # True</code></pre></td>
+                    </tr>
+                    <tr>
+                        <td>and</td>
+                        <td><pre><code>True and False  # False</code></pre></td>
+                        <td><pre><code>2 > 1 and "B" > "A"  # True</code></pre></td>
+                    </tr>
+                    <tr>
+                        <td>or</td>
+                        <td><pre><code>True or False  # True</code></pre></td>
+                        <td><pre><code>1 > 2 or "A" > "B"  # False</code></pre></td>
+                    </tr>
+                </table>
+                <aside class="notes">
+                    <ul>
+                        <li>not will change the boolean value</li>
+                        <li>and will check if both conditions are True</li>
+                        <li>or will check if either condition are True</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <h2>Type Methods</h2>
+                <ul>
+                    <li>Not an operator</li>
+                    <li>Like a fastener</li>
+                    <li>Enable overloading</li>
+                </ul>
+                <pre class="fragment current-visable"><code class="python" data-trim contenteditable>
+"Time for lunch!".replace("lunch", "breakfast")
+# 'Time for breakfast!'
+" & ".join(["eggs", "bacon", "hash browns"])
+# 'eggs & bacon & hash browns'
+                </code></pre>
+                <aside class="notes">
+                    <ul>
+                        <li>Type methods are not exactly an operator.</li>
+                        <li>Type methods may act like a fastener.</li>
+                        <li>But they enable operator overloading.</li>
+                        <li>In the example.</li>
+                        <li>We replace lunch with breakfast.</li>
+                        <li>And join a list with ampersand symbols.</li>
                     </ul>
                 </aside>
             </section>
