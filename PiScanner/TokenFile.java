@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.io.File;
 import java.util.Scanner;
 
@@ -10,6 +11,17 @@ public class TokenFile
         Scanner tokenContents = new Scanner(tokenFile, "UTF8");
         return (tokenContents.hasNext() &&
                HashPassword.hashCheck(tokenContents.nextLine(), Password));
+    }
+
+    private static ArrayList listRoots()
+    {
+        ArrayList roots;
+        File mountsFile = new File("/proc/mounts");
+        while (mountsFile.hasNext()) {
+            String line = mountsFile.nextLine();
+            roots.add(line.split(" "));
+        }
+        return roots;
     }
 
     public static File getRoot(String Password) throws NoToken, Exception
