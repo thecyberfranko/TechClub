@@ -13,21 +13,25 @@ public class TokenFile
                HashPassword.hashCheck(tokenContents.nextLine(), Password));
     }
 
-    private static ArrayList listRoots()
+    private static File[] listRoots() throws Exception
+
     {
-        ArrayList roots;
+        ArrayList<File> roots = new ArrayList<File>();
         File mountsFile = new File("/proc/mounts");
-        while (mountsFile.hasNext()) {
-            String line = mountsFile.nextLine();
-            roots.add(line.split(" "));
+	Scanner fileReader = new Scanner(mountsFile);
+        while (fileReader.hasNext()) {
+            String line = fileReader.nextLine();
+            String[] splitLine = line.split(" ");
+            if (splitLine[0].startsWith("/dev/sd"))
+                roots.add(new File(splitLine[1]));
         }
-        return roots;
+        return roots.toArray(new File[0]);
     }
 
     public static File getRoot(String Password) throws NoToken, Exception
     {
         File tokenFile;
-        for(File root: File.listRoots()) {
+        for(File root: listRoots()) {
             tokenFile = new File(root, "token.txt");
             if (tokenFile.exists() && containsHash(tokenFile, Password)) {
                 return root;
