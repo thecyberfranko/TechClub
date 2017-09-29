@@ -1,20 +1,24 @@
+import java.util.ArrayList;
 import java.io.File;
 import java.util.Scanner;
 
 public class SID_Scanner
 {
     File tokenFile;
-    String[] SID_List;
+    ArrayList<String> SID_List = new ArrayList<String>();
+    Scanner keyboard = new Scanner(System.in);
 
     private void readBarCodes()
     {
-        final int Size = 3;
         System.out.println("Reading barcodes...");
-        Scanner keyboard = new Scanner(System.in);
-        SID_List = new String[Size];
-        for (int i = 0; i < Size; ++i) {
-            System.out.printf("Barcode %d: ", i);
-            SID_List[i] = keyboard.nextLine();
+        String inputVal;
+        int i = 1;
+        while (true) {
+            System.out.printf("Barcode %d: ", i++);
+            inputVal = keyboard.nextLine();
+            if (inputVal.toUpperCase().equals("STOP"))
+                break;  // Prevent Stop value from entering list.
+            SID_List.add(inputVal);
         }
         System.out.println("Press Enter to continue");
         keyboard.nextLine();
@@ -22,9 +26,11 @@ public class SID_Scanner
 
     public SID_Scanner() throws Exception
     {
+        System.out.println("Please enter the access key");
+        String accessKey = keyboard.nextLine();
         try {
             tokenFile = new File(
-                TokenFile.getRoot("1PiSc@nner4T3chClub"), "test.dat");
+                TokenFile.getRoot(accessKey), "test.dat");
         }
         catch (TokenFile.NoToken e) {
             System.out.println("Could not find authenticating token.");
@@ -33,7 +39,7 @@ public class SID_Scanner
         readBarCodes();
         System.out.println("Encrypt to file");
         EncryptList.encryptToFile(
-            tokenFile, "JonathanNiehenke", SID_List);
+            tokenFile, accessKey, SID_List.toArray(new String[0]));
     }
 
     public static void main(String[] args) throws Exception

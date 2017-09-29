@@ -22,7 +22,6 @@ public class DecryptFile
         AESencryption decrypter = new AESencryption(Key);
         String[] decryptedList = new String[Size];
         for (int i = 0; i < Size; ++i) {
-            // decryptedList[i] = new String(encryptedList[i], "UTF8");
             decryptedList[i] = decrypter.decryptMsg(encryptedList[i]);
         }
         return decryptedList;
