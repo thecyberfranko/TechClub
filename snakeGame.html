@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Snake Game</title>
+    <style>
+        canvas { background: skyblue; }
+    </style>
+    <script>
+        let canvas, context, tileSize = 10;
+
+        function PointObj(x, y) {
+            this.x = x;
+            this.y = y;
+            this.add = function(Point) {
+                return new PointObj(this.x + Point.x, this.y + Point.y);
+            }
+        }
+
+        function SnakeObj(Point, direction, length=3) {
+            this.head = Point;
+            this.direction = {
+                "north": new PointObj(0, -tileSize),
+                "south": new PointObj(0, tileSize),
+                "east": new PointObj(-tileSize, 0),
+                "west": new PointObj(tileSize, 0)}[direction];
+            this.length = length;
+            this.body = [];
+            this.drawSegment = function(Point, color="grey") {
+                context.fillStyle = color;
+                context.fillRect(Point.x, Point.y, tileSize, tileSize);
+            };
+            this.move = function() {
+                this.body.push(this.head);
+                this.head = this.head.add(this.direction);
+                this.drawSegment(this.head);
+            }
+        }
+
+        function init() {
+            canvas = document.querySelector("canvas");
+            context = canvas.getContext('2d');
+            canvas.width = 120 * tileSize;
+            canvas.height = 80 * tileSize;
+            snake = new SnakeObj(new PointObj(10, 10), "south");
+            window.setInterval(snake.move.bind(snake), 100);
+        }
+    </script>
+</head>
+
+<body onload="init()">
+
+<canvas></canvas>
+
+</body>
+</html>
