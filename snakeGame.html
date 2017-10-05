@@ -7,7 +7,12 @@
         canvas { background: skyblue; }
     </style>
     <script>
-        let canvas, context, tileSize = 10;
+        let CANVAS, CONTEXT, ANIMATION, TILE_SIZE = 10;
+        let DIRECTIONS = {
+            "north": new PointObj(0, -TILE_SIZE),
+            "south": new PointObj(0, TILE_SIZE),
+            "east": new PointObj(-TILE_SIZE, 0),
+            "west": new PointObj(TILE_SIZE, 0)};
 
         function PointObj(x, y) {
             this.x = x;
@@ -15,35 +20,61 @@
             this.add = function(Point) {
                 return new PointObj(this.x + Point.x, this.y + Point.y);
             }
+            this.equals = function(Point) {
+                return (this.x === Point.x && this.y === Point.y);
+            }
         }
 
-        function SnakeObj(Point, direction, length=3) {
+        function SnakeObj(Point, Direction, Field, Length=9) {
             this.head = Point;
-            this.direction = {
-                "north": new PointObj(0, -tileSize),
-                "south": new PointObj(0, tileSize),
-                "east": new PointObj(-tileSize, 0),
-                "west": new PointObj(tileSize, 0)}[direction];
-            this.length = length;
+            this.direction = Direction;
+            this.field = Field;
+            this.length = Length;
             this.body = [];
-            this.drawSegment = function(Point, color="grey") {
-                context.fillStyle = color;
-                context.fillRect(Point.x, Point.y, tileSize, tileSize);
+            this.drawSegment = function(Point, Color="grey") {
+                CONTEXT.fillStyle = Color;
+                CONTEXT.fillRect(Point.x, Point.y, TILE_SIZE, TILE_SIZE);
             };
+            this.outOfBounds = function (Point) {
+                return (Point.x < 0 || Point.y < 0 ||
+                        Point.x >= this.field.width ||
+                        Point.y >= this.field.height );
+            }
+            this.isBody = function(Point) {
+                for (bodyPoint of this.body) {
+                    if (Point.equals(bodyPoint))
+                        return true;
+                }
+                return false;
+            }
             this.move = function() {
                 this.body.push(this.head);
                 this.head = this.head.add(this.direction);
+                if (this.outOfBounds(this.head) || this.isBody(this.head))
+                    clearInterval(ANIMATION);
                 this.drawSegment(this.head);
+                if (this.body.length > this.length)
+                    this.drawSegment(this.body.shift(), "skyblue");
+            }
+            this.changeDirections = function(e) {
+                switch (e.keyCode) {
+                    case 38: this.direction = DIRECTIONS["north"]; break;
+                    case 40: this.direction = DIRECTIONS["south"]; break;
+                    case 37: this.direction = DIRECTIONS["east"]; break;
+                    case 39: this.direction = DIRECTIONS["west"]; break;
+                }
             }
         }
 
         function init() {
-            canvas = document.querySelector("canvas");
-            context = canvas.getContext('2d');
-            canvas.width = 120 * tileSize;
-            canvas.height = 80 * tileSize;
-            snake = new SnakeObj(new PointObj(10, 10), "south");
-            window.setInterval(snake.move.bind(snake), 100);
+            CANVAS = document.querySelector("canvas");
+            CONTEXT = CANVAS.getContext('2d');
+            CANVAS.width = 60 * TILE_SIZE;
+            CANVAS.height = 20 * TILE_SIZE;
+            let snake = new SnakeObj(new PointObj(10, 10), DIRECTIONS["south"], CANVAS);
+            document.addEventListener(
+                "keydown", snake.changeDirections.bind(snake));
+            ANIMATION = setInterval(snake.move.bind(snake), 100);
         }
     </script>
 </head>
