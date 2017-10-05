@@ -10,7 +10,7 @@ public class SID_Scanner
 
     private void readBarCodes()
     {
-        System.out.println("Reading barcodes...");
+        System.out.println("Waiting to scan barcodes. Type \"stop\" to end.");
         String inputVal;
         int i = 1;
         while (true) {
@@ -33,8 +33,8 @@ public class SID_Scanner
                 TokenFile.getRoot(accessKey), "test.dat");
         }
         catch (TokenFile.NoToken e) {
-            System.out.println("Could not find authenticating token.");
-            throw e;
+            System.out.println("\nCould not find a file associated with the given access key.\n");
+	    throw e;
         }
         readBarCodes();
         System.out.println("Encrypt to file");

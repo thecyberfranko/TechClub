@@ -14,7 +14,7 @@ public class SID_Decrypter
                 TokenFile.getRoot(accessKey), "test.dat");
         }
         catch (TokenFile.NoToken e) {
-            System.out.println("Could not find authenticating token.");
+            System.out.println("\nCould not find a file associated with the given access key.\n");
             throw e;
         }
         DecryptFile.display(tokenFile, accessKey);
