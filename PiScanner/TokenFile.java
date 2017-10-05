@@ -31,7 +31,9 @@ public class TokenFile
     public static File getRoot(String Password) throws NoToken, Exception
     {
         File tokenFile;
-        for(File root: listRoots()) {
+	File roots[] = System.getProperty("os.name").startsWith("Windows") ?
+		File.listRoots() : listRoots();
+        for(File root: roots) {
             tokenFile = new File(root, "token.txt");
             if (tokenFile.exists() && containsHash(tokenFile, Password)) {
                 return root;
