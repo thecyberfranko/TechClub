@@ -7,12 +7,7 @@
         canvas { background: skyblue; }
     </style>
     <script>
-        let CANVAS, CONTEXT, ANIMATION, TILE_SIZE = 10;
-        let DIRECTIONS = {
-            "north": new PointObj(0, -TILE_SIZE),
-            "south": new PointObj(0, TILE_SIZE),
-            "east": new PointObj(-TILE_SIZE, 0),
-            "west": new PointObj(TILE_SIZE, 0)};
+        let GAME;
 
         function PointObj(x, y) {
             this.x = x;
@@ -25,21 +20,17 @@
             }
         }
 
-        function SnakeObj(Point, Direction, Field, Length=9) {
+        function SnakeObj(Context, tileSize, Point, Length=3) {
+            this.context = Context;
+            this.tile_size = tileSize;
             this.head = Point;
-            this.direction = Direction;
-            this.field = Field;
-            this.length = Length;
+            this.length = Length - 1;  // For the head
             this.body = [];
             this.drawSegment = function(Point, Color="grey") {
-                CONTEXT.fillStyle = Color;
-                CONTEXT.fillRect(Point.x, Point.y, TILE_SIZE, TILE_SIZE);
+                this.context.fillStyle = Color;
+                this.context.fillRect(
+                    Point.x, Point.y, this.tile_size, this.tile_size);
             };
-            this.outOfBounds = function (Point) {
-                return (Point.x < 0 || Point.y < 0 ||
-                        Point.x >= this.field.width ||
-                        Point.y >= this.field.height );
-            }
             this.isBody = function(Point) {
                 for (bodyPoint of this.body) {
                     if (Point.equals(bodyPoint))
@@ -47,34 +38,93 @@
                 }
                 return false;
             }
-            this.move = function() {
+            this.move = function(direction) {
                 this.body.push(this.head);
-                this.head = this.head.add(this.direction);
-                if (this.outOfBounds(this.head) || this.isBody(this.head))
-                    clearInterval(ANIMATION);
+                this.head = this.head.add(direction);
+            }
+            this.draw = function() {
                 this.drawSegment(this.head);
                 if (this.body.length > this.length)
                     this.drawSegment(this.body.shift(), "skyblue");
             }
+        }
+
+        function GameObj(Canvas, gridWidth, gridHeight, tileSize) {
+            this.canvas = Canvas;
+            this.width = gridWidth;
+            this.height = gridHeight;
+            this.tile_size = tileSize;
+            this.context = Canvas.getContext('2d');
+            this.snake = new SnakeObj(
+                this.context, tileSize, new PointObj(10, 10));
+            this.directions = {
+                "north": new PointObj(0, -this.tile_size),
+                "south": new PointObj(0, this.tile_size),
+                "east": new PointObj(-this.tile_size, 0),
+                "west": new PointObj(this.tile_size, 0)};
+            this.heading = this.directions["south"];
+            this.food, this.annimation = undefined;
+            Canvas.width = gridWidth * tileSize;
+            Canvas.height = gridHeight * tileSize;
+            this.align = function(Val) {
+                return Math.floor(Val) * this.tile_size;
+            }
+            this.placeFood = function() {
+                do {
+                    this.food = new PointObj(
+                        this.align(Math.random() * this.width),
+                        this.align(Math.random() * this.height));
+                } while (this.snake.isBody(this.food));
+                this.context.fillStyle = "Yellow";
+                this.context.fillRect(
+                    this.food.x, this.food.y, this.tile_size, this.tile_size);
+            }
+            this.outOfBounds = function(Point) {
+                return (Point.x < 0 || Point.y < 0 ||
+                        Point.x >= this.canvas.width ||
+                        Point.y >= this.canvas.height );
+            }
+            this.isEnd = function() {
+                return (this.outOfBounds(this.snake.head) ||
+                        this.snake.isBody(this.snake.head));
+            }
+            this.isEating = function() {
+                return this.snake.head.equals(this.food);
+            }
+            this.loop = function(){
+                this.snake.move(this.heading);
+                if (this.isEnd()) {
+                    clearInterval(this.animation);
+                }
+                else if (this.isEating()) {
+                    this.placeFood();
+                    this.snake.length += 2;
+                    this.snake.draw();
+                }
+                else {
+                    this.snake.draw();
+                }
+            }
             this.changeDirections = function(e) {
                 switch (e.keyCode) {
-                    case 38: this.direction = DIRECTIONS["north"]; break;
-                    case 40: this.direction = DIRECTIONS["south"]; break;
-                    case 37: this.direction = DIRECTIONS["east"]; break;
-                    case 39: this.direction = DIRECTIONS["west"]; break;
+                    case 38: this.heading = this.directions["north"]; break;
+                    case 40: this.heading = this.directions["south"]; break;
+                    case 37: this.heading = this.directions["east"]; break;
+                    case 39: this.heading = this.directions["west"]; break;
                 }
+            }
+            this.init = function() {
+                this.placeFood();
+                document.addEventListener(
+                    "keydown", GAME.changeDirections.bind(GAME));
+                this.animation = setInterval(GAME.loop.bind(GAME), 100);
             }
         }
 
         function init() {
-            CANVAS = document.querySelector("canvas");
-            CONTEXT = CANVAS.getContext('2d');
-            CANVAS.width = 60 * TILE_SIZE;
-            CANVAS.height = 20 * TILE_SIZE;
-            let snake = new SnakeObj(new PointObj(10, 10), DIRECTIONS["south"], CANVAS);
-            document.addEventListener(
-                "keydown", snake.changeDirections.bind(snake));
-            ANIMATION = setInterval(snake.move.bind(snake), 100);
+            let Canvas = document.querySelector("canvas");
+            GAME = new GameObj(Canvas, 60, 30, 10);
+            GAME.init();
         }
     </script>
 </head>
