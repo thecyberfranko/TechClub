@@ -2,12 +2,14 @@ function PointObj(x, y) {
     this.x = x;
 	this.y = y;
     this.add = function(Point) {
-        return new PointObj(
-            this.x + Point.x, this.y + Point.y);
-    }
+        return new PointObj(this.x + Point.x, this.y + Point.y);
+    };
+    this.sub = function(Point) {
+        return new PointObj(this.x - Point.x, this.y - Point.y);
+    };
     this.equals = function(Point) {
         return this.x == Point.x && this.y == Point.y;
-    }
+    };
     return this;
 }
 
@@ -91,6 +93,7 @@ function GameObj(canvas, width, height, tileSize) {
         this.snake.move(this.heading);
         if (this.isEnd()) {
             clearInterval(this.animation);
+            window.alert("Game Over");
         }
         else if (this.isEating()) {
             this.placeFood();
@@ -109,6 +112,8 @@ function GameObj(canvas, width, height, tileSize) {
         this.snake = new SnakeObj(this.context, this.tileSize, startingPoint);
         this.placeFood();
         document.addEventListener("keydown", this.changeDirection.bind(this));
+    }
+    this.beginLoop = function() {
         this.animation = setInterval(this.loop.bind(this), 100);
     }
     return this;
@@ -117,4 +122,5 @@ function GameObj(canvas, width, height, tileSize) {
 function init() {
     let Game = new GameObj(document.querySelector("CANVAS"), 30, 20, 20);
     Game.init();
+    Game.beginLoop();
 }
