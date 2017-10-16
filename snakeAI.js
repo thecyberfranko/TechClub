@@ -55,6 +55,26 @@ function snakeAI_Obj() {
                         : this.game.canvas.height - this.game.tileSize));
                 Points = [head, outside];
                 break;
+            case 8:
+                outside = new PointObj(0, 0);
+                Points = [head, outside];
+                break;
+            case 9:
+                outside = new PointObj(
+                    this.game.canvas.width - this.game.tileSize,
+                    this.game.canvas.height - this.game.tileSize);
+                Points = [head, outside];
+                break;
+            case 10:
+                outside = new PointObj(
+                    0, this.game.canvas.height - this.game.tileSize);
+                Points = [head, outside];
+                break;
+            case 11:
+                outside = new PointObj(
+                    this.game.canvas.width - this.game.tileSize, 0);
+                Points = [head, outside];
+                break;
         }
         return {"Points": Points, "Horizontal": Horizontal};
     };
@@ -71,7 +91,6 @@ function snakeAI_Obj() {
         return Path;
     };
     this.isBadPath = function(Path) {
-        if (!Path.length) return true;
         for (Point of Path) {
             if (this.snake.isBody(Point) && !Point.equals(this.snake.body[0]))
                 return true;
@@ -85,7 +104,7 @@ function snakeAI_Obj() {
             do {
                 Features = this.getPathFeatures(i);
                 Path = this.getSeqAlong(Features.Points, Features.Horizontal);
-            } while (i++ < 7 && this.isBadPath(Path));
+            } while (i++ < 11 && (Path.length == 0 || this.isBadPath(Path)));
             this.path = this.getSeqAlong(
                 Features.Points.slice(0, 2), Features.Horizontal);
         }
