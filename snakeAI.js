@@ -14,16 +14,6 @@ function snakeAI_Obj() {
             if (Src.x > Dest.x) return this.game.directions["west"];
         }
     };
-    this.getSeqAlong = function*(Points, Horizontal) {
-        for (i = 0; i < Points.length - 1; ++i) {
-            let Point = Points[i], Dest = Points[i + 1];
-            while (!Dest.equals(Point)) {
-                heading = this.toPoint(Point, Dest, Horizontal);
-                Point = Point.add(heading);
-                yield Point;
-            }
-        }
-    };
     this.getPathFeatures = function(i) {
         let Horizontal = false, Points;
         switch (i) {
@@ -40,8 +30,20 @@ function snakeAI_Obj() {
         }
         return {"Points": Points, "Horizontal": Horizontal};
     };
+    this.getSeqAlong = function(Points, Horizontal) {
+        let Path = [];
+        for (i = 0; i < Points.length - 1; ++i) {
+            let Point = Points[i], Dest = Points[i + 1];
+            while (!Dest.equals(Point)) {
+                heading = this.toPoint(Point, Dest, Horizontal);
+                Point = Point.add(heading);
+                Path.push(Point);
+            }
+        }
+        return Path;
+    };
     this.isBadPath = function(Path) {
-        
+        if (!Path.length) return true;
         for (Point of Path) {
             if (this.snake.isBody(Point) && !Point.equals(this.snake.body[0]))
                 return true;
@@ -50,21 +52,16 @@ function snakeAI_Obj() {
     };
     this.loop = function() {
         this.game.loop();
-        let nextPoint = this.path.next();
-        if (nextPoint.done || !nextPoint) {
+        if (!this.path.length) {
             let i = 0, Features, Path;
             do {
-                Features = this.getPathFeatures(i++);
+                Features = this.getPathFeatures(i);
                 Path = this.getSeqAlong(Features.Points, Features.Horizontal);
-                console.log(i, Features);
-            } while (i < 4 && this.isBadPath(Path));
-            if (i == 5) return;
+            } while (i++ < 7 && this.isBadPath(Path));
             this.path = this.getSeqAlong(
                 Features.Points.slice(0, 2), Features.Horizontal);
-            // this.path.next();  // throw the first one out
-            nextPoint = this.path.next();
         }
-        this.game.heading = nextPoint.value.sub(this.snake.head);
+        this.game.heading = this.path.shift().sub(this.snake.head);
     }
     this.init = function() {
         this.game = new GameObj(document.querySelector("CANVAS"), 30, 20, 20);
@@ -72,12 +69,11 @@ function snakeAI_Obj() {
         this.snake = this.game.snake;
     };
     this.beginLoop = function() {
-        this.game.animation = setInterval(this.loop.bind(this), 100);
+        this.game.animation = setInterval(this.loop.bind(this), 50);
     }
 }
 
 function init() {
-    window.alert();
     let snakeAI = new snakeAI_Obj();
     snakeAI.init();
     snakeAI.beginLoop();
