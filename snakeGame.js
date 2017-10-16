@@ -69,8 +69,8 @@ function GameObj(canvas, width, height, tileSize) {
     }
     this.isOutOfBounds = function(Point) {
         return (Point.x < 0 || Point.y < 0 ||
-                Point.x > this.canvas.width ||
-                Point.y > this.canvas.height);
+                Point.x >= this.canvas.width ||
+                Point.y >= this.canvas.height);
     }
     this.isEnd = function() {
         return (this.isOutOfBounds(this.snake.head) ||
