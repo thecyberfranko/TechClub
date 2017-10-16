@@ -15,17 +15,45 @@ function snakeAI_Obj() {
         }
     };
     this.getPathFeatures = function(i) {
-        let Horizontal = false, Points;
+        let Horizontal = false, head = this.snake.head, Points, outside;
         switch (i) {
             case 0:
                 Horizontal = true;
             case 1:
-                Points = [this.snake.head, this.game.food, this.snake.body[0]];
+                Points = [head, this.game.food, this.snake.body[0]];
                 break;
             case 2:
                 Horizontal = true;
+                outside = new PointObj(
+                    (head.x < this.snake.body[0].x ? 0
+                        : this.game.canvas.width - this.game.tileSize),
+                    head.y);
+                Points = [head, this.game.food, outside];
+                break;
             case 3:
-                Points = [this.snake.head, this.snake.body[0]];
+                outside = new PointObj(head.x,
+                    (head.y < this.snake.body[0].y ? 0
+                        : this.game.canvas.height - this.game.tileSize));
+                Points = [head, this.game.food, outside];
+                break;
+            case 4:
+                Horizontal = true;
+            case 5:
+                Points = [head, this.snake.body[0]];
+                break;
+            case 6:
+                Horizontal = true;
+                outside = new PointObj(
+                    (head.x < this.snake.body[0].x ? 0
+                        : this.game.canvas.width - this.game.tileSize),
+                    head.y);
+                Points = [head, outside];
+                break;
+            case 7:
+                outside = new PointObj(head.x,
+                    (head.y < this.snake.body[0].y ? 0
+                        : this.game.canvas.height - this.game.tileSize));
+                Points = [head, outside];
                 break;
         }
         return {"Points": Points, "Horizontal": Horizontal};
