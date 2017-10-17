@@ -1,5 +1,5 @@
 function snakeAI_Obj() {
-    this.game, this.snake, this.path = [];
+    this.game, this.snake, this.path = [], this.safe = [];
     this.orthogonalToPoint = function(Src, Dest, Horizontal) {
         if (Horizontal) {  // Favor east/west movement then north/south
             if (Src.x < Dest.x) return this.game.directions["east"];
@@ -15,7 +15,7 @@ function snakeAI_Obj() {
         }
         throw "On target";
     };
-    this.getSeqAlong = function(Point, Dest, Horizontal) {
+    this.getOrthogonalSeq = function(Point, Dest, Horizontal) {
         let Path = [];
         while (!Point.equals(Dest)) {
             heading = this.orthogonalToPoint(Point, Dest, Horizontal);
@@ -31,48 +31,69 @@ function snakeAI_Obj() {
         }
         return true;
     };
-    this.getSegment = function(Src, Dest) {
+    this.getOrthogonalSegment = function(Src, Dest) {
         for (let i = 0; i < 2; ++i) {
-            let Segment = this.getSeqAlong(Src, Dest, i);
+            let Segment = this.getOrthogonalSeq(Src, Dest, i);
             if (this.isSafe(Segment))
                 return Segment;
         }
         return [];
     };
-    this.getOutsidePath = function(Source) {
-        return [];
-    };
-    this.getSafePath = function(Source) {
-        let head = this.snake.head, tail = this.snake.body[0], Detour = [];
-        let pathToTail = this.getSegment(Source, tail);
-        for (let i = 0; !pathToTail.length && i < 3; ++i) {
-            let Segment = this.getOutsidePath(Source, i);
-            if (!Segment.length) {
-                Detour = [];
-                break;
-            }
-            Detour.concat(Segment);
-            pathToTail = this.getSegment(Segment[Segment.length-1], tail);
+    this.simulateMovement = function(Path) {
+        const justAte = 4;
+        this.backupBody = this.snake.body.slice();
+        // Move head
+        this.snake.body = this.snake.body.concat(Path);
+        // Move tail
+        this.snake.body = this.snake.body.slice(-(this.snake.length + justAte));
+        let diff = this.snake.body.length - this.snake.length;
+        if (diff < 0 || diff > 4) {
+            console.log("difference", diff);
+            console.log("length", this.snake.length, "backup", this.backupBody.length);
+            console.log("path", Path.length);
+            console.log("simulated", this.snake.body.length);
         }
-        if (!pathToTail.length)
-            Detour = [];
-        return Detour.concat(pathToTail);
     };
-    this.getPath = function() {
-        let foodPath = this.getSegment(this.snake.head, this.game.food);
+    this.resetSimMovement = function() {
+        this.snake.body = this.backupBody;
+    };
+    this.fillPath = function(Path, Color, Color2, conFunc) {
+        conFunc = conFunc ? conFunc : function() { return false; };
+        for (Point of Path) {
+            this.game.context.fillStyle = (conFunc(Point) ? Color2 : Color);
+            this.game.context.fillRect(
+                Point.x, Point.y, this.game.tileSize, this.game.tileSize);
+        }
+        this.game.context.fillStyle = "Yellow";
+        this.game.context.fillRect(
+            this.game.food.x, this.game.food.y, this.game.tileSize, this.game.tileSize);
+    };
+    this.getOrthogonalPath = function() {
+        let head = this.snake.head, tail = this.snake.body[0];
+        let foodPath = this.getOrthogonalSegment(head, this.game.food);
         if (foodPath.length) {
-            let safePath = this.getSafePath(this.game.food);
-            if (safePath.length)  // Safe to get food
+            // !May continously chase tail.
+            this.simulateMovement(foodPath);
+            // this.fillPath(this.snake.body, "Orange");
+            let safePath = this.getOrthogonalSegment(
+                this.game.food, this.snake.length > this.game.height ? this.snake.body[0] : tail);
+            this.safe = safePath;
+            this.resetSimMovement();
+            if (safePath.length){  // Safe to get food
                 return foodPath;
+            }
         }
-        let Path = this.getSafePath(this.snake.head)
-        console.log(typeof(this.path), this.path)
-        return Path;
+        return this.getOrthogonalSegment(head, this.snake.body[0]);
     };
     this.loop = function() {
         this.game.loop();
         if (!this.path.length) {
-            this.path = this.getPath();
+            // this.fillPath(this.safe, "Skyblue");
+            this.path = this.getOrthogonalPath();
+            // this.fillPath(this.snake.body, "Grey");
+            // this.fillPath(this.path, "Green");
+            // this.fillPath(this.safe, "Blue");
+            console.log();
         }
         try { this.game.heading = this.path.shift().sub(this.snake.head); }
         catch (e) { console.log(typeof(this.path), this.path)}
