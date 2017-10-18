@@ -97,48 +97,35 @@ function snakeAI_Obj() {
                 Point.x, Point.y, this.game.tileSize, this.game.tileSize);
         }
         this.game.context.fillStyle = "Yellow";
-        this.game.context.fillRect(
-            this.game.food.x, this.game.food.y, this.game.tileSize, this.game.tileSize);
+        this.game.context.fillRect(this.game.food.x, this.game.food.y,
+                                   this.game.tileSize, this.game.tileSize);
     };
-    this.getOrthogonalPath = function() {
-        let head = this.snake.head, tail = this.snake.body[0];
-        let foodPath = this.getOrthogonalSegment(head, this.game.food);
-        if (foodPath.length) {
-            // !May continously chase tail.
-            this.simulateMovement(foodPath);
-            // this.fillPath(this.snake.body, "Orange");
-            let safePath = this.getOrthogonalSegment(
-                this.game.food, this.snake.length > this.game.height ? this.snake.body[0] : tail);
-            this.safe = safePath;
-            this.resetSimMovement();
-            if (safePath.length){  // Safe to get food
-                return foodPath;
-            }
-        }
-        return this.getOrthogonalSegment(head, this.snake.body[0]);
-    };
-    this.loop = function() {
+    this.debug_loop = function() {
         this.game.loop();
         if (!this.path.length) {
-            // this.fillPath(this.safe, "Skyblue");
+            this.fillPath(this.safe, "Skyblue", "Grey", this.snake.isBody.bind(this.snake));
             this.path = this.getOrthogonalPath();
-            // this.fillPath(this.snake.body, "Grey");
-            // this.fillPath(this.path, "Green");
-            // this.fillPath(this.safe, "Blue");
-            console.log();
+            this.fillPath(this.path, "Green");
+            this.fillPath(this.safe, "Blue");
         }
         try { this.game.heading = this.path.shift().sub(this.snake.head); }
-        catch (e) { console.log(typeof(this.path), this.path)}
-    }
+        catch (e) {
+            console.log("heading", this.game.heading);
+            console.log("head", this.snake.head);
+            console.log(this.safe);
+        }
+    };
     this.init = function() {
         this.game = new GameObj(document.querySelector("CANVAS"), 30, 20, 20);
         this.game.init();
         this.snake = this.game.snake;
     };
     this.beginLoop = function() {
-        this.game.animation = setInterval(this.loop.bind(this), 50);
-    }
-};
+        this.game.loop();  // Prevents incorrect isSafe on first frame
+        this.game.animation = setInterval(this.loop.bind(this), 30);
+       // this.game.animation = setInterval(this.debug_loop.bind(this), 80);
+    };
+}
 
 function init() {
     let snakeAI = new snakeAI_Obj();
