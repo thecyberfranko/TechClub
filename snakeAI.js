@@ -31,9 +31,11 @@ function snakeAI_Obj() {
         }
         return true;
     };
-    this.getOrthogonalSegment = function(Src, Dest) {
+    this.getOrthogonalSegment = function(Src, Dest, currentHeading) {
+        let Horizontal = currentHeading.y == 0;
         for (let i = 0; i < 2; ++i) {
-            let Segment = this.getOrthogonalSeq(Src, Dest, i);
+            let Segment = this.getOrthogonalSeq(Src, Dest, Horizontal);
+            Horizontal = !Horizontal;
             if (this.isSafe(Segment))
                 return Segment;
         }
@@ -58,7 +60,8 @@ function snakeAI_Obj() {
         this.snake.body = this.backupBody;
     };
     this.getRecoverySegment = function() {
-        Path = this.getOrthogonalSegment(this.snake.head, this.snake.body[0]);
+        Path = this.getOrthogonalSegment(
+            this.snake.head, this.snake.body[0], this.game.heading);
         if (Path.length < 6 && this.safe.length) {
             console.log("Correction", "Missing path:", !Path.length);
             Path = this.safe;
@@ -69,12 +72,17 @@ function snakeAI_Obj() {
     };
     this.getOrthogonalPath = function() {
         let head = this.snake.head, tailBeforeSim = this.snake.body[0];
-        let Path = this.getOrthogonalSegment(head, this.game.food);
+        let Path = this.getOrthogonalSegment(
+            head, this.game.food, this.game.heading);
         if (Path.length) {
             this.simulateMovement(Path);
+            let [simNeck, simHead] = this.snake.body.splice(-2);
+            let heading = simNeck.sub(simHead);
             let forcedBend = this.snake.length > this.game.width;
-            let safePath = this.getOrthogonalSegment(this.game.food,
-                forcedBend ? this.snake.body[0] : tailBeforeSim);
+            let safePath = this.getOrthogonalSegment(
+                this.game.food,
+                forcedBend ? this.snake.body[0] : tailBeforeSim,
+                heading);
             this.resetMovement();
             if (safePath.length) {  // Safe to get food
                 this.safe = safePath;
