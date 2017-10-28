@@ -34,7 +34,7 @@ public class TokenFile
 	File roots[] = System.getProperty("os.name").startsWith("Windows") ?
 		File.listRoots() : listRoots();
         for(File root: roots) {
-            tokenFile = new File(root, "token.txt");
+            tokenFile = new File(root, "file.txt");
             if (tokenFile.exists() && containsHash(tokenFile, Password)) {
                 return root;
             }

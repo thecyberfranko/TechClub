@@ -11,7 +11,7 @@ public class SID_Decrypter
         String accessKey = keyboard.nextLine();
         try {
             tokenFile = new File(
-                TokenFile.getRoot(accessKey), "test.dat");
+                TokenFile.getRoot(accessKey), "club.dat");
         }
         catch (TokenFile.NoToken e) {
             System.out.println("\nCould not find a file associated with the given access key.\n");
