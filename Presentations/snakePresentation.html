@@ -24,14 +24,14 @@
                0 20px 20px rgba(0,0,0,.15);
         }
         .reveal blockquote { font-size: 75%; }
-        .reveal pre.split, ol.split {
+        .reveal div.split, pre.split, ol.split {
             display: inline-block;
             width: 48%;
             vertical-align: top;
             margin: 0px; 
-            line-height: normal;
         }
         .reveal ol.split { font-size: 75%; list-style-position: inside; }
+        .reveal code.small { font-size: 66%; line-height: normal; }
     </style>
 </head>
 
@@ -104,7 +104,6 @@
                 </ul>
             </aside>
         </section>
-        -->
         <section>
             <section>
                 <h3>Lets code!</h3>
@@ -146,7 +145,7 @@
             </section>
             <section>
                 <h3>Mold into a grid</h3>
-                <pre class="split"><code class="javascript" style="font-size: 68%;" data-trim contenteditable>
+                <pre class="split"><code class="javascript small" data-trim contenteditable>
 function GameObj(canvas) {
     this.canvas = canvas;
     this.context = canvas.getContext('2d');
@@ -164,7 +163,7 @@ function GameObj(canvas) {
 function init() {
     let game = new GameObj(
         document.querySelector("CANVAS"));
-    // call init function
+    // call game's init function
 }
                 </code></pre>
                 <ol class="split">
@@ -177,6 +176,44 @@ function init() {
                         <ul><li>file path to script src</li>
                         <li>"onload=init()" to body</li></ul>
                     </li>
+                    <li>Reload in browser</li>
+                </ol>
+            </section>
+            -->
+            <section>
+                <h3>Drawing a segment</h3>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+function snakeObj(context, tileSize) {
+    this.context = context;
+    this.tileSize = tileSize;
+    this.drawSegment = function(Point, Color) {
+        this.context.fillStyle = // the Color;
+        this.context.fillRect(
+            // Destination.x, Destination.y,
+            this.tileSize, this.tileSize);
+    };
+    return this;
+}
+                    </code></pre>
+                    <pre><code class="javascript small" data-trim contenteditable>
+let Point = {"x": this.tileSize,
+             "y": this.tileSize}
+let snake = // create new snakeobj
+// call the snake's drawsegment
+                    </code></pre>
+                </div>
+                <ol class="split">
+                    <li>Copy to top of js document</li>
+                    <li>Properly set the color</li>
+                    <li>Use Point as the Destination</li>
+                    <br>
+                    <li>Copy to end of GameObj's init</li>
+                    <li>Create new snakeObj</li>
+                    <li>With context and tileSize</li>
+                    <li>Call snake's drawSegment</li>
+                    <li>With Point and choice of color</li>
+                    <li>Reload in browser</li>
                 </ol>
             </section>
         </section>
