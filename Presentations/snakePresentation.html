@@ -144,6 +144,41 @@
                     <li>Open it in a web browser</li>
                 </ol>
             </section>
+            <section>
+                <h3>Mold into a grid</h3>
+                <pre class="split"><code class="javascript" style="font-size: 68%;" data-trim contenteditable>
+function GameObj(canvas) {
+    this.canvas = canvas;
+    this.context = canvas.getContext('2d');
+    this.width = this.height = this.tileSize = 0;
+    this.init = function(width, height, tileSize) {
+        this.width = width;
+        this.height = height;
+        this.tileSize = tileSize;
+        this.canvas.width = // width product
+        this.canvas.height = // height product
+    };
+    return this;
+}
+
+function init() {
+    let game = new GameObj(
+        document.querySelector("CANVAS"));
+    // call init function
+}
+                </code></pre>
+                <ol class="split">
+                    <li>Copy to a new document</li>
+                    <li>Assign the apporiate products</li>
+                    <li>Include a call to the function</li>
+                    <li>With your own values</li>
+                    <li>Save as a ".js" document</li>
+                    <li>In the html document include:
+                        <ul><li>file path to script src</li>
+                        <li>"onload=init()" to body</li></ul>
+                    </li>
+                </ol>
+            </section>
         </section>
         <section>
             <h3>I challenge you</h3>
