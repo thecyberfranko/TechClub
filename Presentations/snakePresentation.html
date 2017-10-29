@@ -24,6 +24,14 @@
                0 20px 20px rgba(0,0,0,.15);
         }
         .reveal blockquote { font-size: 75%; }
+        .reveal pre.split, ol.split {
+            display: inline-block;
+            width: 48%;
+            vertical-align: top;
+            margin: 0px; 
+            line-height: normal;
+        }
+        .reveal ol.split { font-size: 75%; list-style-position: inside; }
     </style>
 </head>
 
@@ -31,6 +39,7 @@
 
 <div class="reveal">
     <div class="slides">
+        <!--
         <section>
             <h2>Building a game of snake</h2>
             <h3>By Jonathan Niehenke</h3>
@@ -95,19 +104,46 @@
                 </ul>
             </aside>
         </section>
+        -->
         <section>
-            <h3>Lets code!</h3>
-            <ul class="fragment visible">
-                <li>Display a playing field</li>
-                <li>Draw a snake segment</li>
-                <li>Move the segment</li>
-                <li>Move the snake</li>
-                <li>Add controls</li>
-                <li>Enforce borders</li>
-                <li>Enforce body death</li>
-                <li>Place food</li>
-                <li>Growth upon eating</li>
-            </ul>
+            <section>
+                <h3>Lets code!</h3>
+                <ol class="fragment visible" style="white-space: nowrap;">
+                    <li>Display a playing field</li>
+                    <li>Draw a snake segment</li>
+                    <li>Move the segment</li>
+                    <li>Move the snake</li>
+                    <li>Add controls</li>
+                    <li>Enforce borders</li>
+                    <li>Enforce body death</li>
+                    <li>Place food</li>
+                    <li>Growth upon eating</li>
+                </ol>
+            </section>
+            <section>
+                <h3>Displaying a playing field</h3>
+                <pre class="split"><code class="html" data-trim contenteditable>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;style&gt;&lt;/style&gt;
+    &lt;script&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+                </code></pre>
+                <ol class="split">
+                    <li>Copy to text editor</li>
+                    <li>Include a canvas element</li>
+                    <li>With a background color</li>
+                    <li>Save as a ".html" document</li>
+                    <li>Open it in a web browser</li>
+                </ol>
+            </section>
         </section>
         <section>
             <h3>I challenge you</h3>
