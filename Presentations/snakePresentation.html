@@ -146,14 +146,13 @@
             <section>
                 <h3>Mold into a grid</h3>
                 <pre class="split"><code class="javascript small" data-trim contenteditable>
-function GameObj(canvas) {
+function GameObj(canvas, width, height, tileSize) {
     this.canvas = canvas;
+    this.width = width;
+    this.height = height;
+    this.tileSize = tileSize;
     this.context = canvas.getContext('2d');
-    this.width = this.height = this.tileSize = 0;
-    this.init = function(width, height, tileSize) {
-        this.width = width;
-        this.height = height;
-        this.tileSize = tileSize;
+    this.init = function() {
         this.canvas.width = // width product
         this.canvas.height = // height product
     };
@@ -274,7 +273,6 @@ function PointObj(x, y) {
                     </ol>
                 </div>
             </section>
-            -->
             <section>
                 <h3>Move a snake</h3>
                 <div class="split">
@@ -302,6 +300,55 @@ function PointObj(x, y) {
                         <li>Copy to end of SnakeObj's draw</li>
                         <li>Replace with choosen background color</li>
                     </ol>
+                </div>
+            </section>
+            -->
+            <section>
+                <h3>Adding controls</h3>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.dir = {
+        "N": new PointObj(0, -this.tileSize),
+        "S": new PointObj(0, this.tileSize),
+        "E": new PointObj(this.tileSize, 0),
+        "W": new PointObj(-this.tileSize, 0),
+    };
+    this.heading = this.dir["S"];
+    this.changeDirection = function(e) {
+        switch(e.keyCode) {
+            case 38:  // Up arrow
+                this.heading = this.dir["N"];
+                break;
+            case 40:  // Down arrow
+                this.heading = this.dir["S"];
+                break;
+            case 39:  // Right arrow
+                this.heading = this.dir["E"];
+                break;
+            case 37:  // Left arrow
+                this.heading = this.dir["W"];
+                break;
+        }
+    };
+                    </code></pre>
+                    <ol class="reduce" start=1>
+                        <li>Copy to GameObj above loop</li>
+                    </ol>
+                </div>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+        this.snake.move(this.heading);
+                    </code></pre>
+                    <ol class="reduce" start=2>
+                        <li>Copy and replace inside GameObj's loop</li>
+                    </ol>
+                    <pre><code class="javascript small" data-trim contenteditable>
+        document.addEventListener(
+            "keydown", this.changeDirection.bind(this));
+                    </code></pre>
+                    <ol class="reduce" start=3>
+                        <li>Copy to GameObj's init just before setInterval</li>
+                    <ol class="reduce" start=2>
                 </div>
             </section>
         </section>
