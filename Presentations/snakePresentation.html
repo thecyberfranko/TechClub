@@ -23,7 +23,7 @@
                0 10px 10px rgba(0,0,0,.2),
                0 20px 20px rgba(0,0,0,.15);
         }
-        .reveal blockquote { font-size: 75%; }
+        .reveal blockquote, ol.reduce { font-size: 75%; }
         .reveal div.split, pre.split, ol.split {
             display: inline-block;
             width: 48%;
@@ -184,7 +184,7 @@ function init() {
                 <h3>Drawing a segment</h3>
                 <div class="split">
                     <pre><code class="javascript small" data-trim contenteditable>
-function snakeObj(context, tileSize) {
+function SnakeObj(context, tileSize) {
     this.context = context;
     this.tileSize = tileSize;
     this.drawSegment = function(Point, Color) {
@@ -196,25 +196,28 @@ function snakeObj(context, tileSize) {
     return this;
 }
                     </code></pre>
+                    <ol class="reduce">
+                        <li>Copy to top of js document</li>
+                        <li>Properly set the color</li>
+                        <li>Use Point as the Destination</li>
+                    </ol>
+                </div>
+                <div class="split">
                     <pre><code class="javascript small" data-trim contenteditable>
 let Point = {"x": this.tileSize,
              "y": this.tileSize}
 let snake = // create new snakeobj
 // call the snake's drawsegment
                     </code></pre>
+                    <ol class="reduce" start=4>
+                        <li>Copy to end of GameObj's init</li>
+                        <li>Create new SnakeObj</li>
+                        <li>With context and tileSize</li>
+                        <li>Call snake's drawSegment</li>
+                        <li>With Point and choice of color</li>
+                        <li>Reload in browser</li>
+                    </ol>
                 </div>
-                <ol class="split">
-                    <li>Copy to top of js document</li>
-                    <li>Properly set the color</li>
-                    <li>Use Point as the Destination</li>
-                    <br>
-                    <li>Copy to end of GameObj's init</li>
-                    <li>Create new snakeObj</li>
-                    <li>With context and tileSize</li>
-                    <li>Call snake's drawSegment</li>
-                    <li>With Point and choice of color</li>
-                    <li>Reload in browser</li>
-                </ol>
             </section>
         </section>
         <section>
