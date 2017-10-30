@@ -39,7 +39,6 @@
 
 <div class="reveal">
     <div class="slides">
-        <!--
         <section>
             <h2>Building a game of snake</h2>
             <h3>By Jonathan Niehenke</h3>
@@ -50,21 +49,22 @@
                      data-background-size="contain">
                 <h3>Climbing Mt Everest</h3>
                 <aside class="notes">
-                    <p>To climb Mt Everest in one try would kill you.</p>
+                    <p>To climb Mt Everest in one try would kill you.
+                      Especially because we live at an elevation of 550ft.</p>
                 </aside>
             </section>
             <section data-background-image="https://lh4.ggpht.com/-BDL6qxkMccM/UBf0f-TJpNI/AAAAAAAAMto/X8bHU-sR1vs/mount_everest_thumb%25255B1%25255D.gif?imgmax=800"
                      data-background-size="contain">
-                <h3>Making steps</h3>
+                <h3>Steps</h3>
                 <aside class="notes">
-                    <p>So steps are made to ease the process.</p>
+                    <p>So steps were made to ease the process and ensure saftey.</p>
                 </aside>
             </section>
             <section>
                 <blockquote cite="https://www.runtothefinish.com/how-to-climb-mount-everest/">
                 <h4>For those of us not climbing a mountain this still provides great lessons:</h4>
                     <ul>
-                        <li>...</li>
+                        <li>Your body needs to acclimate...</li>
                         <li>Sometimes to make progress you have to go backwards...</li>
                         <li>The summit is just one point in the journey...</li>
                         <li>Success is not always about the peak...</li>
@@ -75,6 +75,7 @@
                         </span></li>
                     </ul>
                 </blockquote>
+                <a>https://www.runtothefinish.com/how-to-climb-mount-everest/</a>
             </section>
         </section>
         <section>
@@ -90,17 +91,19 @@
             </div>
         </section>
         <section>
-            <h3>Making steps</h3>
+            <h3>Forming the steps</h3>
             <h4>to build snake</h4>
             <br>
             <ul>
                 <li class="fragment visible">Distinguishing features?</li>
+                <li class="fragment visible">Logical order?</li>
                 <li class="fragment visible">Steps/Objectives?</li>
             </ul>
             <aside class="notes">
                 <ul>
                     <li>What are the distinguishing features of snake?</li>
-                    <li>What are the we could take to get there?</li>
+                    <li>What is their logical order?</li>
+                    <li>What steps are needed to reach each feature?</li>
                 </ul>
             </aside>
         </section>
@@ -120,7 +123,7 @@
                 </ol>
             </section>
             <section>
-                <h3>Displaying a playing field</h3>
+                <h3>Getting started</h3>
                 <pre class="split"><code class="html" data-trim contenteditable>
 &lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
@@ -144,7 +147,7 @@
                 </ol>
             </section>
             <section>
-                <h3>Mold into a grid</h3>
+                <h3>Display a playing field</h3>
                 <pre class="split"><code class="javascript small" data-trim contenteditable>
 function GameObj(canvas, width, height, tileSize) {
     this.canvas = canvas;
@@ -302,7 +305,6 @@ function PointObj(x, y) {
                     </ol>
                 </div>
             </section>
-            -->
             <section>
                 <h3>Adding controls</h3>
                 <div class="split">
