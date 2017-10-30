@@ -219,6 +219,62 @@ let snake = // create new snakeobj
                     </ol>
                 </div>
             </section>
+            <section>
+                <h3>Move a segment</h3>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+function PointObj(x, y) {
+    this.x = x;
+	this.y = y;
+    this.add = function(Point) {
+        return new PointObj(
+            this.x + Point.x, this.y + Point.y);
+    };
+    return this;
+}
+                    </code></pre>
+                    <ol class="reduce" start=1>
+                        <li>Copy to top of the js document</li>
+                    </ol>
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.head = new PointObj(tileSize, tileSize);
+    this.move = function(Point) {
+        this.head = this.head.add(Point);
+    };
+                    </code></pre>
+                    <ol class="reduce" start=2>
+                        <li>Copy to SnakeObj just before drawSegment</li>
+                    <ol class="reduce" start=2>
+                </div>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.draw = function () {
+        this.drawSegment(this.head, "grey");
+    };
+                    </code></pre>
+                    <ol class="reduce" start=3>
+                        <li>Copy to SnakeObj just after drawSegment</li>
+                    </ol>
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.loop = function() {
+        this.snake.move(
+            new PointObj(0, this.tileSize));
+        this.snake.draw();
+    };
+                    </code></pre>
+                    <ol class="reduce" start=4>
+                        <li>Copy to GameObj just before init</li>
+                    </ol>
+                    <pre><code class="javascript small" data-trim contenteditable>
+        this.snake = new SnakeObj(
+            this.context, tileSize);
+        setInterval(this.loop.bind(this), 100);
+                    </code></pre>
+                    <ol class="reduce" start=5>
+                        <li>Copy and replace point and snake assignment</li>
+                    </ol>
+                </div>
+            </section>
         </section>
         <section>
             <h3>I challenge you</h3>
