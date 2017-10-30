@@ -179,7 +179,6 @@ function init() {
                     <li>Reload in browser</li>
                 </ol>
             </section>
-            -->
             <section>
                 <h3>Drawing a segment</h3>
                 <div class="split">
@@ -272,6 +271,36 @@ function PointObj(x, y) {
                     </code></pre>
                     <ol class="reduce" start=5>
                         <li>Copy and replace point and snake assignment</li>
+                    </ol>
+                </div>
+            </section>
+            -->
+            <section>
+                <h3>Move a snake</h3>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.length = length;
+    this.body =[];
+                    </code></pre>
+                    <ol class="reduce" start=1>
+                        <li>Copy to SnakeObj above move</li>
+                    </ol>
+                    <pre><code class="javascript small" data-trim contenteditable>
+        this.body.push(this.head);
+                    </code></pre>
+                    <ol class="reduce" start=2>
+                        <li>Copy to SnakeObj's move before assigning to head</li>
+                    <ol class="reduce" start=2>
+                </div>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+        if (this.body.length &gt; length)
+            this.drawSegment(
+                this.body.shift(), // Color);
+                    </code></pre>
+                    <ol class="reduce" start=3>
+                        <li>Copy to end of SnakeObj's draw</li>
+                        <li>Replace with choosen background color</li>
                     </ol>
                 </div>
             </section>
