@@ -443,6 +443,27 @@ this.placeFood = function() {
                     <li>Copy to GameObj's init just after snake assignment</li>
                 </ol>
             </section>
+            <section>
+                <h3>Growth upon eating</h3>
+                <pre><code class="javascript" data-trim contenteditable>
+    this.isEating = function() {
+        return this.head == this.food;
+    }:
+                </code></pre>
+                <ol start=1>
+                    <li>Copy to GameObj just above loop</li>
+                </ol>
+                <pre><code class="javascript" data-trim contenteditable>
+        else if (this.isEating()) {
+            this.placeFood();
+            this.snake.length += 3;
+            this.snake.draw();
+        }
+                </code></pre>
+                <ol start=2>
+                    <li>Copy to GameObj's loop just above else</li>
+                </ol>
+            </section>
         </section>
         <section>
             <h3>I challenge you</h3>
