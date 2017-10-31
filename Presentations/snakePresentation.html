@@ -419,6 +419,30 @@ function SnakeObj(context, tileSize, length=5) {
                     <ol class="reduce" start=2>
                 </div>
             </section>
+            <section>
+                <h3>Placing food</h3>
+                <pre><code class="javascript" data-trim contenteditable>
+this.placeFood = function() {
+    do {
+        this.food = new PointObj(
+            this.align(Math.random() * this.width),
+            this.align(Math.random() * this.height));
+    } while (this.snake.isBody(this.food));
+    this.context.fillStyle = "Yellow";
+    this.context.fillRect(
+        this.food.x, this.food.y, this.tileSize, this.tileSize);
+};
+                </code></pre>
+                <ol start=1>
+                    <li>Copy to GameObj just above isOutOfBounds</li>
+                </ol>
+                <pre><code class="javascript" data-trim contenteditable>
+    this.placeFood();
+                </code></pre>
+                <ol start=2>
+                    <li>Copy to GameObj's init just after snake assignment</li>
+                </ol>
+            </section>
         </section>
         <section>
             <h3>I challenge you</h3>
