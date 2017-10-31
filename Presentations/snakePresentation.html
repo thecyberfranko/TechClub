@@ -383,6 +383,42 @@ function SnakeObj(context, tileSize, length=5) {
                     <li>Save and reload in browser</li>
                 </ol>
             </section>
+            <section>
+                <h3>Enforcing body death</h3>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.equals = function(Point) {
+        return (this.x == Point.x &&
+                this.y == Point.y);
+    };
+                    </code></pre>
+                    <ol class="reduce" start=1>
+                        <li>Copy to PointObj just below add</li>
+                    </ol>
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.isBody = function(Point) {
+        for (bodyPoint of this.body) {
+            if (bodyPoint.equals(Point))
+                return true
+        }
+        return false;
+    };
+                    </code></pre>
+                    <ol class="reduce" start=2>
+                        <li>Copy to SnakeObj just before drawSegment</li>
+                    </ol>
+                </div>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+        if (this.isOutOfBounds(this.snake.head) || 
+            this.snake.isBody(this.snake.head))
+        {
+                    </code></pre>
+                    <ol class="reduce" start=3>
+                        <li>Copy and replace first line inside GameObj's loop</li>
+                    <ol class="reduce" start=2>
+                </div>
+            </section>
         </section>
         <section>
             <h3>I challenge you</h3>
