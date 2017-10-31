@@ -24,7 +24,7 @@
                0 20px 20px rgba(0,0,0,.15);
         }
         .reveal blockquote, ol.reduce { font-size: 75%; }
-        .reveal div.split, pre.split, ol.split {
+        .reveal .split {
             display: inline-block;
             width: 48%;
             vertical-align: top;
@@ -178,7 +178,7 @@ function init() {
                         <ul><li>file path to script src</li>
                         <li>"onload=init()" to body</li></ul>
                     </li>
-                    <li>Reload in browser</li>
+                    <li>Save and reload in browser</li>
                 </ol>
             </section>
             <section>
@@ -216,7 +216,7 @@ let snake = // create new snakeobj
                         <li>With context and tileSize</li>
                         <li>Call snake's drawSegment</li>
                         <li>With Point and choice of color</li>
-                        <li>Reload in browser</li>
+                        <li>Save and reload in browser</li>
                     </ol>
                 </div>
             </section>
@@ -280,28 +280,35 @@ function PointObj(x, y) {
                 <h3>Move a snake</h3>
                 <div class="split">
                     <pre><code class="javascript small" data-trim contenteditable>
+function SnakeObj(context, tileSize, length=5) {
+                    </code></pre>
+                    <ol class="reduce" start=1>
+                        <li>Replace at top of SnakeObj</li>
+                    </ol>
+                    <pre><code class="javascript small" data-trim contenteditable>
     this.length = length;
     this.body =[];
                     </code></pre>
-                    <ol class="reduce" start=1>
+                    <ol class="reduce" start=2>
                         <li>Copy to SnakeObj above move</li>
                     </ol>
                     <pre><code class="javascript small" data-trim contenteditable>
         this.body.push(this.head);
                     </code></pre>
-                    <ol class="reduce" start=2>
+                    <ol class="reduce" start=3>
                         <li>Copy to SnakeObj's move before assigning to head</li>
-                    <ol class="reduce" start=2>
+                    </ol>
                 </div>
                 <div class="split">
                     <pre><code class="javascript small" data-trim contenteditable>
-        if (this.body.length &gt; length)
+        if (this.body.length &gt; this.length)
             this.drawSegment(
                 this.body.shift(), // Color);
                     </code></pre>
-                    <ol class="reduce" start=3>
+                    <ol class="reduce" start=4>
                         <li>Copy to end of SnakeObj's draw</li>
                         <li>Replace with choosen background color</li>
+                        <li>Save and reload in browser</li>
                     </ol>
                 </div>
             </section>
