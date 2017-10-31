@@ -164,7 +164,7 @@ function GameObj(canvas, width, height, tileSize) {
 
 function init() {
     let game = new GameObj(
-        document.querySelector("CANVAS"));
+        document.querySelector("CANVAS"), 30, 20, 20);
     // call game's init function
 }
                 </code></pre>
@@ -172,7 +172,6 @@ function init() {
                     <li>Copy to a new document</li>
                     <li>Assign the apporiate products</li>
                     <li>Include a call to the function</li>
-                    <li>With your own values</li>
                     <li>Save as a ".js" document</li>
                     <li>In the html document include:
                         <ul><li>file path to script src</li>
@@ -205,10 +204,10 @@ function SnakeObj(context, tileSize) {
                 </div>
                 <div class="split">
                     <pre><code class="javascript small" data-trim contenteditable>
-let Point = {"x": this.tileSize,
-             "y": this.tileSize}
-let snake = // create new snakeobj
-// call the snake's drawsegment
+    let Point = {"x": this.tileSize,
+                 "y": this.tileSize}
+    let snake = // create new snakeobj
+    // call the snake's drawsegment
                     </code></pre>
                     <ol class="reduce" start=4>
                         <li>Copy to end of GameObj's init</li>
@@ -269,7 +268,8 @@ function PointObj(x, y) {
                     <pre><code class="javascript small" data-trim contenteditable>
         this.snake = new SnakeObj(
             this.context, tileSize);
-        setInterval(this.loop.bind(this), 100);
+        this.animation = setInterval(
+            this.loop.bind(this), 100);
                     </code></pre>
                     <ol class="reduce" start=5>
                         <li>Copy and replace point and snake assignment</li>
@@ -359,6 +359,29 @@ function SnakeObj(context, tileSize, length=5) {
                         <li>Copy to GameObj's init just before setInterval</li>
                     <ol class="reduce" start=2>
                 </div>
+            </section>
+            <section>
+                <h3>Enforcing borders</h3>
+                <pre><code class="javascript" data-trim contenteditable>
+    this.isOutOfBounds = function(Point) {
+        return (Point.x &lt; 0 || Point.y &lt; 0 ||
+                Point.x &gt;= this.canvas.width ||
+                Point.y &gt;= this.canvas.height);
+    };
+    this.loop = function() {
+        this.snake.move(this.heading);
+        if (this.isOutOfBounds(this.snake.head)) {
+            clearInterval(this.animation);
+            window.alert("Game Over");
+        }
+        else
+            this.snake.draw();
+    };
+                </code></pre>
+                <ol>
+                    <li>Copy and replace GameObj's loop</li>
+                    <li>Save and reload in browser</li>
+                </ol>
             </section>
         </section>
         <section>
