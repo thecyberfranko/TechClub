@@ -161,112 +161,95 @@
         <section>
             <section>
                 <h3>Lets code!</h3>
-                <ol class="fragment visible" style="white-space: nowrap;">
-                    <li>Display a playing field</li>
-                    <li>Draw a snake segment</li>
-                    <li>Move the segment</li>
-                    <li>Move the snake</li>
-                    <li>Add controls</li>
-                    <li>Enforce borders</li>
-                    <li>Enforce body death</li>
-                    <li>Place food</li>
-                    <li>Growth upon eating</li>
+                <ol>
+                    <li>Obtain a copy of this presentation</li>
+                    <li>Open the presentation html file</li>
+                    <li>And use the space bar or arrow keys to navigate</li>
+                    <li>Go to <a href="https://jsfiddle.net">jsfiddle.net</a></li>
+                    <li>And follow the instructions on the slides below</li>
                 </ol>
             </section>
             <section>
-                <h3>Getting started</h3>
-                <pre class="split"><code class="html" data-trim contenteditable>
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-    &lt;meta charset="utf-8"&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;style&gt;&lt;/style&gt;
-    &lt;script&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-                </code></pre>
-                <ol class="split">
-                    <li>Copy to text editor</li>
-                    <li>Include a canvas element</li>
-                    <li>With a background color</li>
-                    <li>Save as a ".html" document</li>
-                    <li>Open it in a web browser</li>
-                </ol>
-            </section>
-            <section>
-                <h3>Display a playing field</h3>
-                <pre class="split"><code class="javascript small" data-trim contenteditable>
-function GameObj(canvas, width, height, tileSize) {
+                <h3>Displaying a playing field</h3>
+                <div class="split">
+                    <pre><code class="html small" data-trim contenteditable>
+<canvas></canvas>
+                    </code></pre>
+                    <pre><code class="css small" data-trim contenteditable>
+canvas { background: skyblue; }
+                    </code></pre>
+                    <pre><code class="javascript small" data-trim contenteditable>
+function GameObj(
+    canvas, width, height, tileSize)
+{
     this.canvas = canvas;
     this.width = width;
     this.height = height;
     this.tileSize = tileSize;
     this.context = canvas.getContext('2d');
     this.init = function() {
-        this.canvas.width = // width product
-        this.canvas.height = // height product
+        this.canvas.width = (
+            this.width * this.tileSize);
+        this.canvas.height = (
+            this.height * this.tileSize);
     };
     return this;
 }
 
-function init() {
-    let game = new GameObj(
-        document.querySelector("CANVAS"), 30, 20, 20);
-    // call game's init function
-}
-                </code></pre>
+
+let canvas = document.querySelector("CANVAS");
+let game = new GameObj(canvas, 30, 20, 20);
+game.init();
+                    </code></pre>
+                </div>
                 <ol class="split">
-                    <li>Copy to a new document</li>
-                    <li>Assign the apporiate products</li>
-                    <li>Include a call to the function</li>
-                    <li>Save as a ".js" document</li>
-                    <li>In the html document include:
-                        <ul><li>file path to script src</li>
-                        <li>"onload=init()" to body</li></ul>
-                    </li>
-                    <li>Save and reload in browser</li>
+                    <li>Copy the first block to HTML</li>
+                    <li>Copy the second block to CSS</li>
+                    <li>Copy the last block to JAVASCRIPT</li>
+                    <li>And run<br>(a skyblue box should appear)</li>
                 </ol>
             </section>
             <section>
                 <h3>Drawing a segment</h3>
                 <div class="split">
                     <pre><code class="javascript small" data-trim contenteditable>
-function SnakeObj(context, tileSize) {
-    this.context = context;
-    this.tileSize = tileSize;
-    this.drawSegment = function(Point, Color) {
-        this.context.fillStyle = // the Color;
-        this.context.fillRect(
-            // Destination.x, Destination.y,
-            this.tileSize, this.tileSize);
-    };
-    return this;
-}
+    function PointObj(x, y) {
+        this.x = x;
+        this.y = y;
+        return this;
+    }
+
+    function SnakeObj(context, tileSize, head) {
+        this.context = context;
+        this.tileSize = tileSize;
+        this.head = head;
+        this.drawSegment = function(
+            Point, Color="grey")
+        {
+            this.context.fillStyle = Color;
+            this.context.fillRect(Point.x, Point.y,
+                this.tileSize, this.tileSize);
+        };
+        this.draw = function() {
+            this.drawSegment(this.head);
+        };
+        return this;
+    }
                     </code></pre>
-                    <ol class="reduce">
-                        <li>Copy to top of js document</li>
-                        <li>Properly set the color</li>
-                        <li>Use Point as the Destination</li>
-                    </ol>
                 </div>
                 <div class="split">
                     <pre><code class="javascript small" data-trim contenteditable>
-    let Point = {"x": this.tileSize,
-                 "y": this.tileSize}
-    let snake = // create new snakeobj
-    // call the snake's drawsegment
+    this.snake = new SnakeObj(
+        this.context, this.tileSize, 
+        new PointObj(this.tileSize, this.tileSize));
+    this.snake.draw();
                     </code></pre>
-                    <ol class="reduce" start=4>
-                        <li>Copy to end of GameObj's init</li>
-                        <li>Create new SnakeObj</li>
-                        <li>With context and tileSize</li>
-                        <li>Call snake's drawSegment</li>
-                        <li>With Point and choice of color</li>
-                        <li>Save and reload in browser</li>
+                    <ol class="reduce">
+                        <li>Copy the Objects<br>
+                            to the top of JAVASCRIPT</li>
+                        <li>Copy the snake assignment<br>
+                            to the end of GameObj's init</li>
+                        <li>And run<br>(a grey square should appear)</li>
                     </ol>
                 </div>
             </section>
@@ -274,56 +257,41 @@ function SnakeObj(context, tileSize) {
                 <h3>Move a segment</h3>
                 <div class="split">
                     <pre><code class="javascript small" data-trim contenteditable>
-function PointObj(x, y) {
-    this.x = x;
-	this.y = y;
     this.add = function(Point) {
         return new PointObj(
             this.x + Point.x, this.y + Point.y);
     };
-    return this;
-}
                     </code></pre>
-                    <ol class="reduce" start=1>
-                        <li>Copy to top of the js document</li>
-                    </ol>
                     <pre><code class="javascript small" data-trim contenteditable>
-    this.head = new PointObj(tileSize, tileSize);
     this.move = function(Point) {
         this.head = this.head.add(Point);
     };
                     </code></pre>
-                    <ol class="reduce" start=2>
-                        <li>Copy to SnakeObj just before drawSegment</li>
-                    <ol class="reduce" start=2>
-                </div>
-                <div class="split">
                     <pre><code class="javascript small" data-trim contenteditable>
-    this.draw = function () {
-        this.drawSegment(this.head, "grey");
+    this.directions = {
+        "N": new PointObj(0, -this.tileSize),
+        "S": new PointObj(0, this.tileSize),
+        "E": new PointObj(this.tileSize, 0),
+        "W": new PointObj(-this.tileSize, 0),
     };
-                    </code></pre>
-                    <ol class="reduce" start=3>
-                        <li>Copy to SnakeObj just after drawSegment</li>
-                    </ol>
-                    <pre><code class="javascript small" data-trim contenteditable>
+    this.heading = this.directions["E"];
     this.loop = function() {
-        this.snake.move(
-            new PointObj(0, this.tileSize));
+        this.snake.move(this.heading);
         this.snake.draw();
     };
                     </code></pre>
-                    <ol class="reduce" start=4>
-                        <li>Copy to GameObj just before init</li>
-                    </ol>
+                </div>
+                <div class="split">
                     <pre><code class="javascript small" data-trim contenteditable>
-        this.snake = new SnakeObj(
-            this.context, tileSize);
         this.animation = setInterval(
             this.loop.bind(this), 100);
                     </code></pre>
-                    <ol class="reduce" start=5>
-                        <li>Copy and replace point and snake assignment</li>
+                    <ol class="reduce">
+                        <li>Copy to PointObj below the this.y = y</li>
+                        <li>Copy to SnakeObj before drawSegment</li>
+                        <li>Copy to GameObj before init</li>
+                        <li>Copy to the end of GameObj's init</li>
+                        <li>And run<br>(the grey square should move)</li>
                     </ol>
                 </div>
             </section>
@@ -331,35 +299,30 @@ function PointObj(x, y) {
                 <h3>Move a snake</h3>
                 <div class="split">
                     <pre><code class="javascript small" data-trim contenteditable>
-function SnakeObj(context, tileSize, length=5) {
+function SnakeObj(
+    context, tileSize, head, length=5) {
                     </code></pre>
-                    <ol class="reduce" start=1>
-                        <li>Replace at top of SnakeObj</li>
-                    </ol>
                     <pre><code class="javascript small" data-trim contenteditable>
     this.length = length;
     this.body =[];
                     </code></pre>
-                    <ol class="reduce" start=2>
-                        <li>Copy to SnakeObj above move</li>
-                    </ol>
                     <pre><code class="javascript small" data-trim contenteditable>
         this.body.push(this.head);
                     </code></pre>
-                    <ol class="reduce" start=3>
-                        <li>Copy to SnakeObj's move before assigning to head</li>
-                    </ol>
+                    <pre><code class="javascript small" data-trim contenteditable>
+        if (this.body.length &gt; this.length) {
+            this.drawSegment(
+                this.body.shift(), "skyblue");
+        }
+                    </code></pre>
                 </div>
                 <div class="split">
-                    <pre><code class="javascript small" data-trim contenteditable>
-        if (this.body.length &gt; this.length)
-            this.drawSegment(
-                this.body.shift(), // Color);
-                    </code></pre>
-                    <ol class="reduce" start=4>
-                        <li>Copy to end of SnakeObj's draw</li>
-                        <li>Replace with choosen background color</li>
-                        <li>Save and reload in browser</li>
+                    <ol class="reduce">
+                        <li>Replace at top of SnakeObj</li>
+                        <li>Copy to SnakeObj above move</li>
+                        <li>Copy to the top of SnakeObj's move</li>
+                        <li>Copy to the end of SnakeObj's draw</li>
+                        <li>And run <br> (a slender object should move)</li>
                     </ol>
                 </div>
             </section>
@@ -367,53 +330,42 @@ function SnakeObj(context, tileSize, length=5) {
                 <h3>Adding controls</h3>
                 <div class="split">
                     <pre><code class="javascript small" data-trim contenteditable>
-    this.dir = {
-        "N": new PointObj(0, -this.tileSize),
-        "S": new PointObj(0, this.tileSize),
-        "E": new PointObj(this.tileSize, 0),
-        "W": new PointObj(-this.tileSize, 0),
-    };
-    this.heading = this.dir["S"];
     this.changeDirection = function(e) {
         switch(e.keyCode) {
             case 38:  // Up arrow
-                this.heading = this.dir["N"];
+                this.heading = this.directions["N"];
                 break;
             case 40:  // Down arrow
-                this.heading = this.dir["S"];
+                this.heading = this.directions["S"];
                 break;
             case 39:  // Right arrow
-                this.heading = this.dir["E"];
+                this.heading = this.directions["E"];
                 break;
             case 37:  // Left arrow
-                this.heading = this.dir["W"];
+                this.heading = this.directions["W"];
                 break;
         }
     };
                     </code></pre>
-                    <ol class="reduce" start=1>
-                        <li>Copy to GameObj above loop</li>
-                    </ol>
                 </div>
                 <div class="split">
-                    <pre><code class="javascript small" data-trim contenteditable>
-        this.snake.move(this.heading);
-                    </code></pre>
-                    <ol class="reduce" start=2>
-                        <li>Copy and replace inside GameObj's loop</li>
-                    </ol>
                     <pre><code class="javascript small" data-trim contenteditable>
         document.addEventListener(
             "keydown", this.changeDirection.bind(this));
                     </code></pre>
-                    <ol class="reduce" start=3>
-                        <li>Copy to GameObj's init just before setInterval</li>
-                    <ol class="reduce" start=2>
+                    <ol class="reduce">
+                        <li>Copy to GameObj above loop</li>
+                        <li>Copy to GameObj's init before setInterval</li>
+                        <li>And run<br>
+                            (click on the canvas and press the arrow keys
+                             the snake should change directions)</li>
+                    </ol>
                 </div>
             </section>
             <section>
                 <h3>Enforcing borders</h3>
-                <pre><code class="javascript" data-trim contenteditable>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
     this.isOutOfBounds = function(Point) {
         return (Point.x &lt; 0 || Point.y &lt; 0 ||
                 Point.x &gt;= this.canvas.width ||
@@ -428,10 +380,12 @@ function SnakeObj(context, tileSize, length=5) {
         else
             this.snake.draw();
     };
-                </code></pre>
-                <ol>
+                    </code></pre>
+                </div>
+                <ol class="split">
                     <li>Copy and replace GameObj's loop</li>
-                    <li>Save and reload in browser</li>
+                    <li>And run<br>(A message displays when encountering the
+                        border)</li>
                 </ol>
             </section>
             <section>
@@ -443,9 +397,6 @@ function SnakeObj(context, tileSize, length=5) {
                 this.y == Point.y);
     };
                     </code></pre>
-                    <ol class="reduce" start=1>
-                        <li>Copy to PointObj just below add</li>
-                    </ol>
                     <pre><code class="javascript small" data-trim contenteditable>
     this.isBody = function(Point) {
         for (bodyPoint of this.body) {
@@ -455,63 +406,70 @@ function SnakeObj(context, tileSize, length=5) {
         return false;
     };
                     </code></pre>
-                    <ol class="reduce" start=2>
-                        <li>Copy to SnakeObj just before drawSegment</li>
-                    </ol>
-                </div>
-                <div class="split">
                     <pre><code class="javascript small" data-trim contenteditable>
         if (this.isOutOfBounds(this.snake.head) || 
             this.snake.isBody(this.snake.head))
         {
                     </code></pre>
-                    <ol class="reduce" start=3>
-                        <li>Copy and replace first line inside GameObj's loop</li>
-                    <ol class="reduce" start=2>
                 </div>
+                <ol class="split">
+                    <li>Copy to PointObj below add</li>
+                    <li>Copy to SnakeObj before drawSegment</li>
+                    <li>Copy and replace the first line inside GameObj's loop</li>
+                    <li>And run<br>(A message displays when encountering the
+                        body)</li>
+                </ol>
             </section>
             <section>
                 <h3>Placing food</h3>
-                <pre><code class="javascript" data-trim contenteditable>
-this.placeFood = function() {
-    do {
-        this.food = new PointObj(
-            this.align(Math.random() * this.width),
-            this.align(Math.random() * this.height));
-    } while (this.snake.isBody(this.food));
-    this.context.fillStyle = "Yellow";
-    this.context.fillRect(
-        this.food.x, this.food.y, this.tileSize, this.tileSize);
-};
-                </code></pre>
-                <ol start=1>
-                    <li>Copy to GameObj just above isOutOfBounds</li>
-                </ol>
-                <pre><code class="javascript" data-trim contenteditable>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.align = function(Val) {
+        return Math.floor(Val) * this.tileSize;
+    };
+    this.placeFood = function() {
+        do {
+            let x = this.align(
+                Math.random() * this.width);
+            let y = this.align(
+                Math.random() * this.height);
+            this.food = new PointObj(x, y);
+        } while (this.snake.isBody(this.food));
+        this.context.fillStyle = "Yellow";
+        this.context.fillRect(
+            this.food.x, this.food.y,
+            this.tileSize, this.tileSize);
+    };
+                    </code></pre>
+                </div>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
     this.placeFood();
-                </code></pre>
-                <ol start=2>
-                    <li>Copy to GameObj's init just after snake assignment</li>
-                </ol>
+                    </code></pre>
+                    <ol class="reduce">
+                        <li>Copy to GameObj just above isOutOfBounds</li>
+                        <li>Copy to GameObj's init just after snake assignment</li>
+                    </ol>
+                </div>
             </section>
             <section>
                 <h3>Growth upon eating</h3>
-                <pre><code class="javascript" data-trim contenteditable>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
     this.isEating = function() {
-        return this.head == this.food;
-    }:
-                </code></pre>
-                <ol start=1>
-                    <li>Copy to GameObj just above loop</li>
-                </ol>
-                <pre><code class="javascript" data-trim contenteditable>
+        return this.snake.head.equals(this.food);
+    };
+                    </code></pre>
+                    <pre><code class="javascript small" data-trim contenteditable>
         else if (this.isEating()) {
             this.placeFood();
             this.snake.length += 3;
             this.snake.draw();
         }
-                </code></pre>
-                <ol start=2>
+                    </code></pre>
+                </div>
+                <ol class="split">
+                    <li>Copy to GameObj just above loop</li>
                     <li>Copy to GameObj's loop just above else</li>
                 </ol>
             </section>
