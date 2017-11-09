@@ -166,8 +166,14 @@
                     <li>Open the presentation html file</li>
                     <li>And use the space bar or arrow keys to navigate</li>
                     <li>Go to <a href="https://jsfiddle.net">jsfiddle.net</a></li>
-                    <li>And follow the instructions on the slides below</li>
+                    <li>Follow the instructions on the slides below</li>
+                    <li>For an explanation of the code press "s"</li>
                 </ol>
+                <aside class="notes">
+                    For this demonstration I am using HTML and Javascript. And
+                    because all modern browsers support JavaScript no
+                    installation is required.
+                </aside>
             </section>
             <section>
                 <h3>Displaying a playing field</h3>
@@ -212,6 +218,22 @@ game.init();
                     <p style="color: gold;">
                         All the remaining instructions will be to JAVASCRIPT</p>
                 </div>
+                <aside class="notes">
+                    <p>HTML defines structure, CSS defines appearance, JavaScript
+                        enables changes to the two.</p>
+                    <ol>
+                        <li>canvas - is the platform for which JavaScript can
+                            draw shapes and images to the screen.
+                        </li>
+                        <li>Apply a background color to differentiate between
+                            the canvas and the white background.</li>
+                        <li>GameObj - will handle the different
+                            parts that construct the game. Within the init
+                            function we are changing the size of the canvas to
+                            match a grid.
+                        </li>
+                    </ol>
+                </aside>
             </section>
             <section>
                 <h3>Drawing a segment</h3>
@@ -256,7 +278,22 @@ game.init();
     }
                     </code></pre>
                 </div>
-
+                <aside class="notes">
+                    <ol>
+                        <li>Create a snake and draw it.
+                        </li>
+                        <li>The snake is defined with attributes that enable it
+                            to draw to our grid.
+                            <ul>
+                                <li>context - is the bush to modify our canvas</li>
+                                <li>tileSize - to enforce consistency with the grid</li>
+                                <li>head - a starting point for the snake</li>
+                                <li>drawSegment - draws to the canvas a colored rectangle</li>
+                                <li>draw - will draw our snake onto the canvas</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </aside>
             </section>
             <section>
                 <h3>Move a segment</h3>
@@ -266,7 +303,7 @@ game.init();
             this.loop.bind(this), 100);
                     </code></pre>
                     <ol class="reduce">
-                        <li>Copy to the end of GameObj's init</li>
+                        <li>Copy and replace snake's draw at the end of GameObj's init</li>
                         <li>Copy to GameObj before init</li>
                         <li>Copy to SnakeObj before drawSegment</li>
                         <li>Copy to PointObj below the this.y = y</li>
@@ -299,6 +336,22 @@ game.init();
     };
                     </code></pre>
                 </div>
+                <aside class="notes">
+                    <ol>
+                        <li>To animate movement the loop function is called 
+                            every 100 milliseconds.</li>
+                        <li>
+                            <ul>
+                                <li>directions - define the possible points of direction</li>
+                                <li>heading - is the current direction of movement</li>
+                                <li>loop - will move the snake and then draw it</li>
+                            </ul>
+                        </li>
+                        <li>move - replaces the head after adding it to Point</li>
+                        <li>add - creates a new PointObj after adding the pair
+                            of x's and y's together</li>
+                    </ol>
+                </aside>
             </section>
             <section>
                 <h3>Move a snake</h3>
@@ -330,6 +383,16 @@ function SnakeObj(
                         <li>And run <br> (a slender object should move)</li>
                     </ol>
                 </div>
+                <aside class="notes">
+                    <ol>
+                        <li>When the body is too long write over the tail with
+                            the background color</li>
+                        <li>Fill the body with the current value of head before
+                            changing it</li>
+                        <li>Creates and initiates length and body with values</li>
+                        <li>Defaults the snake's length to 5</li>
+                    </ol>
+                </aside>
             </section>
             <section>
                 <h3>Adding controls</h3>
@@ -366,6 +429,14 @@ function SnakeObj(
     };
                     </code></pre>
                 </div>
+                <aside class="notes">
+                    <ol>
+                        <li>React to a key being pressed down by running the
+                            changeDirection function</li>
+                        <li>Changes the current heading from which of the arrow
+                            keys were pressed</li>
+                    </ol>
+                </aside>
             </section>
             <section>
                 <h3>Enforcing borders</h3>
@@ -392,6 +463,15 @@ function SnakeObj(
                     <li>And run<br>(A message displays when encountering the
                         border)</li>
                 </ol>
+                <aside class="notes">
+                    <ul>
+                        <li>isOutOfBounds - returns whether the Point is too
+                            far left, up, right or down</li>
+                        <li>loop - now checks if the snake is out of bounds and
+                            ends the game by stopping the animation and
+                            alerting the player</li>
+                    </ul>
+                </aside>
             </section>
             <section>
                 <h3>Enforcing body death</h3>
@@ -424,6 +504,15 @@ function SnakeObj(
                     <li>And run<br>(A message displays when encountering the
                         body)</li>
                 </ol>
+                <aside class="notes">
+                    <ol>
+                        <li>Includes the body death as a condition to end the
+                            game</li>
+                        <li>isBody - checks wether the point is part of the
+                            snake's body</li>
+                        <li>equals - returns whether both x's and  y's are equal</li>
+                    </ol>
+                </aside>
             </section>
             <section>
                 <h3>Placing food</h3>
@@ -434,6 +523,7 @@ function SnakeObj(
                     <ol class="reduce">
                         <li>Copy to GameObj's init just after snake assignment</li>
                         <li>Copy to GameObj just above isOutOfBounds</li>
+                        <li>And run<br>(A yellow square should appear)</li>
                     </ol>
                 </div>
                 <div class="split">
@@ -456,6 +546,18 @@ function SnakeObj(
     };
                     </code></pre>
                 </div>
+                <aside class="notes">
+                    <ol>
+                        <li>Places food at the begining of the game</li>
+                        <li><ul>
+                            <li>align - ensures the food is placed in line with
+                                the grid</li>
+                            <li>placeFood - continues to generate a random food
+                                position when it is part of the snakes body
+                                then draws it as a yellow rectangle</li>
+                        </ul></li>
+                    </ol>
+                </aside>
             </section>
             <section>
                 <h3>Growth upon eating</h3>
@@ -476,7 +578,18 @@ function SnakeObj(
                 <ol class="split">
                     <li>Copy to GameObj's loop just above else</li>
                     <li>Copy to GameObj just above loop</li>
+                    <li>And run<br>(The snake should grow upon eating the food)
+                    </li>
                 </ol>
+                <aside class="notes">
+                    <ol>
+                        <li>When the snake is eating it places new food,
+                            increases the length of the snake, and draws the
+                            snake</li>
+                        <li>isEating - returns whether the snakes head is on
+                            top of the food</li>
+                    </ol>
+                </aside>
             </section>
         </section>
         <section>
