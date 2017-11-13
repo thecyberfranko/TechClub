@@ -1,40 +1,47 @@
-function PositionedObj(context, value, x, y) {
-    this.context = context;
-    this.value = value;
+function PointObj(x, y) {
     this.x = x;
     this.y = y;
+    return this;
+}
+
+function PositionedObj(context, value, point) {
+    this.context = context;
+    this.value = value;
+    this.point = point;
     this.examine = function() {
         this.context.beginPath();
-        this.context.arc(this.x + 13, this.y - 10, 20, 0, 2*Math.PI);
+        this.context.arc(
+            this.point.x + 14, this.point.y - 8, 18, 0, 2*Math.PI);
         this.context.stroke();
     };
-    this.move = function(x, y) {
-        this.x += x;
-        this.y += y;
-    };
     this.draw = function() {
-        context.strokeText(this.value.toString(), this.x, this.y);
-        context.fillText(this.value.toString(), this.x, this.y);
+        context.strokeText(this.value.toString(), this.point.x, this.point.y);
+        context.fillText(this.value.toString(), this.point.x, this.point.y);
     };
     return this;
 }
 
-function ColoredNumbersObj(canvas, context, x, y, offsetx) {
+function ColoredNumbersObj(canvas, context, point, offsetX) {
     this.canvas = canvas;
     this.context = context;
-    this.x = x;
-    this.y = y;
-    this.offsetx = offsetx;
+    this.point = point;
+    this.offsetX = offsetX;
     this.posSet = [];
+    this.swapDisplayedPos = function(i, j) {
+        let tempPoint = this.posSet[i].point;
+        this.posSet[i].point = this.posSet[j].point;
+        this.posSet[j].point = tempPoint;
+    }
+    this.swapSetPos = function(i, j) {
+        let tempObj = this.posSet[i];
+        this.posSet[i] = this.posSet[j]
+        this.posSet[j] = tempObj;
+    }
     this.swap = function(i, j) {
-        swapI = this.posSet[i];
-        swapJ = this.posSet[j];
-        tempX = swapI.x
-        tempY = swapI.y
-        swapI.x = swapJ.x
-        swapI.y = swapJ.y
-        swapJ.x = tempX
-        swapJ.y = tempY
+        this.posSet[i].examine();
+        this.posSet[j].examine();
+        this.swapDisplayedPos(i, j)
+        this.swapSetPos(i, j)
     };
     this.examine = function(i) {
         this.posSet[i].examine();
@@ -50,8 +57,10 @@ function ColoredNumbersObj(canvas, context, x, y, offsetx) {
     };
     this.init = function(numberSet) {
         for (let i= 0; i < numberSet.length; ++i) {
+            let point = new PointObj(this.offsetX * i + this.point.x,
+                                     this.point.y);
             this.posSet.push(new PositionedObj(
-                context, numberSet[i], offsetx * i + x, y))
+                context, numberSet[i], point))
         }
     };
     return this;
@@ -76,9 +85,10 @@ function SortingObj() {
             randomNumbers.push(Math.floor(Math.random() * 15) + 1);
         let sort = randomNumbers.slice();
         sort.sort((a, b) => { return a > b ? 1 : (a < b ? -1 : 0); });
-
-        this.randomColors = new ColoredNumbersObj(this.canvas, this.context, 0, 30, 45);
-        this.sortedColors = new ColoredNumbersObj(this.canvas, this.context, 0, 60, 45);
+        this.randomColors = new ColoredNumbersObj(this.canvas, this.context,
+                                                  new PointObj(10, 30), 45);
+        this.sortedColors = new ColoredNumbersObj(this.canvas, this.context,
+                                                  new PointObj(10, 60), 45);
         this.randomColors.init(randomNumbers);
         this.sortedColors.init(sort);
         this.draw();
