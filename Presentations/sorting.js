@@ -99,6 +99,34 @@ function BubbleSort(cNums) {
     return this;
 }
 
+function InsertionSort(cNums) {
+    this.cNums = cNums;
+    this.i = this.j = 1;
+    this.iter = function() {
+        if (this.swapping) {
+            this.cNums.swap(this.j, this.j - 1);
+            --this.j;
+            if (this.j == 0) {
+                ++this.i;
+                this.j = this.i;
+            }
+            this.swapping = false;
+            return true;
+        }
+        if (this.cNums.examine(this.j) < this.cNums.examine(this.j - 1)) {
+            this.swapping = true;
+            return true;
+        }
+        if (this.i + 1 < this.cNums.length) {
+            ++this.i;
+            this.j = this.i;
+            return true;
+        }
+        return false;
+    };
+    return this;
+}
+
 function SortingObj() {
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
@@ -111,7 +139,7 @@ function SortingObj() {
     };
     this.loop = function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        if (!this.bubble_sort.iter())
+        if (!this.insertion_sort.iter())
             clearInterval(this.animation);
         this.draw();
     };
@@ -121,10 +149,11 @@ function SortingObj() {
         let randomNumbers = [];
         for (let i= 0; i < 20; ++i)
             randomNumbers.push(Math.floor(Math.random() * 15) + 1);
-        this.randomColors = new ColoredNumbersObj(this.canvas, this.context,
-                                                  new PointObj(10, 30), 45);
+        this.randomColors = new ColoredNumbersObj(
+            this.canvas, this.context, new PointObj(10, 30), 45, randomNumbers);
         this.randomColors.init(randomNumbers);
-        this.bubble_sort = new BubbleSort(this.randomColors);
+        // this.bubble_sort = new BubbleSort(this.randomColors);
+        this.insertion_sort = new InsertionSort(this.randomColors);
         this.animation = setInterval(this.loop.bind(this), 500);
     };
     return this;
