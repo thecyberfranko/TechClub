@@ -13,6 +13,7 @@ function PositionedObj(context, value, point) {
         this.context.arc(
             this.point.x + 14, this.point.y - 8, 18, 0, 2*Math.PI);
         this.context.stroke();
+        return this.value;
     };
     this.draw = function() {
         context.strokeText(this.value.toString(), this.point.x, this.point.y);
@@ -44,7 +45,7 @@ function ColoredNumbersObj(canvas, context, point, offsetX) {
         this.swapSetPos(i, j)
     };
     this.examine = function(i) {
-        this.posSet[i].examine();
+        return this.posSet[i].examine();
     };
     this.update = function() {
     };
@@ -56,12 +57,44 @@ function ColoredNumbersObj(canvas, context, point, offsetX) {
         }
     };
     this.init = function(numberSet) {
-        for (let i= 0; i < numberSet.length; ++i) {
+        this.length = numberSet.length;
+        for (let i= 0; i < this.length; ++i) {
             let point = new PointObj(this.offsetX * i + this.point.x,
                                      this.point.y);
             this.posSet.push(new PositionedObj(
                 context, numberSet[i], point))
         }
+    };
+    return this;
+}
+
+function BubbleSort(cNums) {
+    this.cNums = cNums;
+    this.i = this.passes = 0;
+    this.swapping = this.swapped = false;
+    this.iter = function() {
+        if (this.swapping) {
+            this.cNums.swap(this.i, this.i + 1);
+            this.i = ((this.i + 1 < this.cNums.length - 1 - this.passes)
+                       ? this.i + 1 : 0)
+            this.swapping = false;
+            return true;
+        }
+        if (this.cNums.examine(this.i) > this.cNums.examine(this.i + 1)) {
+            this.swapping = this.swapped = true;
+            return true;
+        }
+        if (this.i + 1 < this.cNums.length - 1 - this.passes){
+            ++this.i;
+            return true;
+        }
+        if (this.swapped) {
+            this.i = 0;
+            this.swapped = false;
+            ++this.passes;
+            return true
+        }
+        return false;
     };
     return this;
 }
@@ -74,8 +107,13 @@ function SortingObj() {
         this.context.font = "24px Arial"
         this.context.lineWidth = 3;
         this.randomColors.draw();
-        this.sortedColors.draw();
         this.context.restore()
+    };
+    this.loop = function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        if (!this.bubble_sort.iter())
+            clearInterval(this.animation);
+        this.draw();
     };
     this.init = function() {
         this.canvas.width = window.innerWidth;
@@ -83,15 +121,11 @@ function SortingObj() {
         let randomNumbers = [];
         for (let i= 0; i < 20; ++i)
             randomNumbers.push(Math.floor(Math.random() * 15) + 1);
-        let sort = randomNumbers.slice();
-        sort.sort((a, b) => { return a > b ? 1 : (a < b ? -1 : 0); });
         this.randomColors = new ColoredNumbersObj(this.canvas, this.context,
                                                   new PointObj(10, 30), 45);
-        this.sortedColors = new ColoredNumbersObj(this.canvas, this.context,
-                                                  new PointObj(10, 60), 45);
         this.randomColors.init(randomNumbers);
-        this.sortedColors.init(sort);
-        this.draw();
+        this.bubble_sort = new BubbleSort(this.randomColors);
+        this.animation = setInterval(this.loop.bind(this), 500);
     };
     return this;
 }
