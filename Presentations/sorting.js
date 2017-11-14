@@ -22,7 +22,7 @@ function PositionedObj(context, value, point) {
     return this;
 }
 
-function ColoredNumbersObj(canvas, context, point, offsetX) {
+function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
     this.canvas = canvas;
     this.context = context;
     this.point = point;
@@ -47,14 +47,16 @@ function ColoredNumbersObj(canvas, context, point, offsetX) {
     this.examine = function(i) {
         return this.posSet[i].examine();
     };
-    this.update = function() {
-    };
     this.draw = function() {
+        this.context.save()
+        this.context.font = "24px Arial"
+        this.context.lineWidth = 3;
         for (posNum of this.posSet) {
-            let hue = Math.floor(360 / posNum.value);
+            let hue = Math.floor(360 / (posNum.value + 1));
             context.fillStyle = `hsl(${hue}, 100%, 50%)`;
             posNum.draw();
         }
+        this.context.restore()
     };
     this.init = function(numberSet) {
         this.length = numberSet.length;
@@ -65,6 +67,7 @@ function ColoredNumbersObj(canvas, context, point, offsetX) {
                 context, numberSet[i], point))
         }
     };
+    this.init(numberSet);
     return this;
 }
 
@@ -72,7 +75,7 @@ function BubbleSort(cNums) {
     this.cNums = cNums;
     this.i = this.passes = 0;
     this.swapping = this.swapped = false;
-    this.iter = function() {
+    this.update = function() {
         if (this.swapping) {
             this.cNums.swap(this.i, this.i + 1);
             this.i = ((this.i + 1 < this.cNums.length - 1 - this.passes)
@@ -96,13 +99,16 @@ function BubbleSort(cNums) {
         }
         return false;
     };
+    this.draw = function() {
+        this.cNums.draw();
+    };
     return this;
 }
 
 function InsertionSort(cNums) {
     this.cNums = cNums;
     this.i = this.j = 1;
-    this.iter = function() {
+    this.update = function() {
         if (this.swapping) {
             this.cNums.swap(this.j, this.j - 1);
             --this.j;
@@ -124,36 +130,36 @@ function InsertionSort(cNums) {
         }
         return false;
     };
+    this.draw = function() {
+        this.cNums.draw();
+    };
     return this;
 }
 
 function SortingObj() {
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
-    this.draw = function() {
-        this.context.save()
-        this.context.font = "24px Arial"
-        this.context.lineWidth = 3;
-        this.randomColors.draw();
-        this.context.restore()
-    };
     this.loop = function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        if (!this.insertion_sort.iter())
-            clearInterval(this.animation);
-        this.draw();
+        for (let sorter of this.sorters) {
+            sorter.update();
+            sorter.draw();
+        }
     };
-    this.init = function() {
+    this.init = function(sortingAlgorithms) {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         let randomNumbers = [];
         for (let i= 0; i < 20; ++i)
             randomNumbers.push(Math.floor(Math.random() * 15) + 1);
-        this.randomColors = new ColoredNumbersObj(
-            this.canvas, this.context, new PointObj(10, 30), 45, randomNumbers);
-        this.randomColors.init(randomNumbers);
-        // this.bubble_sort = new BubbleSort(this.randomColors);
-        this.insertion_sort = new InsertionSort(this.randomColors);
+        this.sorters = [];
+        for (let i= 0; i < sortingAlgorithms.length; ++i) {
+            let point = new PointObj(10, i * 60 + 30);
+            console.log(point);
+            let randomColors = new ColoredNumbersObj(
+                this.canvas, this.context, point , 40, randomNumbers);
+            this.sorters[i] = new sortingAlgorithms[i](randomColors);
+        }
         this.animation = setInterval(this.loop.bind(this), 500);
     };
     return this;
@@ -161,5 +167,5 @@ function SortingObj() {
 
 function init() {
     let sorter = new SortingObj();
-    sorter.init();
+    sorter.init([BubbleSort, InsertionSort]);
 }
