@@ -179,6 +179,49 @@ function ShellSort(cNums) {
     return this;
 }
 
+function QuickSort(cNums) {
+    this.cNums = cNums;
+    this.swapping = false;
+    this.pivot = this.cNums.posSet[0].value;
+    this.ftIdx = this.left = 0;
+    this.bkIdx = this.right = cNums.length - 1;
+    this.queue = [];
+    this.update = function() {
+        if (this.swapping) {
+            this.cNums.swap(this.left++, this.right--);
+            this.swapping = false;
+            return;
+        }
+        else if (this.left <= this.right) {
+            if (this.cNums.examine(this.left) < this.pivot) {
+                this.left++;
+            }
+            else if (this.cNums.examine(this.right) > this.pivot) {
+                this.right--;
+            }
+            else if (this.left <= this.right) {
+                this.swapping = true;
+            }
+            return;
+        }
+        if (this.right - this.ftIdx > 0)
+            this.queue.push([this.ftIdx, this.right]);
+        if (this.bkIdx - this.left > 0)
+            this.queue.push([this.left, this.bkIdx]);
+        if (this.queue.length) {
+            let pair = this.queue.shift();
+            this.ftIdx = this.left = pair[0];
+            this.bkIdx = this.right = pair[1];
+            this.pivot = this.cNums.posSet[this.ftIdx].value;
+            this.update();
+        }
+    };
+    this.draw = function() {
+        this.cNums.draw();
+    };
+    return this;
+}
+
 function SortingObj() {
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
@@ -209,5 +252,5 @@ function SortingObj() {
 
 function init() {
     let sorter = new SortingObj();
-    sorter.init([BubbleSort, InsertionSort, ShellSort]);
+    sorter.init([BubbleSort, InsertionSort, ShellSort, QuickSort]);
 }
