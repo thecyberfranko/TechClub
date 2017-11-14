@@ -136,6 +136,49 @@ function InsertionSort(cNums) {
     return this;
 }
 
+function ShellSort(cNums) {
+    this.cNums = cNums;
+    this.division = 3;
+    this.gap = Math.ceil(this.cNums.length / this.division);
+    this.i = this.j = this.gap;
+    this.update = function() {
+        if (this.swapping) {
+            this.cNums.swap(this.j, this.j - this.gap);
+            this.j -= this.gap;
+            if (this.j < this.gap && this.i + 1 < this.cNums.length) {
+                ++this.i;
+                this.j = this.i;
+            }
+            else if (this.j < this.gap) {
+                this.j = this.i = this.gap = (
+                    this.gap == 1 ? 0 : Math.ceil(this.gap / this.division));
+            }
+            this.swapping = false;
+            return true;
+        }
+        if (this.cNums.examine(this.j) < this.cNums.examine(this.j - this.gap)) {
+            this.swapping = true;
+            return true;
+        }
+        if (this.i + 1 < this.cNums.length) {
+            ++this.i;
+            this.j = this.i;
+            console.assert(this.j < this.cNums.length, this.j);
+            return true;
+        }
+        if (this.gap > 1) {
+            this.j = this.i = this.gap = (
+                this.gap == 1 ? 0 : Math.ceil(this.gap / this.division));
+            return true;
+        }
+        return false;
+    };
+    this.draw = function() {
+        this.cNums.draw();
+    };
+    return this;
+}
+
 function SortingObj() {
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
@@ -155,7 +198,6 @@ function SortingObj() {
         this.sorters = [];
         for (let i= 0; i < sortingAlgorithms.length; ++i) {
             let point = new PointObj(10, i * 60 + 30);
-            console.log(point);
             let randomColors = new ColoredNumbersObj(
                 this.canvas, this.context, point , 40, randomNumbers);
             this.sorters[i] = new sortingAlgorithms[i](randomColors);
@@ -167,5 +209,5 @@ function SortingObj() {
 
 function init() {
     let sorter = new SortingObj();
-    sorter.init([BubbleSort, InsertionSort]);
+    sorter.init([BubbleSort, InsertionSort, ShellSort]);
 }
