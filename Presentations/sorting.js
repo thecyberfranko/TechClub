@@ -47,6 +47,14 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
     this.examine = function(i) {
         return this.posSet[i].examine();
     };
+    this.block = function(i, j) {
+        let begin = this.posSet[i].point.x;
+        let end = this.posSet[j].point.x;
+        let y = this.posSet[j].point.y;
+        this.context.save()
+        this.context.strokeRect(begin, y - 27, end - begin  + 27, 36);
+        this.context.restore();
+    };
     this.draw = function() {
         this.context.save()
         this.context.font = "24px Arial"
@@ -194,6 +202,7 @@ function QuickSort(cNums) {
     this.queue = [];
     this.update = function() {
         if (this.done) return;
+        this.cNums.block(this.ftIdx, this.bkIdx);
         if (this.swapping) {
             this.cNums.swap(this.left++, this.right--);
             this.swapping = false;
@@ -212,7 +221,7 @@ function QuickSort(cNums) {
             return;
         }
         if (this.right - this.ftIdx > 0)
-            this.queue.push([this.ftIdx, this.right]);
+            this.queue.unshift([this.ftIdx, this.right]);
         if (this.bkIdx - this.left > 0)
             this.queue.push([this.left, this.bkIdx]);
         if (this.queue.length) {
