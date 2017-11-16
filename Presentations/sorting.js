@@ -28,21 +28,12 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
     this.point = point;
     this.offsetX = offsetX;
     this.posSet = [];
-    this.swapDisplayedPos = function(i, j) {
-        let tempPoint = this.posSet[i].point;
-        this.posSet[i].point = this.posSet[j].point;
-        this.posSet[j].point = tempPoint;
-    }
-    this.swapSetPos = function(i, j) {
-        let tempObj = this.posSet[i];
-        this.posSet[i] = this.posSet[j]
-        this.posSet[j] = tempObj;
-    }
     this.swap = function(i, j) {
         this.posSet[i].examine();
         this.posSet[j].examine();
-        this.swapDisplayedPos(i, j)
-        this.swapSetPos(i, j)
+        [this.posSet[i].point, this.posSet[j].point] = [  // Display
+            this.posSet[j].point, this.posSet[i].point];
+        [this.posSet[i], this.posSet[j]] = [this.posSet[j], this.posSet[i]];
     };
     this.rotate = function(toFront, fromBack) {
         this.posSet[toFront].examine();
