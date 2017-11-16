@@ -44,6 +44,19 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
         this.swapDisplayedPos(i, j)
         this.swapSetPos(i, j)
     };
+    this.rotate = function(toFront, fromBack) {
+        this.posSet[toFront].examine();
+        this.posSet[fromBack].examine();
+        let tempPoint = this.posSet[toFront].point;
+        let temp = this.posSet[fromBack];
+        for (let i = fromBack; i > toFront; --i) {
+            [this.posSet[i].point, this.posSet[i-1].point] = [
+                this.posSet[i-1].point, this.posSet[i].point];
+            [this.posSet[i], this.posSet[i-1]] = [this.posSet[i-1], this.posSet[i]];
+        }
+        this.posSet[toFront] = temp;
+        // this.posSet[toFront].point = tempPoint;
+    };
     this.examine = function(i) {
         return this.posSet[i].examine();
     };
@@ -241,6 +254,63 @@ function QuickSort(cNums) {
     return this;
 }
 
+function MergeSort(cNums) {
+    this.cNums = cNums;
+    this.done = false;
+    this.rotating = false;
+    this.queue = [];
+    ///[0, Math.floor(this.cNums.length / 2)], [Math.floor(this.cNums.length / 2), this.cNums.length -1]];
+    for (let i = 0; i < cNums.length; ++i)
+        this.queue.push([i, i])
+    this.prep = function() {
+        [this.ftIdx, this.ftSplit] = this.queue.shift();
+        [this.bkShift, this.bkIdx] = this.queue.shift();
+        this.left = this.ftIdx;
+        this.right = this.bkShift;
+        if (Math.abs(this.bkShift - this.ftSplit) > 1) {
+            this.queue.push([this.ftIdx, this.ftSplit]);
+            this.ftIdx = this.left = this.right;
+            this.ftSplit = this.bkIdx;
+            [this.bkShift, this.bkIdx] = this.queue.shift();
+            this.right = this.bkShift;
+        }
+    }
+    this.prep();
+    this.update = function() {
+        if (this.done) return;
+        this.cNums.block(this.ftIdx, this.ftSplit);
+        this.cNums.block(this.bkShift, this.bkIdx);
+        if (this.rotating) {
+            this.cNums.rotate(this.left, this.right);
+            this.rotating = false;
+            if (this.left < this.right && this.right < this.bkIdx) {
+                ++this.left;
+                ++this.right;
+            }
+            else if (this.left + 1 == this.right) {
+                this.update();
+            }
+        }
+        else if (this.cNums.examine(this.left) > this.cNums.examine(this.right)) {
+            this.rotating = true;
+        }
+        else if (this.left < this.right - 1 && this.right <= this.bkIdx) {
+            ++this.left;
+        }
+        else {
+            this.queue.push([this.ftIdx, this.bkIdx]);
+            if (this.queue.length > 1)
+                this.prep();
+            else
+                this.done = true;
+        }
+    };
+    this.draw = function() {
+        this.cNums.draw();
+    };
+    return this;
+}
+
 function SortingObj() {
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
@@ -272,5 +342,5 @@ function SortingObj() {
 
 function init() {
     let sorter = new SortingObj();
-    sorter.init([BubbleSort, InsertionSort, ShellSort, QuickSort]);
+    sorter.init([BubbleSort, InsertionSort, ShellSort, QuickSort, MergeSort]);
 }
