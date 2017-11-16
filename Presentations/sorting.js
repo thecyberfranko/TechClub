@@ -28,7 +28,9 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
     this.point = point;
     this.offsetX = offsetX;
     this.posSet = [];
+    this.swapCount = 0;
     this.swap = function(i, j) {
+        ++this.swapCount;
         this.posSet[i].examine();
         this.posSet[j].examine();
         [this.posSet[i].point, this.posSet[j].point] = [  // Display
@@ -36,6 +38,7 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
         [this.posSet[i], this.posSet[j]] = [this.posSet[j], this.posSet[i]];
     };
     this.rotate = function(toFront, fromBack) {
+        ++this.swapCount;
         this.posSet[toFront].examine();
         this.posSet[fromBack].examine();
         let tempPoint = this.posSet[toFront].point;
@@ -46,7 +49,6 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
             [this.posSet[i], this.posSet[i-1]] = [this.posSet[i-1], this.posSet[i]];
         }
         this.posSet[toFront] = temp;
-        // this.posSet[toFront].point = tempPoint;
     };
     this.examine = function(i) {
         return this.posSet[i].examine();
@@ -59,12 +61,13 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
         this.context.strokeRect(begin, y - 27, end - begin  + 27, 36);
         this.context.restore();
     };
-    this.draw = function() {
+    this.draw = function(Title) {
         this.context.save()
         this.context.font = "24px Arial"
         this.context.lineWidth = 3;
+        this.context.fillText(`${Title}    Swaps ${this.swapCount}`, this.point.x, this.point.y);
         for (posNum of this.posSet) {
-            let hue = Math.floor(360 / (posNum.value + 1));
+            let hue = Math.floor(360 / 18 * (posNum.value + 2));
             context.fillStyle = `hsl(${hue}, 100%, 50%)`;
             posNum.draw();
         }
@@ -74,7 +77,7 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
         this.length = numberSet.length;
         for (let i= 0; i < this.length; ++i) {
             let point = new PointObj(this.offsetX * i + this.point.x,
-                                     this.point.y);
+                                     this.point.y + 35);
             this.posSet.push(new PositionedObj(
                 context, numberSet[i], point))
         }
@@ -88,9 +91,11 @@ function BubbleSort(cNums) {
     this.done = false;
     this.i = this.passes = 0;
     this.swapping = this.swapped = false;
-    this.update = function() {
+    this.time = new Date();
+    this.update = function(startTime) {
         if (this.done) return;
-        else if (this.swapping) {
+        this.time = (new Date()).getTime() - startTime;
+        if (this.swapping) {
             this.cNums.swap(this.i, this.i + 1);
             this.i = ((this.i + 1 < this.cNums.length - 1 - this.passes)
                        ? this.i + 1 : 0)
@@ -116,7 +121,7 @@ function BubbleSort(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw();
+        this.cNums.draw(`Bubble Sort      ${Math.floor(this.time / 600)}s    `);
     };
     return this;
 }
@@ -125,8 +130,10 @@ function InsertionSort(cNums) {
     this.cNums = cNums;
     this.done = false;
     this.i = this.j = 1;
-    this.update = function() {
+    this.time = new Date();
+    this.update = function(startTime) {
         if (this.done) return;
+        this.time = (new Date()).getTime() - startTime;
         if (this.swapping) {
             this.cNums.swap(this.j, this.j - 1);
             --this.j;
@@ -148,7 +155,7 @@ function InsertionSort(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw();
+        this.cNums.draw(`Insertion Sort    ${Math.floor(this.time / 600)}s    `);
     };
     return this;
 }
@@ -159,8 +166,10 @@ function ShellSort(cNums) {
     this.division = 3;
     this.gap = Math.ceil(this.cNums.length / this.division);
     this.i = this.j = this.gap;
-    this.update = function() {
+    this.time = new Date();
+    this.update = function(startTime) {
         if (this.done) return;
+        this.time = (new Date()).getTime() - startTime;
         if (this.swapping) {
             this.cNums.swap(this.j, this.j - this.gap);
             this.j -= this.gap;
@@ -191,7 +200,7 @@ function ShellSort(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw();
+        this.cNums.draw(`Shell Sort         ${Math.floor(this.time / 600)}s    `);
     };
     return this;
 }
@@ -204,8 +213,10 @@ function QuickSort(cNums) {
     this.ftIdx = this.left = 0;
     this.bkIdx = this.right = cNums.length - 1;
     this.queue = [];
-    this.update = function() {
+    this.time = new Date();
+    this.update = function(startTime) {
         if (this.done) return;
+        this.time = (new Date()).getTime() - startTime;
         this.cNums.block(this.ftIdx, this.bkIdx);
         if (this.swapping) {
             this.cNums.swap(this.left++, this.right--);
@@ -233,14 +244,14 @@ function QuickSort(cNums) {
             this.ftIdx = this.left = pair[0];
             this.bkIdx = this.right = pair[1];
             this.pivot = this.cNums.posSet[this.ftIdx].value;
-            this.update();
+            this.update(startTime);
         }
         else {
             this.done = true;
         }
     };
-    this.draw = function() {
-        this.cNums.draw();
+    this.draw = function(time) {
+        this.cNums.draw(`Quick Sort        ${Math.floor(this.time / 600)}s    `);
     };
     return this;
 }
@@ -250,7 +261,7 @@ function MergeSort(cNums) {
     this.done = false;
     this.rotating = false;
     this.queue = [];
-    ///[0, Math.floor(this.cNums.length / 2)], [Math.floor(this.cNums.length / 2), this.cNums.length -1]];
+    this.time = new Date();
     for (let i = 0; i < cNums.length; ++i)
         this.queue.push([i, i])
     this.prep = function() {
@@ -267,8 +278,9 @@ function MergeSort(cNums) {
         }
     }
     this.prep();
-    this.update = function() {
+    this.update = function(startTime) {
         if (this.done) return;
+        this.time = (new Date()).getTime() - startTime;
         this.cNums.block(this.ftIdx, this.ftSplit);
         this.cNums.block(this.bkShift, this.bkIdx);
         if (this.rotating) {
@@ -279,7 +291,7 @@ function MergeSort(cNums) {
                 ++this.right;
             }
             else if (this.left + 1 == this.right) {
-                this.update();
+                this.update(startTime);
             }
         }
         else if (this.cNums.examine(this.left) > this.cNums.examine(this.right)) {
@@ -297,7 +309,7 @@ function MergeSort(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw();
+        this.cNums.draw(`Merge Sort       ${Math.floor(this.time / 600)}s    `);
     };
     return this;
 }
@@ -308,25 +320,26 @@ function SortingObj() {
     this.loop = function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         for (let sorter of this.sorters) {
-            sorter.update();
+            sorter.update(this.startTime);
             sorter.draw();
         }
     };
     this.init = function(sortingAlgorithms) {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        // [5, 3, 2, 9, 7, 4, 6, 8, 10, 7, 9, 9, 13, 11, 13, 13, 11, 15, 15, 15]
         let randomNumbers = [];
-        for (let i= 0; i < 20; ++i)
+        for (let i= 0; i < 30; ++i)
             randomNumbers.push(Math.floor(Math.random() * 15) + 1);
+        console.log(randomNumbers);
         this.sorters = [];
         for (let i= 0; i < sortingAlgorithms.length; ++i) {
-            let point = new PointObj(10, i * 60 + 30);
+            let point = new PointObj(10, i * 100 + 30);
             let randomColors = new ColoredNumbersObj(
                 this.canvas, this.context, point , 40, randomNumbers);
             this.sorters[i] = new sortingAlgorithms[i](randomColors);
         }
-        this.animation = setInterval(this.loop.bind(this), 500);
+        this.startTime = (new Date()).getTime();
+        this.animation = setInterval(this.loop.bind(this), 300);
     };
     return this;
 }
