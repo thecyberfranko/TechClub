@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>The Methotical Art of Debugging</title>
+    <link rel="stylesheet" href="reveal/css/reveal.css">
+    <link rel="stylesheet" href="reveal/css/theme/black.css" id="theme">    
+    <style>
+        .reveal .split { display: inline-block; width: 45%; }
+        .reveal ul.split { vertical-align: top; }
+        .reveal img.split { margin: 0px }
+        .reveal div.split img { width: 45%; margin: 0px }
+        .reveal img.tile { width: 35%; margin: 0px }
+        .reveal ul.horizontal li { display: inline; margin: 0px 15px}
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h4>Presenting...</h4>
+            <h2>The Methodical Art of Program Debugging</h2>
+            <h4>By Jonathan Niehenke</h4>
+            <p class="fragment current-visible">View notes by pressing "s"</p>
+        </section>
+        <section>
+            <h2>Intentions</h2>
+            <ul>
+                <li>Provide perspective</li>
+                <li>Focused on reasoning</li>
+                <li>Illustrated by example</li>
+                <li>Keeping it general</li>
+                <li>Please ask questions</li>
+            </ul>
+            <aside class="notes">
+                <ul>
+                    <li>To provided my perspective and thought process</li>
+                    <li>Focused on the reasoning behind each step to remain flexible (even outside of programming)</li>
+                    <li>I will illustrate with a problem I had with my StarCraft Bot</li>
+                    <li>You will not see any code or the details of each step.</li>
+                    <li>Ask questions as any misunderstanding may prevent the intended impact.</li>
+                </ul>
+            </aside>
+        </section>
+        <section>
+            <h2>Steps</h2>
+            <ul>
+                <li>Define the problem</li>
+                <li>Modify and Test</li>
+                <li>Devising a solution</li>
+                <li>Implement/Asses</li>
+            </ul>
+            <aside class="notes"><p>
+                The steps I take to debug a program are define the problem,
+                modify and test, devise a solution, and implement and asses.
+            <p></aside>
+        </section>
+        <section>
+            <section>
+                <h2>Define the problem</h2>
+                <ul>
+                    <li>Gathering information</li>
+                    <li>If we don't understand</li>
+                <ul>
+                <aside class="notes">
+                    <ul>
+                        <li>The first step "define the problem" aims at gathering information</li>
+                        <li>How could we effectively fix the problem, if we don't understand the events leading to it</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <h2>Example</h2>
+                <img src="debugImages\Misplaced.png" class="split" />
+                <ul class="split">
+                    <li>What is the problem?</li>
+                    <li>Why is it?</li>
+                    <li>Expected?</li>
+                    <li>Cause?</li>
+                    <li>Solution?</li>
+                </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>Problem: is that some bases are not gathering resources.</li>
+                        <li>Background: Resources are the currency used to build and train stuff
+                            <ul>
+                                <li>Minerals are the abundant blue crystals</li>
+                                <li>Vespene gas is gathered from the geysers</li>
+                                <li>Both need workers to gather them</li>
+                            </ul>
+                        </li>
+                        <li>Why: The base will not justify the cost with a single worker</li>
+                        <li>Expect: To train workers to improve economic income</li>
+                        <li>Cause: Minerals were not detected within range to
+                            determine it an economic base.
+                            <ul>
+                                <li>The method of mineral detection is situationally faulty.</li>
+                                <li>The base placement was too far away from the minerals.</li>
+                            </ul>
+                        </li>
+                        <li>Target: is to improve the base placement as it
+                            provides a good perspective for each step.</li>
+                    </ul>
+                </aside>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Modify and Test</h2>
+                <ul>
+                    <li>Quick fixes</li>
+                    <li>Functionality</li>
+                    <li>Logical deductions</li>
+                </ul>
+            </section>
+            <section>
+                <ul class="horizontal">
+                    <li>Black: Average</li>
+                    <li>Green: Favor Gysers</li>
+                    <li>White: Final</li>
+                </ul>
+                <img src="debugImages/Positioning1.png" class="split" />
+                <img src="debugImages/Positioning2.png" class="split" />
+                <p class="fragment current-visible">Deduction: Skipping around</p>
+                <aside class="notes">
+                    <ul>
+                        <li>Background: To interact with StarCraft programmatically
+                            we use the Brood War API. Included is a tool that finds
+                            appropriate building positions with a range around a
+                            desired position.
+                        </li>
+                        <br />
+                        <li>Originally: The desired position was the average position of minerals</li>
+                        <li>First: Use the average position of all local resources</li>
+                        <li>Result: Reduced the worse cases.</li>
+                        <li>Second: Bisect the average position of minerals and geysers</li>
+                        <li>Result: Good given positions, but receiving worse locations</li>
+                        <li>Deduction: The tool was skipping around in its search</li>
+                    </ul>
+                </aside>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Devising a solution</h2>
+                <ul>
+                    <li>New solution</li>
+                    <li>Insufficient</li>
+                    <li>Nonexistent</li>
+                </ul>
+                <aside class="notes">
+                    <p>For creating a new solution, after determining current
+                        methods are insufficient or nonexistent.</p>
+                </aside>
+            </section>
+            <section>
+                <h2>I know:</h2>
+                <p>Players use the graphic's corner</p>
+                <img src="debugImages/PlayerPlacementUL.png" />
+                <aside class="notes"><p>
+                    Players like myself use the corner of graphic for placement.
+                </p></aside>
+            </section>
+            <section>
+                <h2>Possible Solution</h2>
+                <p>Build along the perpendicular edges</p>
+                <img src="debugImages/PlayerPlacementLL.png" />
+                <aside class="notes"><p>
+                    Build at the corner made by the perpendicular edges after
+                    the required offset.
+                </p></aside>
+            </section>
+            <section>
+                <h2>What could be used?</h2>
+                <p>The nearest edge shared by the resources</p>
+                <img src="debugImages/PlayerPlacementUR.png" />
+                <aside class="notes"><p>
+                </p></aside>
+            </section>
+            <section>
+                <h2>How could we find?</h2>
+                <p>The reoccurring positions of a resource's sides</p>
+                <img src="debugImages/PlayerPlacementLR.png" />
+                <aside class="notes"><p>
+                </p></aside>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Implement/Asses</h2>
+            </section>
+            <section>
+                <h2>Python Correct</h2>
+                <img src="debugImages/PythonT.png" class="tile" />
+                <img src="debugImages/PythonL.png" class="tile" />
+                <img src="debugImages/PythonR.png" class="tile" />
+                <img src="debugImages/PythonB.png" class="tile" />
+            </section>
+            <section>
+                <h2>Python Wrong</h2>
+                <img src="debugImages/PythonIssue.png" class="tile" />
+                <img src="debugImages/PythonIssue2.png" class="tile" />
+            </section>
+            <section>
+                <h2>Destination</h2>
+                <img src="debugImages/DestinationT.png" class="tile" />
+                <img src="debugImages/DestinationB.png" class="tile" />
+                <img src="debugImages/DestinationIssue.png" class="tile" />
+                <img src="debugImages/DestinationIssue2.png" class="tile" />
+            </section>
+        </section>
+        <section>
+            <h2>We learned</h2>
+            <ul>
+                <li>Defining the problem:
+                    <span class="fragment">Direction</span>
+                </li>
+                <li>Modifying and Testing:
+                    <span class="fragment">Misunderstanding</span>
+                </li>
+                <li>Devising a solution:
+                    <span class="fragment">Simplify</span>
+                </li>
+                <li>Implement/Assess:
+                    <span class="fragment">Improvement</span>
+                </li>
+                <li>Finally:
+                    <span class="fragment">Good enough</span>
+                </li>
+            </ul>
+            <aside class="notes">
+                <ul>
+                    <li>Problem: We learned about directions we could take and
+                        chose to improve building placement</li>
+                    <li>Testing: We learned of a misunderstanding in a tools
+                        functionality that was finding worse positions.</li>
+                    <li>Devising: We learned how to simplify the problem
+                        by applying what we knew.</li>
+                    <li>Assess: We learned there are still problems, but it is
+                        an improvement.</li>
+                    <li>Finally: "Reach for good enough as every little
+                        improvement is a big deal. Perfection is an ever
+                        expanding standard that if challenged immediately will
+                        cause frustration and disinterest.
+                    </li>
+                </ul>
+            </aside>
+        </section>
+    </div>
+</div>
+<script src="reveal/lib/js/head.min.js"></script>
+<script src="reveal/js/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        dependencies: [
+            // { src: 'reveal/plugin/zoom-js/zoom.js', async: true },
+            { src: 'reveal/plugin/notes/notes.js', async: true }
+        ]
+    });
+</script>
+
+</body>
+</html>

@@ -8,6 +8,8 @@ Jonathan Niehenke
 ### Contained files:
 
 - Presentations/ **Note: requires reveal directory containing [reveal.js](https://github.com/hakimel/reveal.js)**
+    Debug.html - Presentation of program debugging using reveal.js
+    debugImages/*  - Images used in Debug presentation
     Vim.html - Presentation of vim using reveal.js
     VimImages/* - Images used in vim presentation
 - PiCalc/ **Note: assumes a fixed console size**
