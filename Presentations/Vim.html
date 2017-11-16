@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Vim</title>
+    <link rel="stylesheet" href="reveal/css/reveal.css">
+    <link rel="stylesheet" href="reveal/css/theme/black.css" id="theme">    
+    <style>
+        .reveal p.myQuote { font-size: 50% }
+        .reveal code {
+            font-family: Lucida Console, Consolas, Liberation Mono,DejaVu Sans Mono;
+            font-size: 80%;
+            color: black;
+            background-color: dimgrey;
+            padding: 3px;
+        }
+        .reveal b { color:yellow; }
+        .reveal .transparentImg {
+            background: none; border: none; box-shadow: none }
+        .reveal ul {
+            list-style-image: url("VimImages/vimBullet.png"); }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <img src="VimImages/vimLogo.png" width=50% class="transparentImg" />
+            <h3>By Jonathan Niehenke</h3>
+            <p class="fragment current-visible">View notes by pressing "s"</p>
+        </section>
+        <section>
+            <h2>Why vim?</h2>
+            <ul>
+                <li>Reduce load times</li>
+                <li>Keyboard exclusive</li>
+                <li>Create your workflow</li>
+                <li><a href="https://www.fastcompany.com/3037629/why-vim-an-80s-text-editor-is-still-the-ui-of-choice-for-power-users"
+                       target="_blank">An ’80s Text Editor</a></li>
+                <li>Popular
+                    <a href="https://insights.stackoverflow.com/survey/2015#tech-editor"
+                       target="_blank">Editors</a> and
+                    <a href="https://insights.stackoverflow.com/survey/2016#technology-development-environments"
+                           target="_blank">Environments</a>
+                </li>
+            </ul>
+            <aside class="notes">
+                <p>Vim is a text editor that uniquely approaches how to edit
+                   text. It is best for programmers, power users and
+                    command-line gurus.</p>
+                <ul>
+                    <li>It is lightweight (35MB) and loads quickly</li>
+                    <li>Repeatedly switching between the keyboard and mouse
+                        accumulates into waisted time</li>
+                    <li>Modify settings, hotkeys, and create and run macros as
+                        you work</li>
+                    <li>More on that and vim in the linked article</li>
+                    <li>Survey results of preferred developer text editors and
+                        environments</li>
+                </ul>
+            </aside>
+        </section>
+        <section>
+            <h2>Speaker</h2>
+            <ul>
+                <li>Student</li>
+                <li>Programmer
+                    <a href="https://github.com/JonathanNiehenke"
+                       target="_blank">GitHub</a>
+                </li>
+                <li>A vimmer</li>
+            </ul>
+            <aside class="notes">
+                <ul>
+                    <li>I am Jonathan Niehenke a programming group lead in Tech
+                        Club</li>
+                    <li>I am earning an Associates in Software Development this
+                        quarter (Summer 17)</li>
+                    <li>I have been programming since March 2014, when I began
+                        teaching myself Python</li>
+                    <li>Vim is my preferred working environment it has become
+                        second nature to where I feel crippled when using
+                        Visual Studio or Netbeans.</li>
+                </ul>
+            </aside>
+        </section>
+        <section>
+            <section>
+                <h2>Expect</h2>
+                <ul>
+                    <li>My terminology</li>
+                    <li>Functionality</li>
+                    <li>Links</li>
+                    <li>Questions and Demos</li>
+                    <li><code>Commands</code></li>
+                    <li><b>Keypresses</b></li>
+                </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>I probably refer to things differently than
+                            most.<li>
+                        <li>Presenting at least the functionality expected of a
+                            text editor</li>
+                        <li>I may follow the links, but they were specifically
+                            chosen</li>
+                        <li>Ask questions this is not intended for only my
+                            benefit</li>
+                        <li>I will be demonstrating upon request</li>
+                        <li>Commands and keypresses will be formatted like
+                            these</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <h2>Points</h2>
+                <ul>
+                    <li>About</li>
+                    <li>Basics</li>
+                    <li>Search/Replace</li>
+                    <li>Check spelling</li>
+                    <li>Word Completion</li>
+                    <li>Other Features</li>
+                    <li>Resources</li>
+                </ul>
+            </section>
+        </section>
+        <section>
+            <h2>About</h2>
+            <ul>
+                <li>Released in 1991</li>
+                <li>Clone of Vi</li>
+                <li>Modal interface
+                    <ul>
+                        <li>Normal mode</li>
+                        <li>Insertion mode</li>
+                        <li>Visual mode</li>
+                    </ul>
+                </li>
+            </ul>
+            <aside class="notes">
+                <ul>
+                    <li>Vim was released in 1991 as an improved clone of Vi</li>
+                    <li>Vi was created before the adoption of the mouse</li>
+                    <li>They use keyboard commands rather than menus, and a
+                        modal interface rather than hotkey modifiers.
+                    </li>
+                    <li>Modal interface changes its functionality depending on
+                        the current mode</li>
+                    <li>Normal mode is for movement/scrolling, copy/pasting,
+                        and entering commands</li>
+                    <li>Insertion is for input of text</li>
+                    <li>Visual mode is for selecting text</li>
+                    <li>And switching modes takes a single keypress much faster
+                        than reaching for the mouse.</li>
+                    <li>Press the escape key to return to normal mode</li>
+                </ul>
+            </aside>
+        </section>
+        <section>
+            <section>
+                <h2>Basics</h2>
+                <ul>
+                    <li>Movement</li>
+                    <li>Scrolling</li>
+                    <li>Actions</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Movement</h3>
+                <ul>
+                    <li>Mimic arrow keys: <b>h</b>, <b>j</b>, <b>k</b>, <b>l</b></li>
+                    <li>To word: <b>w</b>, <b>b</b>, <b>e</b>, <b>W</b>,
+                                 <b>B</b>, <b>E</b></li>
+                    <li>To occurrence: <b>f</b>, <b>t</b>, <b>F</b>,
+                                            <b>T</b></li>
+                    <li>To boundaries: <b>0</b> (zero), <b>^</b>,
+                                            <b>$</b></li>
+                    <li>Within Document: <b>gg</b>, <b>G</b>, <b>#g</b></li>
+                    <li><a href="https://bitbucket.org/tednaleid/vim-shortcut-wallpaper/raw/tip/vim-shortcuts.png"
+                           target="_blank">Movement Cheatsheet</a>
+                    </li>
+                </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>"h", "j", "k", "l" function like arrow keys but are accessibly on the home row.</li>
+                        <li>Think of word movement as "word", "back" and "end" </li>
+                        <li>Word movement capitals extend to the whitespace, mimicking the control arrow key hotkeys</li>
+                        <li>Occurrence movement "find" moves onto occurrence while "till" moves just before</li>
+                        <li>Occurrence movement capitals go backwards</li>
+                        <li>Zero moves to the very beginning of the line</li>
+                        <li>The carrot moves to the first visible char of the line</li>
+                        <li>The dollar sign moves to end of the line.</li>
+                        <li>"gg" goes to the document's beginning and "G" to the end</li>
+                        <li>A number and "g" move to that line number within the document</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <h3>Scrolling</h3>
+                <ul>
+                    <li>Automatic</li>
+                    <li>Page-up: <b>ctrl+b</b></li>
+                    <li>Page-down: <b>ctrl+f</b></li>
+                    <li>Relative to cursor: <b>zt</b>, <b>zz</b>, <b>zb</b></li>
+                </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>If the movement is outside of the screen scrolling
+                            is automatic</li>
+                        <li>I remember page-up and down as backwards and forwards</li>
+                        <li>Scrolling relative to the cursor will positions the
+                            text about the cursor to that position within the
+                            screen
+                        </li>
+                        <li>So with the cursor positioned about the middle of
+                            the screen and we use "zt" the text at the middle
+                            shifts up to the top like we were scrolling down
+                        </li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <h3>Actions</h3>
+                <ul>
+                    <li>Input: <b>i</b>, <b>I</b></li>
+                    <li>Append: <b>a</b>, <b>A</b></li>
+                    <li>New line: <b>o</b>, <b>O</b></li>
+                    <li>Delete: <b>d</b>, <b>D</b>, <b>dd</b></li>
+                    <li>Change: <b>c</b>, <b>C</b>, <b>cc</b></li>
+                    <li>Yank (Copy): <b>y</b>, <b>yy</b></li>
+                    <li>Paste: <b>p</b>, <b>P</b></li>
+                    <li>Undo & Redo: <b>u</b>, <b>ctrl+r</b></li>
+                </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>Input: Enters insert mode immediately before the cursor or at the beginning of the line</li>
+                        <li>Append: Enters insert mode immediately after the cursor or at the end of the line</li>
+                        <li>New line: Enters insert mode on a new line before or after current line</li>
+                        <li>Delete: Removes text specified with movement, end of line or entire line</li>
+                        <li>Change: Removes text and enters insert mode specified with movement, end of line or entire line</li>
+                        <li>Yank: Copies text specified with movement or entire line</li>
+                        <li>Paste: Pastes the text last removed or yanked after or before cursor</li>
+                    </ul>
+                </aside>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Search/Replace</h2>
+                <ul>
+                    <li>Search custom pattern: <b>/</b>, <b>?</b></li>
+                    <li>Search current word: <b>*</b>, <b>#</b></li>
+                    <li>Move to match: <b>n</b>, <b>N</b></li>
+                    <li>Substitute:<code>:s/find/replace</code></li>
+                </ul>
+                <aside class="notes">
+                    <ul>
+                        <li>Search pattern or current word following or preceding the cursor</li>
+                        <li>Jump to the next or previous match according to search direction</li>
+                        <li>If either substitute command ran as is the first
+                            f-i-n-d would get replaced by replace</li>
+                        <li>Preceed "s" with "%" to replace within entire file</li>
+                        <li>Append "/g" to the substitute command to replace all matches</li>
+                    </ul>
+                </aside>
+                </section>
+            <section>
+                <h2>Custom Search</h2>
+                <img src="VimImages/customSearch.gif" />
+                <aside class="notes">
+                    <ul>
+                        <li>The search patter is in the bottom left corner</li>
+                        <li>This pattern include matches within words</li>
+                        <li>To highlight the search like in browsers "set hlsearch" command</li>
+                        <li>The "noh" command temporarily disables search highlighting</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <h2>Star Search</h2>
+                <img src="VimImages/starSearch.gif" />
+                <aside class="notes">
+                    <ul>
+                        <li>Search supports regular expressions</li>
+                        <li>The star automatically types the search expression
+                            matching an entire word</li>
+                    </ul>
+                </aside>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Spell Checking</h2>
+                <ul>
+                    <li>Enable: <code>:set spell</code></li>
+                    <li>Next misspell: <b>]s</b></li>
+                    <li>Previous misspell: <b>[s</b></li>
+                    <li>List/Select corrections: <b>z=</b></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Spell Highlighting</h2>
+                <img src="VimImages\spellHighlight.gif" />
+            </section>
+            <section>
+                <h2>Spell Suggestion</h2>
+                <img src="VimImages\spellSuggestions.gif" />
+                <aside class="notes">
+                    <ul>
+                        <li>Press "z=" to view the suggestion</li>
+                        <li>Type the associated number and press "Enter"</li>
+                    </ul>
+                </aside>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Word Completion</h2>
+                <ul>
+                    <li>Word must exist</li>
+                    <li>Insert mode</li>
+                    <li>Next matching word: <b>Ctrl+n</b></li>
+                    <li>Previous matching word: <b>Ctrl+p</b></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Word Completion</h2>
+                <img src="VimImages\wordCompletion.gif" />
+                <aside class="notes">
+                    <ul>
+                        <li>mo has multiple matches</li>
+                        <li>Use Ctrl+n or Ctrl+p to cycle through them</li>
+                    </ul>
+                </aside>
+            </section>
+        </section>
+        <section>
+            <h2>Other Features</h2>
+            <ul>
+                <li>Composition with text objects</li>
+                <li>Text folding</li>
+                <li>Window Tabs and Splits</li>
+                <li>Highlight/merge differences</li>
+                <li>Macros</li>
+                <li>Customizations</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Resources</h2>
+            <ul>
+                <li>Built-in: <code>:help</code> & <code>:help tutor</code></li>
+                <li>Collection:
+                    <a href="http://vim.wikia.com/wiki/Vim_documentation#Vim_help_documentation"
+                       target="_blank">Vim resource collection</a>
+                </li>
+                <li>Screencasts:
+                    <a href="http://vimcasts.org/" target="_blank">
+                        Vimcasts</a>
+                </li>
+                <li>Fundamentals:
+                    <a href="https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim/1220118#1220118"
+                       target="_blank">You don't grok vi</a>
+                </li>
+                <li>Book
+                    <a href="https://www.amazon.com/Practical-Vim-Edit-Speed-Thought/dp/1680501275/ref=asap_bc?ie=UTF8"
+                       target="_blank">
+                            Practical Vim: Edit Text at the Speed of Thought</a>
+                </li>
+            </ul>
+        </section>
+    </div>
+</div>
+<script src="reveal/lib/js/head.min.js"></script>
+<script src="reveal/js/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        dependencies: [
+            // { src: 'reveal/plugin/zoom-js/zoom.js', async: true },
+            { src: 'reveal/plugin/notes/notes.js', async: true }
+        ]
+    });
+</script>
+
+</body>
+</html>

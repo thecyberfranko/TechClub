@@ -7,6 +7,9 @@ Jonathan Niehenke
 
 ### Contained files:
 
+- Presentations/ **Note: requires reveal directory containing [reveal.js](https://github.com/hakimel/reveal.js)**
+    Vim.html - Presentation of vim using reveal.js
+    VimImages/* - Images used in vim presentation
 - PiCalc/ **Note: assumes a fixed console size**
     - algorithmPrintOut.rtf - A handout of demonstrated Pi formulas.
     - piCalc.cpp - Cpp source that demonstrates Pi formulas to a fixed amount.
