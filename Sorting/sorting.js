@@ -200,6 +200,43 @@ function InsertionSort(cNums) {
     return this;
 }
 
+function BinaryInsertion(cNums) {
+    this.cNums = cNums;
+    this.done = false;
+    this.i =  1;
+    this.rangeLow = this.rangeHigh, this.j = 0;
+    this.time = new Date();
+    this.update = function(startTime) {
+        if (this.done) return;
+        this.time = (new Date()).getTime() - startTime;
+        if (this.rangeLow == this.rangeHigh) {
+            this.j += (this.cNums.examine(this.i) < this.cNums.examine(this.j)
+                ? 0 : 1);
+            this.cNums.rotate(this.j, this.i++);
+            if (this.i < this.cNums.length) {
+                this.rangeLow = 0;
+                this.rangeHigh = this.i;
+                this.j = Math.floor((this.rangeHigh - this.rangeLow) / 2 + this.rangeLow);
+            }
+            else
+                this.done = true;
+        }
+        else {
+            this.cNums.block(this.rangeLow, this.rangeHigh);
+            let temp = Math.floor((this.rangeHigh - this.rangeLow) / 2 + this.rangeLow);
+            if (this.cNums.examine(this.i) < this.cNums.examine(this.j))
+                this.rangeHigh = this.j;
+            else
+                this.rangeLow = this.j + 1
+            this.j = temp;
+        }
+    };
+    this.draw = function() {
+        this.cNums.draw(`Binary Insertion    ${Math.floor(this.time / 600)}s    `);
+    };
+    return this;
+}
+
 function ShellSort(cNums) {
     this.cNums = cNums;
     this.done = false;
@@ -386,5 +423,5 @@ function SortingObj() {
 
 function init() {
     let sorter = new SortingObj();
-    sorter.init([BubbleSort, SelectionSort, InsertionSort, ShellSort, QuickSort, MergeSort]);
+    sorter.init([BubbleSort, SelectionSort, InsertionSort, BinaryInsertion, ShellSort, QuickSort, MergeSort]);
 }
