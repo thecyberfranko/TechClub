@@ -296,11 +296,16 @@ function QuickSort(cNums) {
     this.cNums = cNums;
     this.done = false;
     this.swapping = false;
-    this.pivot = this.cNums.posSet[0].value;
     this.ftIdx = this.left = 0;
     this.bkIdx = this.right = cNums.length - 1;
     this.queue = [];
     this.time = new Date();
+    this.getNewPivot = function() {
+        let pivotIdx = Math.floor(
+            Math.random() * (this.bkIdx - this.ftIdx) + this.ftIdx);
+        return this.cNums.posSet[pivotIdx].value;
+    }
+    this.pivot = this.getNewPivot();
     this.update = function(startTime) {
         if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
@@ -330,7 +335,7 @@ function QuickSort(cNums) {
             let pair = this.queue.shift();
             this.ftIdx = this.left = pair[0];
             this.bkIdx = this.right = pair[1];
-            this.pivot = this.cNums.posSet[this.ftIdx].value;
+            this.pivot = this.getNewPivot();
             this.update(startTime);
         }
         else {
