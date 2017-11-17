@@ -139,29 +139,29 @@ function BubbleSort(cNums) {
     this.i = this.passes = 0;
     this.swapping = this.swapped = false;
     this.time = new Date();
+    this.nextPass = function() {
+        this.i = 0;
+        this.swapped = false;
+        ++this.passes;
+    };
     this.update = function(startTime) {
         if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
         if (this.swapping) {
             this.cNums.swap(this.i, this.i + 1);
-            this.i = ((this.i + 1 < this.cNums.length - 1 - this.passes)
-                       ? this.i + 1 : 0)
+            ++this.i;
+            if (this.i == this.cNums.length - 1 - this.passes && this.swapped)
+                this.nextPass();
             this.swapping = false;
-            return true;
         }
         else if (this.cNums.examine(this.i) > this.cNums.examine(this.i + 1)) {
             this.swapping = this.swapped = true;
-            return true;
         }
         else if (this.i + 1 < this.cNums.length - 1 - this.passes){
             ++this.i;
-            return true;
         }
         else if (this.swapped) {
-            this.i = 0;
-            this.swapped = false;
-            ++this.passes;
-            return true
+            this.nextPass();
         }
         else {
             this.done = true;
