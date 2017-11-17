@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Snake</title>
+    <link rel="stylesheet" href="reveal/css/reveal.css">
+    <link rel="stylesheet" href="reveal/css/theme/black.css" id="theme">    
+    <link rel="stylesheet" href="reveal/lib/css/zenburn.css">
+    <style>
+        .reveal #elevation h3 {
+            font-family: Impact;
+            color: black;
+            text-shadow:  0 1px 0 #ccc, 
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.15);
+        }
+        .reveal blockquote, ol.reduce { font-size: 75%; }
+        .reveal .split {
+            display: inline-block;
+            width: 48%;
+            vertical-align: top;
+            margin: 0px; 
+        }
+        .reveal ol.split { font-size: 75%; list-style-position: inside; }
+        .reveal code.small { font-size: 66%; line-height: normal; }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h2>Building a game of snake</h2>
+            <h3>By Jonathan Niehenke</h3>
+            <img src="http://www.onetechstop.net/wp-content/uploads/2012/02/snake.png" />
+            <aside class="notes">
+                I will demonstrate to you the thinking I use to approach and
+                build a program.
+            </aside>
+        </section>
+        <section>
+            <h3>Everyone should learn to Program</h3>
+            <h4>from Steve Jobs</h4>
+            <iframe width="640" height="480" data-autoplay
+                data-src="https://youtube.com/embed/UaA1PbyS8BA?start=19&end=39">
+            </iframe>
+        </section>
+        <section>
+            <h3>Why</h3>
+            <blockquote cite="http://www.academy-cube.com/10-reasons-why-you-should-learn-at-least-one-programming-language/">
+                <ol>
+                    <li>The job prospects are great...</li>
+                    <li>...Even if you're not a programmer</li>
+                    <li>It helps you work with others</li>
+                    <li>You'll learn how to learn</li>
+                    <li>It teaches you how to think logically and solve problems</li>
+                    <li>You'll become more detail-orientated</li>
+                    <li>It can be used to automate repetitive tasks</li>
+                    <li>You can use it for your side projects...</li>
+                    <li>...Or rake in money as a freelancer</li>
+                    <li>Everyone can learn how to do it</li>
+                </ol>
+            </blockquote>
+            <a href="http://www.academy-cube.com/10-reasons-why-you-should-learn-at-least-one-programming-language/">
+                http://www.academy-cube.com/10-reasons-why-you-should-learn-at-least-one-programming-language/
+            </a>
+            <aside class="notes">
+                Why would we want to learn to program. For a job, to challenge
+                ourselves to think logically, to use in automation or side
+                projects.<br>
+                Everyone can learn to program. I just believe people go about
+                it incorrectly.
+            </aside>
+        </section>
+        <section id="elevation">
+            <section data-background-image="https://www.nasa.gov/images/content/634127main_pia15292-Fig2-946.jpg"
+                     data-background-size="contain">
+                <h3>Climbing Mt Everest</h3>
+                <aside class="notes">
+                    Now, to climb Mt Everest in one try would kill us.
+                    Especially at the elevation we live in.
+                </aside>
+            </section>
+            <section data-background-image="https://lh4.ggpht.com/-BDL6qxkMccM/UBf0f-TJpNI/AAAAAAAAMto/X8bHU-sR1vs/mount_everest_thumb%25255B1%25255D.gif?imgmax=800"
+                     data-background-size="contain">
+                <h3>Steps</h3>
+                <aside class="notes">
+                    So steps were made to ease the process and ensure saftey.
+                </aside>
+            </section>
+            <section>
+                <blockquote cite="https://www.runtothefinish.com/how-to-climb-mount-everest/">
+                <h4>For those of us not climbing a mountain this still provides great lessons:</h4>
+                    <ul>
+                        <li>Your body needs to acclimate...</li>
+                        <li>Sometimes to make progress you have to go backwards...</li>
+                        <li>The summit is just one point in the journey...</li>
+                        <li>Success is not always about the peak...</li>
+                        <li>Slow progress is still progress</li>
+                        <li>You aren't done when you reach the top. It's about
+                            taking that new knowledge to apply it forward.</li>
+                    </ul>
+                </blockquote>
+                <a>https://www.runtothefinish.com/how-to-climb-mount-everest/</a>
+                <aside class="notes">
+                    What we can learn from Mt. Everest climbers is that
+                    sometimes to make progress you have to go backwards,
+                    slow progress is still progress, and you are not done when
+                    you reach the top its about using the knowledge you've
+                    gained.
+                </aside>
+            </section>
+        </section>
+        <section>
+            <h3>How it compares</h3>
+            <div class="fragment visible">
+                <h4>to programming</h4>
+                <br>
+                <ul>
+                    <li>Easy from afar</li>
+                    <li class="fragment visible">Overwhelming up close</li>
+                    <li class="fragment visible">Destructive without steps</li>
+                </ul>
+            </div>
+            <aside class="notes">
+                From afar a mountain looks small and to get something move
+                across the screen seems easy. But at its base it looks daunting
+                and within the code it seems impossible. Both are destructive
+                without steps.
+            </aside>
+        </section>
+        <section>
+            <h3>Forming the steps</h3>
+            <div  class="fragment visible">
+                <h4>to build snake</h4>
+                <br>
+                <ul>
+                    <li>Distinguishing features?</li>
+                    <li class="fragment visible">Logical order?</li>
+                    <li class="fragment visible">Steps/Objectives?</li>
+                </ul>
+            </div>
+            <aside class="notes">
+                <ul>
+                    <li>What are the distinguishing features of snake?</li>
+                    <li>What is their logical order?</li>
+                    <li>What steps are needed to reach each feature?</li>
+                </ul>
+            </aside>
+        </section>
+        <section>
+            <section>
+                <h3>Lets code!</h3>
+                <ol>
+                    <li>Obtain a copy of this presentation</li>
+                    <li>Open the presentation html file</li>
+                    <li>And use the space bar or arrow keys to navigate</li>
+                    <li>Go to <a href="https://jsfiddle.net">jsfiddle.net</a></li>
+                    <li>Follow the instructions on the slides below</li>
+                    <li>For an explanation of the code press "s"</li>
+                </ol>
+                <aside class="notes">
+                    For this demonstration I am using HTML and Javascript. And
+                    because all modern browsers support JavaScript no
+                    installation is required.
+                </aside>
+            </section>
+            <section>
+                <h3>Displaying a playing field</h3>
+                <div class="split">
+                    <pre><code class="html small" data-trim contenteditable>
+<canvas></canvas>
+                    </code></pre>
+                    <pre><code class="css small" data-trim contenteditable>
+canvas { background: skyblue; }
+                    </code></pre>
+                    <pre><code class="javascript small" data-trim contenteditable>
+function GameObj(
+    canvas, width, height, tileSize)
+{
+    this.canvas = canvas;
+    this.width = width;
+    this.height = height;
+    this.tileSize = tileSize;
+    this.context = canvas.getContext('2d');
+    this.init = function() {
+        this.canvas.width = (
+            this.width * this.tileSize);
+        this.canvas.height = (
+            this.height * this.tileSize);
+    };
+    return this;
+}
+
+
+let canvas = document.querySelector("CANVAS");
+let game = new GameObj(canvas, 30, 20, 20);
+game.init();
+                    </code></pre>
+                </div>
+                <div class="split">
+                    <ol class="reduce">
+                        <li>Copy the first block to HTML</li>
+                        <li>Copy the second block to CSS</li>
+                        <li>Copy the last block to JAVASCRIPT</li>
+                        <li>And run<br>(a skyblue box should appear)</li>
+                    </ol>
+                    <p style="color: gold;">
+                        All the remaining instructions will be to JAVASCRIPT</p>
+                </div>
+                <aside class="notes">
+                    <p>HTML defines structure, CSS defines appearance, JavaScript
+                        enables changes to the two.</p>
+                    <ol>
+                        <li>canvas - is the platform for which JavaScript can
+                            draw shapes and images to the screen.
+                        </li>
+                        <li>Apply a background color to differentiate between
+                            the canvas and the white background.</li>
+                        <li>GameObj - will handle the different
+                            parts that construct the game. Within the init
+                            function we are changing the size of the canvas to
+                            match a grid.
+                        </li>
+                    </ol>
+                </aside>
+            </section>
+            <section>
+                <h3>Drawing a segment</h3>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.snake = new SnakeObj(
+        this.context, this.tileSize, 
+        new PointObj(this.tileSize, this.tileSize));
+    this.snake.draw();
+                    </code></pre>
+                    <ol class="reduce">
+                        <li>Copy the snake assignment<br>
+                            to the end of GameObj's init</li>
+                        <li>Copy the Objects<br>
+                            to the top of JAVASCRIPT</li>
+                        <li>And run<br>(a grey square should appear)</li>
+                    </ol>
+                </div>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+    function PointObj(x, y) {
+        this.x = x;
+        this.y = y;
+        return this;
+    }
+
+    function SnakeObj(context, tileSize, head) {
+        this.context = context;
+        this.tileSize = tileSize;
+        this.head = head;
+        this.drawSegment = function(
+            Point, Color="grey")
+        {
+            this.context.fillStyle = Color;
+            this.context.fillRect(Point.x, Point.y,
+                this.tileSize, this.tileSize);
+        };
+        this.draw = function() {
+            this.drawSegment(this.head);
+        };
+        return this;
+    }
+                    </code></pre>
+                </div>
+                <aside class="notes">
+                    <ol>
+                        <li>Create a snake and draw it.
+                        </li>
+                        <li>The snake is defined with attributes that enable it
+                            to draw to our grid.
+                            <ul>
+                                <li>context - is the bush to modify our canvas</li>
+                                <li>tileSize - to enforce consistency with the grid</li>
+                                <li>head - a starting point for the snake</li>
+                                <li>drawSegment - draws to the canvas a colored rectangle</li>
+                                <li>draw - will draw our snake onto the canvas</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </aside>
+            </section>
+            <section>
+                <h3>Move a segment</h3>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+        this.animation = setInterval(
+            this.loop.bind(this), 100);
+                    </code></pre>
+                    <ol class="reduce">
+                        <li>Copy and replace snake's draw at the end of GameObj's init</li>
+                        <li>Copy to GameObj before init</li>
+                        <li>Copy to SnakeObj before drawSegment</li>
+                        <li>Copy to PointObj below the this.y = y</li>
+                        <li>And run<br>(the grey square should move)</li>
+                    </ol>
+                </div>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.directions = {
+        "N": new PointObj(0, -this.tileSize),
+        "S": new PointObj(0, this.tileSize),
+        "E": new PointObj(this.tileSize, 0),
+        "W": new PointObj(-this.tileSize, 0),
+    };
+    this.heading = this.directions["E"];
+    this.loop = function() {
+        this.snake.move(this.heading);
+        this.snake.draw();
+    };
+                    </code></pre>
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.move = function(Point) {
+        this.head = this.head.add(Point);
+    };
+                    </code></pre>
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.add = function(Point) {
+        return new PointObj(
+            this.x + Point.x, this.y + Point.y);
+    };
+                    </code></pre>
+                </div>
+                <aside class="notes">
+                    <ol>
+                        <li>To animate movement the loop function is called 
+                            every 100 milliseconds.</li>
+                        <li>
+                            <ul>
+                                <li>directions - define the possible points of direction</li>
+                                <li>heading - is the current direction of movement</li>
+                                <li>loop - will move the snake and then draw it</li>
+                            </ul>
+                        </li>
+                        <li>move - replaces the head after adding it to Point</li>
+                        <li>add - creates a new PointObj after adding the pair
+                            of x's and y's together</li>
+                    </ol>
+                </aside>
+            </section>
+            <section>
+                <h3>Move a snake</h3>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+        if (this.body.length &gt; this.length) {
+            this.drawSegment(
+                this.body.shift(), "skyblue");
+        }
+                    </code></pre>
+                    <pre><code class="javascript small" data-trim contenteditable>
+        this.body.push(this.head);
+                    </code></pre>
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.length = length;
+    this.body =[];
+                    </code></pre>
+                    <pre><code class="javascript small" data-trim contenteditable>
+function SnakeObj(
+    context, tileSize, head, length=5) {
+                    </code></pre>
+                </div>
+                <div class="split">
+                    <ol class="reduce">
+                        <li>Copy to the end of SnakeObj's draw</li>
+                        <li>Copy to the top of SnakeObj's move</li>
+                        <li>Copy to SnakeObj above move</li>
+                        <li>Replace at top of SnakeObj</li>
+                        <li>And run <br> (a slender object should move)</li>
+                    </ol>
+                </div>
+                <aside class="notes">
+                    <ol>
+                        <li>When the body is too long write over the tail with
+                            the background color</li>
+                        <li>Fill the body with the current value of head before
+                            changing it</li>
+                        <li>Creates and initiates length and body with values</li>
+                        <li>Defaults the snake's length to 5</li>
+                    </ol>
+                </aside>
+            </section>
+            <section>
+                <h3>Adding controls</h3>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+        document.addEventListener(
+            "keydown", this.changeDirection.bind(this));
+                    </code></pre>
+                    <ol class="reduce">
+                        <li>Copy to GameObj's init before setInterval</li>
+                        <li>Copy to GameObj above loop</li>
+                        <li>And run<br>
+                            (click on the canvas and press the arrow keys
+                             the snake should change directions)</li>
+                    </ol>
+                </div>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.changeDirection = function(e) {
+        switch(e.keyCode) {
+            case 38:  // Up arrow
+                this.heading = this.directions["N"];
+                break;
+            case 40:  // Down arrow
+                this.heading = this.directions["S"];
+                break;
+            case 39:  // Right arrow
+                this.heading = this.directions["E"];
+                break;
+            case 37:  // Left arrow
+                this.heading = this.directions["W"];
+                break;
+        }
+    };
+                    </code></pre>
+                </div>
+                <aside class="notes">
+                    <ol>
+                        <li>React to a key being pressed down by running the
+                            changeDirection function</li>
+                        <li>Changes the current heading from which of the arrow
+                            keys were pressed</li>
+                    </ol>
+                </aside>
+            </section>
+            <section>
+                <h3>Enforcing borders</h3>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.isOutOfBounds = function(Point) {
+        return (Point.x &lt; 0 || Point.y &lt; 0 ||
+                Point.x &gt;= this.canvas.width ||
+                Point.y &gt;= this.canvas.height);
+    };
+    this.loop = function() {
+        this.snake.move(this.heading);
+        if (this.isOutOfBounds(this.snake.head)) {
+            clearInterval(this.animation);
+            window.alert("Game Over");
+        }
+        else
+            this.snake.draw();
+    };
+                    </code></pre>
+                </div>
+                <ol class="split">
+                    <li>Copy and replace GameObj's loop</li>
+                    <li>And run<br>(A message displays when encountering the
+                        border)</li>
+                </ol>
+                <aside class="notes">
+                    <ul>
+                        <li>isOutOfBounds - returns whether the Point is too
+                            far left, up, right or down</li>
+                        <li>loop - now checks if the snake is out of bounds and
+                            ends the game by stopping the animation and
+                            alerting the player</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <h3>Enforcing body death</h3>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+        if (this.isOutOfBounds(this.snake.head) || 
+            this.snake.isBody(this.snake.head))
+        {
+                    </code></pre>
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.isBody = function(Point) {
+        for (bodyPoint of this.body) {
+            if (bodyPoint.equals(Point))
+                return true
+        }
+        return false;
+    };
+                    </code></pre>
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.equals = function(Point) {
+        return (this.x == Point.x &&
+                this.y == Point.y);
+    };
+                    </code></pre>
+                </div>
+                <ol class="split">
+                    <li>Copy and replace the first line inside GameObj's loop</li>
+                    <li>Copy to SnakeObj before drawSegment</li>
+                    <li>Copy to PointObj below add</li>
+                    <li>And run<br>(A message displays when encountering the
+                        body)</li>
+                </ol>
+                <aside class="notes">
+                    <ol>
+                        <li>Includes the body death as a condition to end the
+                            game</li>
+                        <li>isBody - checks wether the point is part of the
+                            snake's body</li>
+                        <li>equals - returns whether both x's and  y's are equal</li>
+                    </ol>
+                </aside>
+            </section>
+            <section>
+                <h3>Placing food</h3>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.placeFood();
+                    </code></pre>
+                    <ol class="reduce">
+                        <li>Copy to GameObj's init just after snake assignment</li>
+                        <li>Copy to GameObj just above isOutOfBounds</li>
+                        <li>And run<br>(A yellow square should appear)</li>
+                    </ol>
+                </div>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.align = function(Val) {
+        return Math.floor(Val) * this.tileSize;
+    };
+    this.placeFood = function() {
+        do {
+            let x = this.align(
+                Math.random() * this.width);
+            let y = this.align(
+                Math.random() * this.height);
+            this.food = new PointObj(x, y);
+        } while (this.snake.isBody(this.food));
+        this.context.fillStyle = "Yellow";
+        this.context.fillRect(
+            this.food.x, this.food.y,
+            this.tileSize, this.tileSize);
+    };
+                    </code></pre>
+                </div>
+                <aside class="notes">
+                    <ol>
+                        <li>Places food at the begining of the game</li>
+                        <li><ul>
+                            <li>align - ensures the food is placed in line with
+                                the grid</li>
+                            <li>placeFood - continues to generate a random food
+                                position when it is part of the snakes body
+                                then draws it as a yellow rectangle</li>
+                        </ul></li>
+                    </ol>
+                </aside>
+            </section>
+            <section>
+                <h3>Growth upon eating</h3>
+                <div class="split">
+                    <pre><code class="javascript small" data-trim contenteditable>
+        else if (this.isEating()) {
+            this.placeFood();
+            this.snake.length += 3;
+            this.snake.draw();
+        }
+                    </code></pre>
+                    <pre><code class="javascript small" data-trim contenteditable>
+    this.isEating = function() {
+        return this.snake.head.equals(this.food);
+    };
+                    </code></pre>
+                </div>
+                <ol class="split">
+                    <li>Copy to GameObj's loop just above else</li>
+                    <li>Copy to GameObj just above loop</li>
+                    <li>And run<br>(The snake should grow upon eating the food)
+                    </li>
+                </ol>
+                <aside class="notes">
+                    <ol>
+                        <li>When the snake is eating it places new food,
+                            increases the length of the snake, and draws the
+                            snake</li>
+                        <li>isEating - returns whether the snakes head is on
+                            top of the food</li>
+                    </ol>
+                </aside>
+            </section>
+        </section>
+        <section>
+            <h3>I challenge you</h3>
+            <div class="fragment visible">
+                <h4>to take it further</h4>
+                <ul>
+                    <li>Include a score</li>
+                    <li>Draw with circles</li>
+                    <li>Draw with images</li>
+                    <li>Remove the background dependency</li>
+                    <li>Fix the invisible food bug</li>
+                    <li>Add a second player</li>
+                    <li>Create a game of pong</li>
+                    <li>Contact me</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</div>
+<script src="reveal/lib/js/head.min.js"></script>
+<script src="reveal/js/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        dependencies: [
+            // { src: 'reveal/plugin/zoom-js/zoom.js', async: true },
+            { src: 'reveal/plugin/notes/notes.js', async: true },
+            { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        ]
+    });
+</script>
+
+</body>
+</html>
