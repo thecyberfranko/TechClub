@@ -184,9 +184,12 @@ function InsertionSort(cNums) {
         if (this.swapping) {
             this.cNums.swap(this.j, this.j - 1);
             --this.j;
-            if (this.j == 0) {
+            if (this.j == 0 && this.i + 1 < this.cNums.length) {
                 ++this.i;
                 this.j = this.i;
+            }
+            else if (this.j == 0) {
+                this.done = true;
             }
             this.swapping = false;
         }
