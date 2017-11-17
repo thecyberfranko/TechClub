@@ -7,6 +7,10 @@ Jonathan Niehenke
 
 ### Contained files:
 
+- snakeAI.html - html file for running the AI that plays snake
+- snakeAI.js - js file for running the snakeAI
+- snakeGame.html - html file for playing snake
+- snakeGame.js - js file for playing snake
 - Presentations/ **Note: requires reveal directory containing [reveal.js](https://github.com/hakimel/reveal.js)**
     - Debug.html - Presentation of program debugging using reveal.js
     - debugImages/ - Images used in the Debug presentation
