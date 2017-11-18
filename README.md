@@ -1,35 +1,38 @@
 # Presonal Tech Club Contributions
 
-There are my personal contributions to Technology Club.
+Here are my personal contributions to Technology Club.
 
 ### Developed by:
 Jonathan Niehenke
 
+### Disclaimer:
+The screen shot are the only images of my own. Otherwise they were found through Google and used for educational and demonstrative purposes.
+
 ### Contained files:
 
-- PiCalc/ **Note: assumes a fixed console size**
-    - algorithmPrintOut.rtf - A handout of demonstrated Pi formulas.
+- PiCalc/* **Note: assumes a fixed console size**
+    - algorithmPrintOut.rtf - A handout of demonstrated Pi formulas gathered from Wikipedia.
     - piCalc.cpp - Cpp source that demonstrates Pi formulas to a fixed amount.
     - piCalc.py - Python source that demonstrates Pi formulas to a fixed amount. 
     - piCalcConditions.cpp - Cpp source that demonstrates to relative digit.
     - piCalcConditions.py - Python source that demonstrates to relative digit.
-- Presentations/ **Note: requires reveal directory containing [reveal.js](https://github.com/hakimel/reveal.js)**
+- Presentations/* **Note: requires reveal directory containing [reveal.js](https://github.com/hakimel/reveal.js)**
     - Debug.html - Presentation of program debugging using reveal.js
-    - debugImages/ - Images used in the Debug presentation
+    - debugImages/* - Images used in the Debug presentation
     - Python.html - Beginner's presentation of Python using reveal.js
-    - pythonImages/ - Images used in the Python presentation
+    - pythonImages/* - Images used in the Python presentation
     - snakePresentation.html - Presentation with code and instructions for building snake
     - Vim.html - Presentation of vim using reveal.js
-    - VimImages/ - Images used in vim presentation
-- Snake/
+    - VimImages/* - Images used in vim presentation
+- Snake/*
     - snakeAI.html - html file for running the AI that plays snake
     - snakeAI.js - js file for running the snakeAI
     - snakeGame.html - html file for playing snake
     - snakeGame.js - js file for playing snake
-- Sorting/
+- Sorting/*
     - sorting.html - html file for running the animated sorting demonstration
     - sorting.js - js file for running the animated sorting demonstration
-- SVD_compression/
+- SVD_compression/*
     - skyline.png - A medium image for demonstrating visual changes.
     - SoccerBall.png - A small image.
     - SoccerBall_verySmall.png - Image for demonstrating numeric changes.
@@ -39,10 +42,17 @@ Jonathan Niehenke
 
 ### Requires:
 
-For Presentations:
+- For Presentations:
     - reveal.js: <https://github.com/hakimel/reveal.js>
-For PiCalc and SVD_compression
+- For PiCalc and SVD_compression
     - Python 3: <https://www.python.org/downloads/>:
-SVD_compression
+- For SVD_compression:
     - Matplotlib: `python -m pip install --user matplotlib`
     - Numpy: `pip install --user numpy`
+
+### Other contributions **Already as their own repositories**
+- JS_Bomberman
+- JS_Portal
+- Js_OfficeGame
+- JS_TileEngine
+- Tasker - **Inspired by a fellow club member**
