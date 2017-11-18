@@ -422,31 +422,37 @@ function NoSort(cNums) {
     return this;
 }
 
-function SortingObj() {
+function SortingObj(sortingAlgorithms) {
+    this.sortingAlgorithms = sortingAlgorithms;
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
     this.loop = function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        let allSorted = true;
         for (let sorter of this.sorters) {
             if (!sorter.done) {
                 sorter.update(this.startTime);
+                allSorted = false;
             }
             sorter.draw();
         }
+        if (allSorted) {
+            clearInterval(this.animation);
+            setTimeout(this.init.bind(this), 4000);
+        }
     };
-    this.init = function(sortingAlgorithms) {
+    this.init = function() {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         let randomNumbers = [];
         for (let i= 0; i < 30; ++i)
             randomNumbers.push(Math.floor(Math.random() * 15) + 1);
-        console.log(randomNumbers);
         this.sorters = [];
-        for (let i= 0; i < sortingAlgorithms.length; ++i) {
+        for (let i= 0; i < this.sortingAlgorithms.length; ++i) {
             let point = new PointObj(10, i * 85 + 30);
             let randomColors = new ColoredNumbersObj(
                 this.canvas, this.context, point , 40, randomNumbers);
-            this.sorters[i] = new sortingAlgorithms[i](randomColors);
+            this.sorters[i] = new this.sortingAlgorithms[i](randomColors);
         }
         this.context.lineWidth = 2;
         this.startTime = (new Date()).getTime();
@@ -456,6 +462,6 @@ function SortingObj() {
 }
 
 function init() {
-    let sorter = new SortingObj();
-    sorter.init([NoSort, BubbleSort, SelectionSort, InsertionSort, BinaryInsertion, ShellSort, QuickSort, MergeSort]);
+    let sorter = new SortingObj([NoSort, BubbleSort, SelectionSort, InsertionSort, BinaryInsertion, ShellSort, QuickSort, MergeSort]);
+    sorter.init();
 }
