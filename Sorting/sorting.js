@@ -68,7 +68,7 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
     this.draw = function(Heading) {
         this.context.save()
         this.context.lineWidth = 3;
-        this.context.font = "24px Arial"
+        this.context.font = "24px Consolas"
         this.context.fillText(Heading, this.point.x, this.point.y);
         for (posNum of this.posSet) {
             let hue = Math.floor(360 / 18 * (posNum.value + 2));
@@ -105,7 +105,6 @@ function SelectionSort(cNums) {
             this.done = true;
     };
     this.update = function(startTime) {
-        if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
         if (this.rotating) {
             ++this.swapCount;
@@ -146,7 +145,6 @@ function BubbleSort(cNums) {
         ++this.passes;
     };
     this.update = function(startTime) {
-        if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
         if (this.swapping) {
             ++this.swapCount;
@@ -182,7 +180,6 @@ function InsertionSort(cNums) {
     this.time = new Date();
     this.swapCount = 0;
     this.update = function(startTime) {
-        if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
         if (this.swapping) {
             ++this.swapCount;
@@ -222,7 +219,6 @@ function BinaryInsertion(cNums) {
     this.time = new Date();
     this.swapCount = 0;
     this.update = function(startTime) {
-        if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
         if (this.rangeLow == this.rangeHigh) {
             ++this.swapCount;
@@ -262,7 +258,6 @@ function ShellSort(cNums) {
     this.time = new Date();
     this.swapCount = 0;
     this.update = function(startTime) {
-        if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
         if (this.swapping) {
             ++this.swapCount;
@@ -316,7 +311,6 @@ function QuickSort(cNums) {
     this.pivot = this.getNewPivot();
     this.swapCount = 0;
     this.update = function(startTime) {
-        if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
         this.cNums.block(this.ftIdx, this.bkIdx);
         if (this.swapping) {
@@ -418,13 +412,25 @@ function MergeSort(cNums) {
     return this;
 }
 
+function NoSort(cNums) {
+    this.cNums = cNums;
+    this.done = true;
+    this.update = function(startTime) {};
+    this.draw = function() {
+        this.cNums.draw("Number Set");
+    };
+    return this;
+}
+
 function SortingObj() {
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
     this.loop = function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         for (let sorter of this.sorters) {
-            sorter.update(this.startTime);
+            if (!sorter.done) {
+                sorter.update(this.startTime);
+            }
             sorter.draw();
         }
     };
@@ -437,7 +443,7 @@ function SortingObj() {
         console.log(randomNumbers);
         this.sorters = [];
         for (let i= 0; i < sortingAlgorithms.length; ++i) {
-            let point = new PointObj(10, i * 100 + 30);
+            let point = new PointObj(10, i * 85 + 30);
             let randomColors = new ColoredNumbersObj(
                 this.canvas, this.context, point , 40, randomNumbers);
             this.sorters[i] = new sortingAlgorithms[i](randomColors);
@@ -451,5 +457,5 @@ function SortingObj() {
 
 function init() {
     let sorter = new SortingObj();
-    sorter.init([BubbleSort, SelectionSort, InsertionSort, BinaryInsertion, ShellSort, QuickSort, MergeSort]);
+    sorter.init([NoSort, BubbleSort, SelectionSort, InsertionSort, BinaryInsertion, ShellSort, QuickSort, MergeSort]);
 }
