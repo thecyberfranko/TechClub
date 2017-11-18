@@ -29,9 +29,7 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
     this.point = point;
     this.offsetX = offsetX;
     this.posSet = [];
-    this.swapCount = 0;
     this.swap = function(i, j) {
-        ++this.swapCount;
         this.context.save();
         this.posSet[i].examine("Red");
         this.posSet[j].examine("Red");
@@ -41,7 +39,6 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
         [this.posSet[i], this.posSet[j]] = [this.posSet[j], this.posSet[i]];
     };
     this.rotate = function(toFront, fromBack) {
-        ++this.swapCount;
         this.context.save();
         this.posSet[toFront].examine("Red");
         this.posSet[fromBack].examine("Red");
@@ -68,11 +65,11 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
         this.context.strokeRect(begin, y - 27, end - begin  + 27, 36);
         this.context.restore();
     };
-    this.draw = function(Title) {
+    this.draw = function(Heading) {
         this.context.save()
-        this.context.font = "24px Arial"
         this.context.lineWidth = 3;
-        this.context.fillText(`${Title}    Swaps ${this.swapCount}`, this.point.x, this.point.y);
+        this.context.font = "24px Arial"
+        this.context.fillText(Heading, this.point.x, this.point.y);
         for (posNum of this.posSet) {
             let hue = Math.floor(360 / 18 * (posNum.value + 2));
             context.fillStyle = `hsl(${hue}, 100%, 50%)`;
@@ -98,6 +95,8 @@ function SelectionSort(cNums) {
     this.done = false;
     this.i = this.j = this.min = 0;
     this.time = new Date();
+    this.rotating = false;
+    this.swapCount = 0;
     this.nextPass = function() {
         ++this.i;
         if (this.i < this.cNums.length)
@@ -109,6 +108,7 @@ function SelectionSort(cNums) {
         if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
         if (this.rotating) {
+            ++this.swapCount;
             this.cNums.rotate(this.i, this.min);
             this.nextPass();
             this.rotating = false;
@@ -128,7 +128,7 @@ function SelectionSort(cNums) {
             ++this.j;
     };
     this.draw = function() {
-        this.cNums.draw(`Selection Sort    ${Math.floor(this.time / 600)}s    `);
+        this.cNums.draw(`Selection Sort      ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
     };
     return this;
 }
@@ -139,6 +139,7 @@ function BubbleSort(cNums) {
     this.i = this.passes = 0;
     this.swapping = this.swapped = false;
     this.time = new Date();
+    this.swapCount = 0;
     this.nextPass = function() {
         this.i = 0;
         this.swapped = false;
@@ -148,6 +149,7 @@ function BubbleSort(cNums) {
         if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
         if (this.swapping) {
+            ++this.swapCount;
             this.cNums.swap(this.i, this.i + 1);
             ++this.i;
             if (this.i == this.cNums.length - 1 - this.passes && this.swapped)
@@ -168,7 +170,7 @@ function BubbleSort(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw(`Bubble Sort      ${Math.floor(this.time / 600)}s    `);
+        this.cNums.draw(`Bubble Sort         ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
     };
     return this;
 }
@@ -178,10 +180,12 @@ function InsertionSort(cNums) {
     this.done = false;
     this.i = this.j = 1;
     this.time = new Date();
+    this.swapCount = 0;
     this.update = function(startTime) {
         if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
         if (this.swapping) {
+            ++this.swapCount;
             this.cNums.swap(this.j, this.j - 1);
             --this.j;
             if (this.j == 0 && this.i + 1 < this.cNums.length) {
@@ -205,7 +209,7 @@ function InsertionSort(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw(`Insertion Sort    ${Math.floor(this.time / 600)}s    `);
+        this.cNums.draw(`Insertion Sort      ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
     };
     return this;
 }
@@ -216,10 +220,12 @@ function BinaryInsertion(cNums) {
     this.i =  1;
     this.rangeLow = this.rangeHigh, this.j = 0;
     this.time = new Date();
+    this.swapCount = 0;
     this.update = function(startTime) {
         if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
         if (this.rangeLow == this.rangeHigh) {
+            ++this.swapCount;
             this.j += (this.cNums.examine(this.i) < this.cNums.examine(this.j)
                 ? 0 : 1);
             this.cNums.rotate(this.j, this.i++);
@@ -242,7 +248,7 @@ function BinaryInsertion(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw(`Binary Insertion    ${Math.floor(this.time / 600)}s    `);
+        this.cNums.draw(`Binary Insertion    ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
     };
     return this;
 }
@@ -254,10 +260,12 @@ function ShellSort(cNums) {
     this.gap = Math.ceil(this.cNums.length / this.division);
     this.i = this.j = this.gap;
     this.time = new Date();
+    this.swapCount = 0;
     this.update = function(startTime) {
         if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
         if (this.swapping) {
+            ++this.swapCount;
             this.cNums.swap(this.j, this.j - this.gap);
             this.j -= this.gap;
             if (this.j < this.gap && this.i + 1 < this.cNums.length) {
@@ -287,7 +295,7 @@ function ShellSort(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw(`Shell Sort         ${Math.floor(this.time / 600)}s    `);
+        this.cNums.draw(`Shell Sort          ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
     };
     return this;
 }
@@ -306,11 +314,13 @@ function QuickSort(cNums) {
         return this.cNums.posSet[pivotIdx].value;
     }
     this.pivot = this.getNewPivot();
+    this.swapCount = 0;
     this.update = function(startTime) {
         if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
         this.cNums.block(this.ftIdx, this.bkIdx);
         if (this.swapping) {
+            ++this.swapCount;
             this.cNums.swap(this.left++, this.right--);
             this.swapping = false;
             return;
@@ -343,7 +353,7 @@ function QuickSort(cNums) {
         }
     };
     this.draw = function(time) {
-        this.cNums.draw(`Quick Sort        ${Math.floor(this.time / 600)}s    `);
+        this.cNums.draw(`Quick Sort          ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
     };
     return this;
 }
@@ -354,6 +364,7 @@ function MergeSort(cNums) {
     this.rotating = false;
     this.queue = [];
     this.time = new Date();
+    this.swapCount = 0;
     for (let i = 0; i < cNums.length; ++i)
         this.queue.push([i, i])
     this.prep = function() {
@@ -376,6 +387,7 @@ function MergeSort(cNums) {
         this.cNums.block(this.ftIdx, this.ftSplit);
         this.cNums.block(this.bkShift, this.bkIdx);
         if (this.rotating) {
+            ++this.swapCount;
             this.cNums.rotate(this.left, this.right);
             this.rotating = false;
             if (this.left < this.right && this.right < this.bkIdx) {
@@ -401,7 +413,7 @@ function MergeSort(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw(`Merge Sort       ${Math.floor(this.time / 600)}s    `);
+        this.cNums.draw(`Merge Sort          ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
     };
     return this;
 }
