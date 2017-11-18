@@ -7,10 +7,6 @@ Jonathan Niehenke
 
 ### Contained files:
 
-- snakeAI.html - html file for running the AI that plays snake
-- snakeAI.js - js file for running the snakeAI
-- snakeGame.html - html file for playing snake
-- snakeGame.js - js file for playing snake
 - PiCalc/ **Note: assumes a fixed console size**
     - algorithmPrintOut.rtf - A handout of demonstrated Pi formulas.
     - piCalc.cpp - Cpp source that demonstrates Pi formulas to a fixed amount.
@@ -25,6 +21,14 @@ Jonathan Niehenke
     - snakePresentation.html - Presentation with code and instructions for building snake
     - Vim.html - Presentation of vim using reveal.js
     - VimImages/ - Images used in vim presentation
+- Snake/
+    - snakeAI.html - html file for running the AI that plays snake
+    - snakeAI.js - js file for running the snakeAI
+    - snakeGame.html - html file for playing snake
+    - snakeGame.js - js file for playing snake
+- Sorting/
+    - sorting.html - html file for running the animated sorting demonstration
+    - sorting.js - js file for running the animated sorting demonstration
 - SVD_compression/
     - skyline.png - A medium image for demonstrating visual changes.
     - SoccerBall.png - A small image.
@@ -35,8 +39,10 @@ Jonathan Niehenke
 
 ### Requires:
 
-- reveal.js: <https://github.com/hakimel/reveal.js>: For Presentations
-- Python 3: <https://www.python.org/downloads/>: For PiCalc and and SVD_compression
+For Presentations:
+    - reveal.js: <https://github.com/hakimel/reveal.js>
+For PiCalc and SVD_compression
+    - Python 3: <https://www.python.org/downloads/>:
 SVD_compression
     - Matplotlib: `python -m pip install --user matplotlib`
     - Numpy: `pip install --user numpy`
