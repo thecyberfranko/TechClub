@@ -213,10 +213,13 @@ function BinaryInsertion(cNums) {
     this.update = function(startTime) {
         this.time = (new Date()).getTime() - startTime;
         if (this.rangeLow == this.rangeHigh) {
-            ++this.swapCount;
-            this.j += (this.cNums.examine(this.i) < this.cNums.examine(this.j)
-                ? 0 : 1);
-            this.cNums.rotate(this.j, this.i++);
+            this.j += (
+                this.cNums.examine(this.i) < this.cNums.examine(this.j) ? 0 : 1);
+            if (this.j != this.i) {
+                ++this.swapCount;
+                this.cNums.rotate(this.j, this.i);
+            }
+            ++this.i;
             if (this.i < this.cNums.length) {
                 this.rangeLow = 0;
                 this.rangeHigh = this.i;
