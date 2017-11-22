@@ -72,42 +72,10 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
     return this;
 }
 
-function SelectionSort(cNums) {
+function NoSort(cNums) {
     this.cNums = cNums;
-    this.done = false;
-    this.i = this.j = this.min = 0;
-    this.time = new Date();
-    this.rotating = false;
-    this.swapCount = 0;
-    this.nextPass = function() {
-        ++this.i;
-        if (this.i < this.cNums.length)
-            this.j = this.min = this.i;
-        else
-            this.done = true;
-    };
-    this.update = function(startTime) {
-        this.time = (new Date()).getTime() - startTime;
-        if (this.rotating) {
-            ++this.swapCount;
-            this.cNums.rotate(this.i, this.min);
-            this.nextPass();
-            this.rotating = false;
-        }
-        else if (this.cNums.examine(this.j) < this.cNums.examine(this.min)) {
-            this.cNums.block(this.i, this.i);
-            this.min = this.j;
-        }
-        else {
-            this.cNums.block(this.i, this.i);
-        }
-        if (this.min == this.i && this.j + 1 == this.cNums.length)
-            this.nextPass();
-        else if (this.j + 1 == this.cNums.length)
-            this.rotating = true;
-        else
-            ++this.j;
-    };
+    this.done = true;
+    this.update = function(startTime) {};
     this.draw = function() {
         this.cNums.draw(`Selection Sort      ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
     };
@@ -150,7 +118,49 @@ function BubbleSort(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw(`Bubble Sort         ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
+        this.cNums.draw(`Bubble Sort         ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
+    };
+    return this;
+}
+
+function SelectionSort(cNums) {
+    this.cNums = cNums;
+    this.done = false;
+    this.i = this.j = this.min = 0;
+    this.time = new Date();
+    this.rotating = false;
+    this.swapCount = 0;
+    this.nextPass = function() {
+        ++this.i;
+        if (this.i < this.cNums.length)
+            this.j = this.min = this.i;
+        else
+            this.done = true;
+    };
+    this.update = function(startTime) {
+        this.time = (new Date()).getTime() - startTime;
+        if (this.rotating) {
+            ++this.swapCount;
+            this.cNums.rotate(this.i, this.min);
+            this.nextPass();
+            this.rotating = false;
+        }
+        else if (this.cNums.examine(this.j) < this.cNums.examine(this.min)) {
+            this.cNums.block(this.i, this.i);
+            this.min = this.j;
+        }
+        else {
+            this.cNums.block(this.i, this.i);
+        }
+        if (this.min == this.i && this.j + 1 == this.cNums.length)
+            this.nextPass();
+        else if (this.j + 1 == this.cNums.length)
+            this.rotating = true;
+        else
+            ++this.j;
+    };
+    this.draw = function() {
+        this.cNums.draw(`Selection Sort      ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
     };
     return this;
 }
@@ -394,16 +404,6 @@ function MergeSort(cNums) {
     return this;
 }
 
-function NoSort(cNums) {
-    this.cNums = cNums;
-    this.done = true;
-    this.update = function(startTime) {};
-    this.draw = function() {
-        this.cNums.draw("Number Set");
-    };
-    return this;
-}
-
 function SortingObj(sortingAlgorithms) {
     this.sortingAlgorithms = sortingAlgorithms;
     this.canvas = document.querySelector("canvas");
@@ -444,6 +444,9 @@ function SortingObj(sortingAlgorithms) {
 }
 
 function init() {
-    let sorter = new SortingObj([NoSort, BubbleSort, SelectionSort, InsertionSort, BinaryInsertion, ShellSort, QuickSort, MergeSort]);
+    let sorter = new SortingObj([
+        NoSort, BubbleSort, SelectionSort, InsertionSort, BinaryInsertion,
+        ShellSort, QuickSort, MergeSort
+    ]);
     sorter.init();
 }
