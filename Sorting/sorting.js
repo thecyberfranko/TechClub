@@ -49,8 +49,7 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
         this.context.restore();
         let temp = this.numSet[fromBack];
         for (let i = fromBack; i > toFront; --i) {
-            [this.numSet[i], this.numSet[i-1]] = [
-             this.numSet[i-1], this.numSet[i]];
+            [this.numSet[i], this.numSet[i-1]] = [this.numSet[i-1], this.numSet[i]];
         }
         this.numSet[toFront] = temp;
     };
@@ -69,12 +68,20 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
         }
         this.context.restore()
     };
+    this.reset = function(numberSet) {
+        this.numSet = numberSet;
+        this.length = numberSet.length;
+    };
     return this;
 }
 
 function NoSort(cNums) {
     this.cNums = cNums;
     this.done = true;
+    this.reset = function(numberSet) {
+        this.cNums.reset(numberSet);
+        this.done = true;
+    };
     this.update = function(startTime) {};
     this.draw = function() {
         this.cNums.draw("Number Set");
@@ -87,8 +94,8 @@ function BubbleSort(cNums) {
     this.done = false;
     this.i = this.passes = 0;
     this.swapping = this.swapped = false;
-    this.time = new Date();
     this.swapCount = 0;
+    this.time = new Date();
     this.nextPass = function() {
         this.i = 0;
         this.swapped = false;
@@ -120,6 +127,14 @@ function BubbleSort(cNums) {
     this.draw = function() {
         this.cNums.draw(`Bubble Sort         ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
     };
+    this.reset = function(numberSet) {
+        this.cNums.reset(numberSet);
+        this.done = false;
+        this.i = this.passes = 0;
+        this.swapping = this.swapped = false;
+        this.swapCount = 0;
+        this.time = new Date();
+    };
     return this;
 }
 
@@ -127,9 +142,9 @@ function SelectionSort(cNums) {
     this.cNums = cNums;
     this.done = false;
     this.i = this.j = this.min = 0;
-    this.time = new Date();
     this.rotating = false;
     this.swapCount = 0;
+    this.time = new Date();
     this.nextPass = function() {
         ++this.i;
         if (this.i < this.cNums.length)
@@ -162,6 +177,14 @@ function SelectionSort(cNums) {
     this.draw = function() {
         this.cNums.draw(`Selection Sort      ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
     };
+    this.reset = function(numberSet) {
+        this.cNums.reset(numberSet);
+        this.done = false;
+        this.i = this.j = this.min = 0;
+        this.rotating = false;
+        this.swapCount = 0;
+        this.time = new Date();
+    };
     return this;
 }
 
@@ -169,8 +192,8 @@ function InsertionSort(cNums) {
     this.cNums = cNums;
     this.done = false;
     this.i = this.j = 1;
-    this.time = new Date();
     this.swapCount = 0;
+    this.time = new Date();
     this.update = function(startTime) {
         this.time = (new Date()).getTime() - startTime;
         if (this.swapping) {
@@ -200,6 +223,13 @@ function InsertionSort(cNums) {
     this.draw = function() {
         this.cNums.draw(`Insertion Sort      ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
     };
+    this.reset = function(numberSet) {
+        this.cNums.reset(numberSet);
+        this.done = false;
+        this.i = this.j = 1;
+        this.swapCount = 0;
+        this.time = new Date();
+    };
     return this;
 }
 
@@ -208,8 +238,8 @@ function BinaryInsertion(cNums) {
     this.done = false;
     this.i =  1;
     this.rangeLow = this.rangeHigh, this.j = 0;
-    this.time = new Date();
     this.swapCount = 0;
+    this.time = new Date();
     this.update = function(startTime) {
         this.time = (new Date()).getTime() - startTime;
         if (this.rangeLow == this.rangeHigh) {
@@ -241,6 +271,14 @@ function BinaryInsertion(cNums) {
     this.draw = function() {
         this.cNums.draw(`Binary Insertion    ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
     };
+    this.reset = function(numberSet) {
+        this.cNums.reset(cNums);
+        this.done = false;
+        this.i =  1;
+        this.rangeLow = this.rangeHigh, this.j = 0;
+        this.swapCount = 0;
+        this.time = new Date();
+    };
     return this;
 }
 
@@ -250,8 +288,8 @@ function ShellSort(cNums) {
     this.division = 3;
     this.gap = Math.ceil(this.cNums.length / this.division);
     this.i = this.j = this.gap;
-    this.time = new Date();
     this.swapCount = 0;
+    this.time = new Date();
     this.update = function(startTime) {
         this.time = (new Date()).getTime() - startTime;
         if (this.swapping) {
@@ -287,6 +325,15 @@ function ShellSort(cNums) {
     this.draw = function() {
         this.cNums.draw(`Shell Sort          ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
     };
+    this.reset = function(numberSet) {
+        this.cNums.reset(cNums);
+        this.done = false;
+        this.division = 3;
+        this.gap = Math.ceil(this.cNums.length / this.division);
+        this.i = this.j = this.gap;
+        this.swapCount = 0;
+        this.time = new Date();
+    };
     return this;
 }
 
@@ -297,14 +344,13 @@ function QuickSort(cNums) {
     this.ftIdx = this.left = 0;
     this.bkIdx = this.right = cNums.length - 1;
     this.queue = [];
+    this.swapCount = 0;
     this.time = new Date();
     this.getNewPivot = function() {
         let pivotIdx = Math.floor(
             Math.random() * (this.bkIdx - this.ftIdx) + this.ftIdx);
         return this.cNums.numSet[pivotIdx];
-    }
-    this.pivot = this.getNewPivot();
-    this.swapCount = 0;
+    };
     this.update = function(startTime) {
         this.time = (new Date()).getTime() - startTime;
         this.cNums.block(this.ftIdx, this.bkIdx);
@@ -344,6 +390,18 @@ function QuickSort(cNums) {
     this.draw = function(time) {
         this.cNums.draw(`Quick Sort          ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
     };
+    this.reset = function(numberSet) {
+        this.cNums.reset(numberSet);
+        this.done = false;
+        this.swapping = false;
+        this.pivot = this.getNewPivot();
+        this.ftIdx = this.left = 0;
+        this.bkIdx = this.right = cNums.length - 1;
+        this.queue = [];
+        this.swapCount = 0;
+        this.time = new Date();
+    };
+    this.pivot = this.getNewPivot();
     return this;
 }
 
@@ -368,8 +426,7 @@ function MergeSort(cNums) {
             [this.bkShift, this.bkIdx] = this.queue.shift();
             this.right = this.bkShift;
         }
-    }
-    this.prep();
+    };
     this.update = function(startTime) {
         if (this.done) return;
         this.time = (new Date()).getTime() - startTime;
@@ -404,6 +461,18 @@ function MergeSort(cNums) {
     this.draw = function() {
         this.cNums.draw(`Merge Sort          ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
     };
+    this.reset = function(numberSet) {
+        this.cNums.reset(numberSet);
+        this.done = false;
+        this.rotating = false;
+        this.queue = [];
+        this.time = new Date();
+        this.swapCount = 0;
+        for (let i = 0; i < cNums.length; ++i)
+            this.queue.push([i, i])
+        this.prep();
+    };
+    this.prep();
     return this;
 }
 
@@ -411,6 +480,17 @@ function SortingObj(sortingAlgorithms) {
     this.sortingAlgorithms = sortingAlgorithms;
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
+    this.numberGen = function() {
+        let numberSet = [];
+        for (let i= 0; i < 30; ++i)
+            numberSet.push(Math.floor(Math.random() * 15) + 1);
+        return numberSet;
+    };
+    this.reset = function() {
+        let numberSet = this.numberGen();
+        for (let sorter of this.sorters)
+            sorter.reset(numberSet.splice());
+    };
     this.loop = function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         let allSorted = true;
@@ -429,14 +509,12 @@ function SortingObj(sortingAlgorithms) {
     this.init = function() {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        let randomNumbers = [];
-        for (let i= 0; i < 30; ++i)
-            randomNumbers.push(Math.floor(Math.random() * 15) + 1);
+        let numberSet = this.numberGen();
         this.sorters = [];
         for (let i= 0; i < this.sortingAlgorithms.length; ++i) {
             let point = new PointObj(10, i * 85 + 30);
             let randomColors = new ColoredNumbersObj(
-                this.canvas, this.context, point , 40, randomNumbers.slice());
+                this.canvas, this.context, point , 40, numberSet.slice());
             this.sorters[i] = new this.sortingAlgorithms[i](randomColors);
         }
         this.context.lineWidth = 2;
