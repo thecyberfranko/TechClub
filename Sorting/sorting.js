@@ -4,89 +4,71 @@ function PointObj(x, y) {
     return this;
 }
 
-function PositionedObj(context, value, point) {
-    this.context = context;
-    this.value = value;
-    this.point = point;
-    this.examine = function(Color = "Black") {
-        this.context.strokeStyle = Color;
-        this.context.beginPath();
-        this.context.arc(
-            this.point.x + 14, this.point.y - 8, 18, 0, 2*Math.PI);
-        this.context.stroke();
-        return this.value;
-    };
-    this.draw = function() {
-        context.strokeText(this.value.toString(), this.point.x, this.point.y);
-        context.fillText(this.value.toString(), this.point.x, this.point.y);
-    };
-    return this;
-}
-
 function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
     this.canvas = canvas;
     this.context = context;
     this.point = point;
     this.offsetX = offsetX;
-    this.posSet = [];
+    this.numSet = numberSet;
+    this.length = numberSet.length;
+    this.getPos = function(i) {
+        return new PointObj(this.offsetX * i + this.point.x,
+                this.point.y + 35);
+    };
+    this.examine = function(i, Color = "Black") {
+        this.context.strokeStyle = Color;
+        let indexPoint = this.getPos(i);
+        this.context.beginPath();
+        this.context.arc(
+            indexPoint.x + 14, indexPoint.y - 8, 18, 0, 2*Math.PI);
+        this.context.stroke();
+        return this.numSet[i];
+    };
     this.swap = function(i, j) {
         this.context.save();
-        this.posSet[i].examine("Red");
-        this.posSet[j].examine("Red");
+        this.examine(i, "Red");
+        this.examine(j, "Red");
         this.context.restore();
-        [this.posSet[i].point, this.posSet[j].point] = [  // Display
-            this.posSet[j].point, this.posSet[i].point];
-        [this.posSet[i], this.posSet[j]] = [this.posSet[j], this.posSet[i]];
-    };
-    this.rotate = function(toFront, fromBack) {
-        this.context.save();
-        this.posSet[toFront].examine("Red");
-        this.posSet[fromBack].examine("Red");
-        this.block(toFront, fromBack, "Red");
-        this.context.restore();
-        let tempPoint = this.posSet[toFront].point;
-        let temp = this.posSet[fromBack];
-        for (let i = fromBack; i > toFront; --i) {
-            [this.posSet[i].point, this.posSet[i-1].point] = [
-                this.posSet[i-1].point, this.posSet[i].point];
-            [this.posSet[i], this.posSet[i-1]] = [this.posSet[i-1], this.posSet[i]];
-        }
-        this.posSet[toFront] = temp;
-    };
-    this.examine = function(i) {
-        return this.posSet[i].examine();
+        [this.numSet[i], this.numSet[j]] = [this.numSet[j], this.numSet[i]];
     };
     this.block = function(i, j, Color="Black") {
-        let begin = this.posSet[i].point.x;
-        let end = this.posSet[j].point.x;
-        let y = this.posSet[j].point.y;
+        let begin = this.getPos(i).x;
+        let indexPoint_J = this.getPos(j);
+        let end = indexPoint_J.x;
+        let y = indexPoint_J.y;
         this.context.save()
         this.context.strokeStyle = Color;
         this.context.strokeRect(begin, y - 27, end - begin  + 27, 36);
         this.context.restore();
+    };
+    this.rotate = function(toFront, fromBack) {
+        this.context.save();
+        this.examine(toFront, "Red");
+        this.examine(fromBack, "Red");
+        this.block(toFront, fromBack, "Red");
+        this.context.restore();
+        let temp = this.numSet[fromBack];
+        for (let i = fromBack; i > toFront; --i) {
+            [this.numSet[i], this.numSet[i-1]] = [
+             this.numSet[i-1], this.numSet[i]];
+        }
+        this.numSet[toFront] = temp;
     };
     this.draw = function(Heading) {
         this.context.save()
         this.context.lineWidth = 3;
         this.context.font = "24px Consolas"
         this.context.fillText(Heading, this.point.x, this.point.y);
-        for (posNum of this.posSet) {
-            let hue = Math.floor(360 / 18 * (posNum.value + 2));
+        for (let i = 0; i < this.numSet.length; ++i) {
+            let Num = this.numSet[i];
+            let hue = Math.floor(360 / 18 * (Num + 2));
+            let indexPoint = this.getPos(i);
             context.fillStyle = `hsl(${hue}, 100%, 50%)`;
-            posNum.draw();
+            context.strokeText(Num.toString(), indexPoint.x, indexPoint.y);
+            context.fillText(Num.toString(), indexPoint.x, indexPoint.y);
         }
         this.context.restore()
     };
-    this.init = function(numberSet) {
-        this.length = numberSet.length;
-        for (let i= 0; i < this.length; ++i) {
-            let point = new PointObj(this.offsetX * i + this.point.x,
-                                     this.point.y + 35);
-            this.posSet.push(new PositionedObj(
-                context, numberSet[i], point))
-        }
-    };
-    this.init(numberSet);
     return this;
 }
 
@@ -306,7 +288,7 @@ function QuickSort(cNums) {
     this.getNewPivot = function() {
         let pivotIdx = Math.floor(
             Math.random() * (this.bkIdx - this.ftIdx) + this.ftIdx);
-        return this.cNums.posSet[pivotIdx].value;
+        return this.cNums.numSet[pivotIdx];
     }
     this.pivot = this.getNewPivot();
     this.swapCount = 0;
@@ -451,7 +433,7 @@ function SortingObj(sortingAlgorithms) {
         for (let i= 0; i < this.sortingAlgorithms.length; ++i) {
             let point = new PointObj(10, i * 85 + 30);
             let randomColors = new ColoredNumbersObj(
-                this.canvas, this.context, point , 40, randomNumbers);
+                this.canvas, this.context, point , 40, randomNumbers.slice());
             this.sorters[i] = new this.sortingAlgorithms[i](randomColors);
         }
         this.context.lineWidth = 2;
