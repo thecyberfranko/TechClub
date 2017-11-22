@@ -77,7 +77,7 @@ function NoSort(cNums) {
     this.done = true;
     this.update = function(startTime) {};
     this.draw = function() {
-        this.cNums.draw(`Selection Sort      ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
+        this.cNums.draw("Number Set");
     };
     return this;
 }
@@ -198,7 +198,7 @@ function InsertionSort(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw(`Insertion Sort      ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
+        this.cNums.draw(`Insertion Sort      ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
     };
     return this;
 }
@@ -236,7 +236,7 @@ function BinaryInsertion(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw(`Binary Insertion    ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
+        this.cNums.draw(`Binary Insertion    ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
     };
     return this;
 }
@@ -282,7 +282,7 @@ function ShellSort(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw(`Shell Sort          ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
+        this.cNums.draw(`Shell Sort          ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
     };
     return this;
 }
@@ -339,7 +339,7 @@ function QuickSort(cNums) {
         }
     };
     this.draw = function(time) {
-        this.cNums.draw(`Quick Sort          ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
+        this.cNums.draw(`Quick Sort          ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
     };
     return this;
 }
@@ -399,7 +399,7 @@ function MergeSort(cNums) {
         }
     };
     this.draw = function() {
-        this.cNums.draw(`Merge Sort          ${Math.floor(this.time / 600)}s    ${this.swapCount} Swaps`);
+        this.cNums.draw(`Merge Sort          ${Math.floor(this.time / 1000)}s    ${this.swapCount} Swaps`);
     };
     return this;
 }
