@@ -480,10 +480,59 @@ function SortingObj(sortingAlgorithms) {
     this.sortingAlgorithms = sortingAlgorithms;
     this.canvas = document.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
+    this.iteration = 0;
+    // https://stackoverflow.com/a/12646864
+    this.shuffle = function(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    };
     this.numberGen = function() {
         let numberSet = [];
-        for (let i= 0; i < 30; ++i)
-            numberSet.push(Math.floor(Math.random() * 15) + 1);
+        switch (this.iteration) {
+            case 0: // Fully Sorted
+                for (let i = 0; i < 30; ++i)
+                    numberSet.push(i + 1);
+                break;
+            case 1: // Non Unique Random
+            case 7:
+                for (let i = 0; i < 30; ++i)
+                    numberSet.push(Math.floor(Math.random() * 15) + 1);
+                break;
+            case 2: // Unique Alterating Left
+                for (let i = 0; i < 30; ++i)
+                    numberSet.push(i % 2 == 0 ? i / 2 + 1: 30 - Math.floor(i / 2));
+                break;
+            case 3: // Accending Decending
+                for (let i = 0; i < 30; ++i)
+                    numberSet.push(i < 15 ? i + 1 : 15 - i + 15);
+                break;
+            case 4: // Unique Random
+            case 10:
+                for (let i = 0; i < 30; ++i)
+                    numberSet.push(i + 1);
+                this.shuffle(numberSet);
+                break;
+            case 5: // Non Unique Alternating Both
+            case 11:
+                for (let i = 0; i < 30; ++i)
+                    numberSet.push(i % 2 == 0 ? i / 2 + 1: 15 - Math.floor(i / 2));
+                break;
+            case 6: // Reverse
+                for (let i = 0; i < 30; ++i)
+                    numberSet.push(30 - i);
+                break;
+            case 8: // Unique Alterating Right
+                for (let i = 0; i < 30; ++i)
+                    numberSet.push(i % 2 == 0 ? 30 - i / 2: Math.floor(i / 2) + 1);
+                break;
+            case 9: // Decending Accending
+                for (let i = 0; i < 30; ++i)
+                    numberSet.push(i < 15 ? 15 - i : i - 14);
+                break;
+        }
+        this.iteration = (this.iteration + 1) % 12;
         return numberSet;
     };
     this.reset = function() {
