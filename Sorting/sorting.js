@@ -312,7 +312,6 @@ function ShellSort(cNums) {
         else if (this.i + 1 < this.cNums.length) {
             ++this.i;
             this.j = this.i;
-            console.assert(this.j < this.cNums.length, this.j);
         }
         else if (this.gap > 1) {
             this.j = this.i = this.gap = (
@@ -351,27 +350,7 @@ function QuickSort(cNums) {
             Math.random() * (this.bkIdx - this.ftIdx) + this.ftIdx);
         return this.cNums.numSet[pivotIdx];
     };
-    this.update = function(startTime) {
-        this.time = (new Date()).getTime() - startTime;
-        this.cNums.block(this.ftIdx, this.bkIdx);
-        if (this.swapping) {
-            ++this.swapCount;
-            this.cNums.swap(this.left++, this.right--);
-            this.swapping = false;
-            return;
-        }
-        else if (this.left <= this.right) {
-            if (this.cNums.examine(this.left) < this.pivot) {
-                this.left++;
-            }
-            else if (this.cNums.examine(this.right) > this.pivot) {
-                this.right--;
-            }
-            else if (this.left <= this.right) {
-                this.swapping = true;
-            }
-            return;
-        }
+    this.manageGroup = function() {
         if (this.right - this.ftIdx > 0)
             this.queue.unshift([this.ftIdx, this.right]);
         if (this.bkIdx - this.left > 0)
@@ -381,10 +360,41 @@ function QuickSort(cNums) {
             this.ftIdx = this.left = pair[0];
             this.bkIdx = this.right = pair[1];
             this.pivot = this.getNewPivot();
-            this.update(startTime);
         }
         else {
             this.done = true;
+        }
+    };
+    this.update = function(startTime) {
+        this.time = (new Date()).getTime() - startTime;
+        this.cNums.block(this.ftIdx, this.bkIdx);
+        if (this.swapping) {
+            ++this.swapCount;
+            this.cNums.swap(this.left++, this.right--);
+            this.swapping = false;
+        }
+        else if (this.left <= this.right) {
+            if (this.cNums.examine(this.left) < this.pivot) {
+                this.left++;
+            }
+            else if (this.cNums.examine(this.right) > this.pivot) {
+                this.right--;
+            }
+            else if (this.left <= this.right &&
+                     this.cNums.numSet[this.left] != this.cNums.numSet[this.right])
+            {
+                this.swapping = true;
+            }
+            else if (this.left + 1 <= this.right + 1) {
+                ++this.left;
+                --this.right;
+            }
+            else {
+                this.manageGroup();
+            }
+        }
+        else {
+            this.manageGroup()
         }
     };
     this.draw = function(time) {
