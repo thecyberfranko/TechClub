@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Launch Into Programming</title>
+    <link rel="stylesheet" type="text/css" href="LaunchIntoProgramming.css">
+    <link rel="stylesheet" type="text/css" href="dynamicParser.css">
+    <script type="text/javascript" src="dynamicParser.js"></script>
+</head>
+
+<body onload="tabIt()">
+
+<h1>Launch Into Programming</h1>
+<div id="Main" name="tabContainer">
+    <h2>Intent</h2>
+    <div>
+        <p>
+            This is intended as a superfial jump-start guide to programming with
+            select programming languages. By providing installation guidence and
+            examples hopefully it equipts and empowers you enough to enable your
+            own testing and exploration. This does not teach how to program or any
+            of it's skills, but rather demonstrates core functionality. Please,
+            inquire about Programming Group we would like extend and incorporate
+            your perspective to program something awesome.
+        </p>
+        <h3>Organization</h3>
+        <ul>
+            <li>
+                About: Creator, Maintainer, Features, and Perspective of the
+                language.
+            </li>
+            <li>
+                Online: Links to testing environments without/before installing.
+            </li>
+            <li>
+                Installation: Instructions to install the language for use
+                without a internet connection also enabling use of native features
+                like files, GUI, and more.
+            </li>
+            <li>
+                Examples: Simple program examples demonstrating core functionality.
+            </li>
+        </ul>
+        <h3>Examples</h3>
+        <ul>
+            <li>
+                <strong>HelloWorld</strong>
+                - The de facto first program. Displays a message to a user.<br />
+                Demonstrating: Output.
+            </li>
+            <li>
+                <strong>Greeting</strong>
+                - Takes user input and displays a greeting to the user.<br />
+                Demonstrating: User input and formatted output.
+            </li>
+            <li>
+                <strong>PigLatin</strong>
+                - Manipulates and displays a string in Pig Latin.<br />
+                Demonstrating: String manipulation, loops and decisions.
+            </li>
+            <li>
+                <strong>Factor</strong>
+                - Displays the factor pairs of a given number.<br />
+                Demonstrating: Mathematics, containers, loops and decisions.
+            </li>
+            </ul>
+            <h3>Taking it further</h3>
+            <p>
+                While only demonstrating a handful of the core functionallities
+                incorperating them together will produce more than could be first 
+                imagined. We challenge you to:
+            </p>
+            <ol>
+                <li>
+                Modify Hello World to display a different message.
+            </li>
+            <li>
+                Modify Greetings to take and display first name, last name and
+                perhaps age.
+            </li>
+            <li>
+                Extend PigLatin with the user input of Greetings so that the
+                program converts what the user given statements into Pig Latin.
+            </li>
+            <li>
+                Like above, extend Factor so that it factors a user given number.
+                Before applying mathematical operations convert the user input into
+                a number. Google for the language's conversion of string to integer.
+            </li>
+        </ol>
+    </div>
+    <h2>JavaScript</h2>
+    <div>
+        <h3>About</h3>
+        <p>
+            <!-- Creator, Maintainer, Features, and Perspective. -->
+            Arguably the most used programming language, JavaScritp was written by
+            Brendan Eich in May 1995 for the Netscape Navigator 2.0 beta in 10
+            days. It was standardized in 1997 by Ecma International as the first
+            ECMAScript, which today ECMAScript 2016 is the current standard.
+            Interpetated and nearly supported by all modern web browsers,
+            JavaScript is extremely portable, increasingly integrated into the
+            web by enabling dynamic content and pages. Also, because JavaScript was
+            designed for web designers and amatuer programmers it is a good
+            learning language.
+        </p>
+        <h3>Online/Installation</h3>
+        <p>
+            Because JavaScript is included in web browsers and it is likely already
+            installed. These examples embend JavaScript into a html page by
+            containing the JavaScript code between the &lt;script&gt; tags.
+            To run save the code in a file with the .html extension and open it
+            with the browser. Alternatively the JavaScript code saved in a ".js"
+            file is incoporated to a html page with the &lt;script
+            type="text/javascript" src="Path/To/File.js"&gt;&lt;/script&gt;.
+        </p>
+        <h3>Examples</h3>
+        <div id="JS_Examples" name="tabContainer">
+            <h4>HelloWorld.html</h4>
+            <pre><code>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Hello World&lt;/title&gt;
+    &lt;script&gt;
+        document.getElementById("HelloWorld").innerHTML = "Hello World";
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;p Id="HelloWorld"&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </code></pre>
+            <h4>Greetings.html</h4>
+            <pre><code>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Greetings&lt;/title&gt;
+    &lt;script&gt;
+        function greet() {
+            let Name = document.getElementById("Name").value;
+            let el = document.getElementById("Greetings")
+            el.innerHTML = `Greetings ${Name}`;
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;form&gt;
+        &lt;input type="text" Id="Name"/&gt;&lt;br/&gt;
+        &lt;input type="button" value="Submit" onclick="greet()"/&gt;&lt;br/&gt;
+    &lt;/form&gt;
+    &lt;p Id="Greetings"&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </code></pre>
+            <h4>PigLatin.html</h4>
+            <pre><code>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;PigLatin&lt;/title&gt;
+    &lt;script&gt;
+        function translateToPigLatin(initalPhrase) {
+            let convertedPhrase = ""
+            // Convert entire phrase to uppercase and split into separate words.
+            let Words = initalPhrase.toUpperCase().split(" ");
+            let phraseLength = Words.length;
+            for (let i = 0; i &lt; phraseLength; ++i) {
+                let Word = Words[i];
+                if (Word.length &gt; 1)
+                    convertedPhrase += Word.substring(1);
+                convertedPhrase += Word.charAt(0) + "AY "
+            }
+            return convertedPhrase;
+        }
+        document.getElementById("PigLatin").innerHTML = translateToPigLatin(
+            "This example converts this phase to Pig Latin");
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;p Id="PigLatin"&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </code></pre>
+            <h4>Factor.html</h4>
+            <pre><code>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Factor&lt;/title&gt;
+    &lt;script&gt;
+        function factor(Num) {
+            let factors = [], limitSearch = Math.sqrt(Num) + 1;
+            for (let Divisor = 1; Divisor &lt; limitSearch; ++Divisor) {
+                if (!(Num % Divisor)) {
+                    factors.push([Divisor, Num / Divisor]);
+                }
+            }
+            return factors;
+        }
+    document.getElementById("Factor").innerHTML = factor(48).join("&lt;br/&gt;");
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;p Id="Factor"&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </code></pre>
+        </div>
+    </div>
+    <h2>Python</h2>
+    <div>
+        <h3>About</h3>
+        <p>
+            Written by Guido van Rossum in February 1991 and currently developed by the
+            Python Software Foundation. Python employs more english-like syntax
+            and less symbolic syntax (curly brackets and semicolons).
+        </p>
+        <h3>Online Testing</h3>
+        <ul>
+            <li>
+                <a href="https://repl.it/languages/python3">
+                    https://repl.it/languages/python3</a>
+                - Use "run" to execute.
+            </li>
+            <li>
+                <a href="http://www.pythontutor.com/visualize.html#mode=edit">
+                    http://www.pythontutor.com/visualize.html#mode=edit</a>
+                - Select Python3 and use Visulize Execution and forward to execute.
+            </li>
+        </ul>
+        <h3>Installation</h3>
+            From this page
+                <a href="https://www.python.org/downloads/release/python-360/">
+                    https://www.python.org/downloads/release/python-360/</a>
+            choose a Python version (the newest Python 3 is recommended). At the
+            bottom of the resulting page choose the appropriate file to begin
+            download and continue it into installation. From the new installation
+            open Idle the interactive interpreter and developement environment.
+        <h3>Examples</h3>
+        <div id="PyExamples" name="tabContainer">
+            <h4>HelloWorld.py</h4>
+            <pre><code>
+print("Hello World")
+            </code></pre>
+            <h4>Greetings.py</h4>
+            <pre><code>
+userName = input("Please enter your name. ")
+print("Greetings {}.".format(userName))
+            </code></pre>
+            <h4>PigLatin.py</h4>
+            <pre><code>
+def translateToPigLatin(initalPhrase):
+    convertedPhrase = ""
+    # Convert entire phrase to uppercase and split into separate words.
+    for Word in initalPhrase.upper().split():
+        if (len(Word) &gt; 1):
+            convertedPhrase += Word[1:]
+        convertedPhrase += Word[0:1] + "AY "
+    return convertedPhrase
+
+print(translateToPigLatin("This example converts this phase to Pig Latin"))
+            </code></pre>
+            <h4>Factor.py</h4>
+            <pre><code>
+from math import sqrt
+def factor(Num):
+    factors, limitSearch = [], int(sqrt(Num)) + 1
+    for Divisor in range(1, limitSearch):
+        Whole, Remainder = divmod(Num, Divisor)
+        if not Remainder:
+            factors.append((Divisor, Whole))
+    return factors
+
+print(factor(48))
+            </code></pre>
+        </div>
+    </div>
+    <h2>Java</h2>
+    <div>
+        <h3>Online Testing</h3>
+        <ul>
+            <li>
+                <a href="https://repl.it/languages/java">
+                    https://repl.it/languages/java</a>
+                - Edit the class name to "Main" and press "run" to execute.
+            </li>
+            <li>
+                <a href="http://www.pythontutor.com/visualize.html#mode=edit">
+                    http://www.pythontutor.com/visualize.html#mode=edit</a>
+                - Select Java and use Visulize Execution and forward to execute.
+            </li>
+        </ul>
+        <h3>Installation</h3>
+            <abbr title="Integrated Developement Environments">IDEs</abbr>
+            provide tools that assist in developing and managing program creations.
+            <a href="https://netbeans.org">NetBeans</a>,
+            <a href="https://eclipse.org/ide/">Eclipse</a>, and
+            <a href="https://www.jetbrains.com/idea/">IntelliJ</a> are popular
+            IDEs for Java. Download one of these or from
+                <a href="http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html">
+                    this page</a>
+            download the standalone JDK.
+        <h3>Examples</h3>
+        <div id="JavaExamples" name="tabContainer">
+            <h4>HelloWorld.java</h4>
+            <pre><code>
+public class HelloWorld
+{
+    public static void main(String[] args)
+    {
+        System.out.println("Hello World");
+    }
+}
+            </code></pre>
+            <h4>Greetings.java</h4>
+            <pre><code>
+import java.util.Scanner; 
+
+public class Greetings
+{
+    public static void main(String[] args)
+    {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.printf("Please enter your name. ");
+        String userName = keyboard.nextLine();
+        System.out.printf("Greetings %s.%n", userName);
+    }
+}
+            </code></pre>
+            <h4>PigLatin.java</h4>
+            <pre><code>
+public class HelloWorld
+{
+    public static void main(String[] args)
+    {
+        System.out.println(translateToPigLatin(
+            "This example converts this phase to Pig Latin"));
+    }
+    
+    public static String translateToPigLatin(String initalPhrase)
+    {
+        String convertedPhrase = "";
+        for (String Word: initalPhrase.toUpperCase().split(" ")) {
+            int Length = Word.length();
+            if (Length &gt; 1)
+                convertedPhrase += Word.substring(1, Length);
+            convertedPhrase += Word.substring(0, 1) + "AY ";
+        }
+        return convertedPhrase;
+    }
+}
+            </code></pre>
+            <h4>Factor.java</h4>
+            <pre><code>
+import java.util.ArrayList;
+
+public class Factor
+{
+    public static void main(String[] args)
+    {
+        for (Integer[] Pair: factor(48)) {
+            System.out.printf("%d, %d%n", Pair[0], Pair[1]);
+        }
+    }
+
+    public static ArrayList&lt;Integer[]&gt; factor(int Num) {
+        ArrayList&lt;Integer[]&gt; factors = new ArrayList&lt;Integer[]&gt;();
+        int limitSearch = (int)Math.sqrt(Num) + 1;
+        for (int Divisor = 1; Divisor &lt; limitSearch; ++Divisor) {
+            if (Num % Divisor == 0) {
+                factors.add(new Integer[]{Divisor, Num / Divisor});
+            }
+        }
+        return factors;
+    }
+}
+            </code></pre>
+        </div>
+    </div>
+    <h2>C++</h2>
+    <div>
+        <h3>Online Testing</h3>
+        <ul>
+            <li>
+                <a href="https://repl.it/languages/cpp">
+                    https://repl.it/languages/cpp</a>
+                - Use "run" to execute.
+            </li>
+            <li>
+                <a href="http://www.pythontutor.com/visualize.html#mode=edit">
+                    http://www.pythontutor.com/visualize.html#mode=edit</a>
+                - Select C++ and use Visulize Execution and forward to execute.
+            </li>
+        </ul>
+        <h3>Installation</h3>
+        <h3>Examples</h3>
+        <div id="CppExamples" name="tabContainer">
+            <h4>HelloWorld.py</h4>
+            <pre><code>
+#include &lt;iostream&gt;
+
+int main()
+{
+    std::cout &lt;&lt; "Hello World" &lt;&lt; std::endl;
+}
+            </code></pre>
+            <h4>Greetings.cpp</h4>
+            <pre><code>
+#include &lt;iostream&gt;
+
+int main()
+{
+    std::string Name;
+    std::cout &lt;&lt; "Please enter your name. ";
+    getline(std::cin, Name);
+    std::cout &lt;&lt; "Greetings " &lt;&lt; Name &lt;&lt; "." &lt;&lt; std::endl;
+}
+            </code></pre>
+            <h4>PigLatin.cpp</h4>
+            <pre><code>
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;cctype&gt;
+
+std::vector&lt;std::string&gt; tokenize(std::string initalPhrase, char token) {
+    std::vector&lt;std::string&gt; Tokenized;
+    std::string Word = "";
+    for (char letter: initalPhrase) {
+        if (letter != token) {
+            Word += std::toupper(letter);
+            continue;
+        }
+        Tokenized.push_back(Word);
+        Word = "";
+    }
+    Tokenized.push_back(Word);
+    return Tokenized;
+}
+
+std::string translateToPigLatin(std::string initalPhrase) {
+    std::string convertedPhrase = "";
+    for (std::string Word: tokenize(initalPhrase, ' ')) {
+        if (Word.length() &gt; 1) {
+            convertedPhrase += Word.substr(1);
+        }
+        convertedPhrase += Word.substr(0, 1) + "AY ";
+    }
+    return convertedPhrase;
+}
+
+int main() {
+    std::string initalPhrase = "This example converts this phrase to Pig Latin";
+    std::cout &lt;&lt; translateToPigLatin(initalPhrase) &lt;&lt; std::endl;
+}
+            </code></pre>
+            <h4>Factor.cpp</h4>
+            <pre><code>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;cmath&gt;
+#include &lt;utility&gt;
+
+std::vector&lt;std::pair&lt;int, int&gt;&gt; factor(int Num) {
+    std::vector&lt;std::pair&lt;int, int&gt;&gt;  factors;
+    int limitSearch = std::sqrt(Num) + 1;
+    for (int Divisor = 1; Divisor &lt; limitSearch; ++Divisor) {
+        if (!(Num % Divisor)) {
+            factors.push_back(std::make_pair(Divisor, Num / Divisor));
+        }
+    }
+    return factors;
+}
+
+int main()
+{
+    for (std::pair&lt;int, int&gt; Pair: factor(48)) {
+        std::cout &lt;&lt; Pair.first &lt;&lt; ", " &lt;&lt; Pair.second &lt;&lt; std::endl;
+    }
+    return 0;
+}
+            </code></pre>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

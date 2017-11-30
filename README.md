@@ -10,6 +10,12 @@ The screen shot are the only images of my own. Otherwise they were found through
 
 ### Contained files:
 
+-Lip/*
+	- LaunchIntoProgramming.css - stylesheet for LIP page
+	- LaunchIntoProgramming.html - page for introducing programming languages
+	- LaunchIntoProgramming.js - enabling functionality to LIP page
+	- dynamicParser.css - stylesheet for dynamic parser use
+	- dynamicParser.js - enables parsing of html page to support tabs
 - PiCalc/* **Note: assumes a fixed console size**
     - algorithmPrintOut.rtf - A handout of demonstrated Pi formulas gathered from Wikipedia.
     - piCalc.cpp - Cpp source that demonstrates Pi formulas to a fixed amount.
