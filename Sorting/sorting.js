@@ -264,7 +264,7 @@ function BinaryInsertion(cNums) {
             if (this.cNums.examine(this.i) < this.cNums.examine(this.j))
                 this.rangeHigh = this.j;
             else
-                this.rangeLow = this.j + 1
+                this.rangeLow = this.j + 1;
             this.j = temp;
         }
     };
@@ -285,9 +285,9 @@ function BinaryInsertion(cNums) {
 function ShellSort(cNums) {
     this.cNums = cNums;
     this.done = false;
-    this.division = 3;
-    this.gap = Math.ceil(this.cNums.length / this.division);
-    this.i = this.j = this.gap;
+    this.gapSet = [20, 9, 4, 1];  // https://oeis.org/A108870
+    this.gapIndex = 0;
+    this.i = this.j = this.gap = this.gapSet[this.gapIndex++];
     this.swapCount = 0;
     this.time = new Date();
     this.update = function(startTime) {
@@ -313,9 +313,8 @@ function ShellSort(cNums) {
             ++this.i;
             this.j = this.i;
         }
-        else if (this.gap > 1) {
-            this.j = this.i = this.gap = (
-                this.gap == 1 ? 0 : Math.ceil(this.gap / this.division));
+        else if (this.gapIndex < this.gapSet.length) {
+            this.j = this.i = this.gap = this.gapSet[this.gapIndex++];
         }
         else {
             this.done = true;
@@ -327,9 +326,8 @@ function ShellSort(cNums) {
     this.reset = function(numberSet) {
         this.cNums.reset(cNums);
         this.done = false;
-        this.division = 3;
-        this.gap = Math.ceil(this.cNums.length / this.division);
-        this.i = this.j = this.gap;
+        this.gapIndex = 0;
+        this.i = this.j = this.gap = this.gapSet[this.gapIndex++];
         this.swapCount = 0;
         this.time = new Date();
     };
