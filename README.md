@@ -22,6 +22,14 @@ The screen shot are the only images of my own. Otherwise they were found through
     - piCalc.py - Python source that demonstrates Pi formulas to a fixed amount. 
     - piCalcConditions.cpp - Cpp source that demonstrates to relative digit.
     - piCalcConditions.py - Python source that demonstrates to relative digit.
+PiScanner/*
+    - AESencryption.java - Enables encryption/decryption of Strings.
+    - DecryptFile.java - Reads and decrypts given file.
+    - EncryptList.java - Encrypts and writes given file.
+    - HashPassword.java - Compares given password with Hash.
+    - SID_Decrypter.java - Reads, decrypts and displays the "club.dat" file.
+    - SID_Scanner.java - Encrypts given input and writes to "club.dat".
+    - TokenFile.java - Checks for a file containing given password hash.
 - Presentations/* **Note: requires reveal directory containing [reveal.js](https://github.com/hakimel/reveal.js)**
     - Debug.html - Presentation of program debugging using reveal.js
     - debugImages/* - Images used in the Debug presentation
