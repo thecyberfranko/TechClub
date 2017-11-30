@@ -55,7 +55,7 @@ function ColoredNumbersObj(canvas, context, point, offsetX, numberSet) {
     };
     this.draw = function(Heading) {
         this.context.save()
-        this.context.lineWidth = 3;
+        this.context.lineWidth = 4;
         this.context.font = "24px Consolas"
         this.context.fillText(Heading, this.point.x, this.point.y);
         for (let i = 0; i < this.numSet.length; ++i) {
