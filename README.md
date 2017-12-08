@@ -8,6 +8,32 @@ Jonathan Niehenke
 ### Disclaimer:
 The screen shot are the only images of my own. Otherwise they were found through Google and used for educational and demonstrative purposes.
 
+## Projects
+- Launch into Programming - A dynamic web page with instructions and links to begin programming in C++, C#, Java, JavaScript and Python.
+- PiCalc - A demonstration of Pi algorithms and how quickly they calculate its digits.
+- PiScanner - A attendance assist to club advisors with security in mind.
+- Presentations - A collection of presentations about different aspects of programming.
+- Snake - A game of snake and moderate ai.
+- Sorting - A sorting demonstration of bubble sort, insertion sort, quicksort, mergesort and more.
+- SVD image compression - A demonstration of image compression by using Singular Value Decomposition
+
+### Other contribution projects that already have their own repository
+- [JS_Bomberman](https://github.com/JonathanNiehenke/JS_Bomberman)
+- [JS_Portal](https://github.com/JonathanNiehenke/JS_Portal)
+- [Js_OfficeGame](https://github.com/JonathanNiehenke/Js_OfficeGame)
+- [JS_TileEngine](https://github.com/JonathanNiehenke/JS_TileEngine)
+- [Tasker](https://github.com/JonathanNiehenke/Tasker) - **Inspired by a fellow club member**
+
+### Requires:
+
+- For Presentations:
+    - reveal.js: <https://github.com/hakimel/reveal.js>
+- For PiCalc and SVD_compression
+    - Python 3: <https://www.python.org/downloads/>:
+- For SVD_compression:
+    - Matplotlib: `python -m pip install --user matplotlib`
+    - Numpy: `pip install --user numpy`
+
 ### Contained files:
 
 - Lip/*
@@ -53,20 +79,3 @@ The screen shot are the only images of my own. Otherwise they were found through
     - svd.py - Demonstrates compression using Singular Value Decomposition.
 - LICENSE.md - The License.
 - README.md - This file.
-
-### Requires:
-
-- For Presentations:
-    - reveal.js: <https://github.com/hakimel/reveal.js>
-- For PiCalc and SVD_compression
-    - Python 3: <https://www.python.org/downloads/>:
-- For SVD_compression:
-    - Matplotlib: `python -m pip install --user matplotlib`
-    - Numpy: `pip install --user numpy`
-
-### Other contributions that already have their own repository
-- [JS_Bomberman](https://github.com/JonathanNiehenke/JS_Bomberman)
-- [JS_Portal](https://github.com/JonathanNiehenke/JS_Portal)
-- [Js_OfficeGame](https://github.com/JonathanNiehenke/Js_OfficeGame)
-- [JS_TileEngine](https://github.com/JonathanNiehenke/JS_TileEngine)
-- [Tasker](https://github.com/JonathanNiehenke/Tasker) - **Inspired by a fellow club member**
