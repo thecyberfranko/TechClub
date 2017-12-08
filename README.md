@@ -64,9 +64,9 @@ The screen shot are the only images of my own. Otherwise they were found through
     - Matplotlib: `python -m pip install --user matplotlib`
     - Numpy: `pip install --user numpy`
 
-### Other contributions **Already as their own repositories**
-- JS_Bomberman
-- JS_Portal
-- Js_OfficeGame
-- JS_TileEngine
-- Tasker - **Inspired by a fellow club member**
+### Other contributions that already have their own repository
+- [JS_Bomberman](https://github.com/JonathanNiehenke/JS_Bomberman)
+- [JS_Portal](https://github.com/JonathanNiehenke/JS_Portal)
+- [Js_OfficeGame](https://github.com/JonathanNiehenke/Js_OfficeGame)
+- [JS_TileEngine](https://github.com/JonathanNiehenke/JS_TileEngine)
+- [Tasker](https://github.com/JonathanNiehenke/Tasker) - **Inspired by a fellow club member**
